@@ -9,7 +9,7 @@ Our product is a news platform that provides concise summaries of breaking news 
 - [ ] Users can report about harmful or inaccurate information that they encounter by reading our  concise articles summaries , for help reduce toxicity content and prevent the spread of fake news.
 
 ## Project Plan
-![[MVP Scope & Project Plan.png|max]]
+![Screenshot](./MVP%20Scope%20%26%20Project%20Plan.png)
 **Note:** The timeline is approximate and may be adjusted based on project progress and unforeseen challenges.
 
 ---
