@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BrieflyServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2507679072657bf84b4a1d816774af9a82137fdb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76ac69db60cac47c424c4d86a8b938b8af02c274")]
 [assembly: System.Reflection.AssemblyProductAttribute("BrieflyServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BrieflyServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
