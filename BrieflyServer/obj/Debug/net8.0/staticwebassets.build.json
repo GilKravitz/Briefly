@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "cLnND6VCiMTOnE319VOHTJho0wASd4m11rqtbf3kxJo=",
+  "Source": "BrieflyServer",
+  "BasePath": "_content/BrieflyServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
