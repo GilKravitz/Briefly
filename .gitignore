@@ -7,6 +7,9 @@
 .AppleDouble
 .LSOverride
 
+# ignore all config files
+**/config
+
 # Icon must end with two \r
 Icon
 
