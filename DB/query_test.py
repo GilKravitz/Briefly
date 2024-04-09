@@ -14,8 +14,12 @@ db_password = os.getenv("DB_PASSWORD")
 def read_sql_file(filename):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, filename)
-    with open(file_path, 'r') as file:
-        return file.read()
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:  # First try UTF-8
+            return file.read()
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='windows-1255') as file:  # Fallback to Windows-1255
+            return file.read()
 
 # Read SQL commands from query.sql file
 sql_commands = read_sql_file('query.sql')
