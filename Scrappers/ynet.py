@@ -1,9 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
+from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD , DB_URL
 
-origin_url = "https://www.ynet.co.il"
-newsType = ["news/category/185" , "sport"] # news/category/185 = politics in ynet. 
+ARTICLE_SOURCE= "YNET"
+BASE_URL= "https://www.ynet.co.il"
+
+newsType = ["news/category/185" , "sport"] 
 
 def filter_links(href):
     return href and 'article' in href
@@ -30,7 +33,7 @@ def print_article(link):
         #reuturn error code status
         
 def main(type):
-    response = requests.get(origin_url + "/" + type)
+    response = requests.get(BASE_URL + "/" + type)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         

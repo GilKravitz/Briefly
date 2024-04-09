@@ -1,11 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
+from config import N13_BASE_URL , N13_SOURCE , N13_NEWS_TYPE
 
-
-
-origin_url = "https://13tv.co.il/news"
-newsType = ["politics/politics/" , "politics/security/"] # change this to add more news types..
+ARTICLE_SOURCE = "N13"
+BASE_URL = "https://13tv.co.il/news"
+newsType = ["politics/politics/"] # change this to add more news types..
 
 
 def filter_links(href):
@@ -14,7 +14,7 @@ def filter_links(href):
 def print_article(link):
     article=""
     str_link = str(link)
-    full_link = origin_url+str_link
+    full_link = BASE_URL+str_link
     #need to check against the database if the full_link exists.
     response = requests.get(full_link)
     if response.status_code == 200:
@@ -22,8 +22,11 @@ def print_article(link):
         all_content = soup.find_all(['p', 'h1', 'h2','strong'])
         print("------------------------------------------start----------------------------------------------")
         for tag in all_content:
+            if tag.name == 'h1':
+                    title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
             article+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
             article+=" "
+        print(title)
         print(article)#for tests purposes
         print("------------------------------------------end----------------------------------------------")
         #send the article to the database.
@@ -33,19 +36,14 @@ def print_article(link):
         #return error code status
         
 def main(type):
-    response = requests.get(origin_url + "/" + type)
+    response = requests.get(BASE_URL + "/" + type)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         
         article_links = set()
         max_links = 3 #number of actual article's links.
-        skip_links = 3
-        counter = 0
 
         for a_tag in soup.find_all('a', href=filter_links):
-            if counter < skip_links:
-                counter += 1
-                continue
 
             if len(article_links) < max_links:
                 link = a_tag.get('href')
