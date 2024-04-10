@@ -1,8 +1,8 @@
 using BrieflyServer.Data;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
-using BrieflyServer.Interfaces;
 using BrieflyServer.Middleware;
+using BrieflyServer.Services;
 
 Env.Load();
 
@@ -13,15 +13,22 @@ var connectionString = $"Host={Environment.GetEnvironmentVariable("PG_HOST")};Po
 builder.Services.AddDbContext<BrieflyContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Register authentication services
-builder.Services.AddSingleton<IAuthService, FacebookAuth>();
 
+builder.Services.AddScoped<ArticleService>();
+// Register authentication services
+//builder.Services.AddSingleton<IAuthService, FacebookAuth>();
+
+
+//add controllers
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-
 // Use authentication and authorization
-app.UseAuthentication();
+//app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();

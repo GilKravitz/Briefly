@@ -14,10 +14,13 @@ public class Article
     public string Category { get; set; }
     [Column("title")] // Specify the column name in the database
     public string Title { get; set; }
-    public Article(string articleText, string category, string title)
+    [Column("publish_date")]
+    public DateTime PublishDate { get; set; }
+    public Article(string articleText, string category, string title, DateTime publishDate)
     {
         ArticleText = articleText;
         Category = category;
         Title = title;
+        PublishDate = publishDate;
     }
 }

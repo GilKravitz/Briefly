@@ -11,13 +11,16 @@ public class User
     public string Email { get; set; }
     [Column("password")]
     public string Password { get; set; }
-    [Column("preferences")]
-    public string Preferences { get; set; }
+    [Column("preferredTopics")]
+    public string PreferredTopics { get; set; }
+    [Column("bookmarkedArticles")]
+    public string BookmarkedArticles { get; set; }
 
-    public User(string email, string password, string preferences)
+    public User(string email, string password, string preferredTopics,string bookmarkedArticles)
     {
         Email = email;
         Password = password;
-        Preferences = preferences;
+        PreferredTopics = preferredTopics;
+        BookmarkedArticles = bookmarkedArticles;
     }
 }

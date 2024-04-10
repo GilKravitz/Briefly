@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace BrieflyServer.Interfaces
+namespace BrieflyServer.Middleware
 {
     public interface IAuthService
     {
