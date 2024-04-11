@@ -13,23 +13,36 @@ namespace BrieflyServer.Services
             _context = context;
         }
 
-        public List<Article> GetArticles(int page, int pageSize, List<string> categories)
+        public List<Article> GetArticles(int page, int pageSize,string email)
         {
             // Calculate the number of items to skip
             int skip = (page - 1) * pageSize;
 
+            var preferredCategoriesString = _context.Users
+                .Where(user => user.Email == email)
+                .Select(user => user.PreferredTopics)
+                .FirstOrDefault();
+
+            if (preferredCategoriesString == null)
+            {
+                // User with the given email not found or preferred topics are null
+                throw new ArgumentNullException(nameof(email));
+            }
+
+            var preferredCategories = preferredCategoriesString.Split(" ").ToList();
+
             //check if the requested categories are valid
-            if (categories.Any(category => !Enum.IsDefined(typeof(ArticleCategory), category)))
+            if (preferredCategories.Any(category => !Enum.IsDefined(typeof(ArticleCategory), category)))
             {
                 throw new ArgumentException("One or more categories are invalid.");
             }
             // Query the articles based on categories, skipping the appropriate number and taking the desired number
             var articles = _context.Articles
-                .Where(article => categories.Contains(article.Category))
+                .Where(article => preferredCategories.Contains(article.Category))
+                .OrderByDescending(article => article.PublishDate)
                 .Skip(skip)
                 .Take(pageSize)
                 .ToList();
-
             return articles;
         }
         public List<Article> SearchArticles(string searchString)

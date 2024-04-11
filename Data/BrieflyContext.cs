@@ -13,10 +13,7 @@ namespace BrieflyServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Specify the table name for the User entity
             modelBuilder.Entity<User>().ToTable("users");
-
-            // Specify the table name for the Article entity
             modelBuilder.Entity<Article>().ToTable("merged_articles");
         }
     }

@@ -15,6 +15,7 @@ builder.Services.AddDbContext<BrieflyContext>(options =>
 
 
 builder.Services.AddScoped<ArticleService>();
+builder.Services.AddScoped<UserService>();
 // Register authentication services
 //builder.Services.AddSingleton<IAuthService, FacebookAuth>();
 
