@@ -1,19 +1,22 @@
 using BrieflyServer.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Data
 {
-    public class BrieflyContext : DbContext
+    public class BrieflyContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
+        public DbSet<Article> Articles { get; set; }
+
         public BrieflyContext(DbContextOptions<BrieflyContext> options) : base(options)
         {
         }
-        public DbSet<User> Users { get; set; } // Map to the 'users' table
-        public DbSet<Article> Articles { get; set; } // Map to the 'merged_articles' table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("users");
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Article>().ToTable("merged_articles");
         }
     }

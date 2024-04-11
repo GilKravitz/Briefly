@@ -1,32 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace BrieflyServer.Models;
-
-public class User
+namespace BrieflyServer.Models
 {
-    [Key]
-    public int id { get; set; }
-    [Column("email")]
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid Email Address")]
-    public string Email { get; set; }
-    [Column("password")]
-    [Required(ErrorMessage = "Password is required")]
-    [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
-    public string Password { get; set; }
-    [Column("preferredTopics")]
-    [Required(ErrorMessage = "Preferred topics are required")]
-    public string PreferredTopics { get; set; }
-    [Column("bookmarkedArticles")]
-    public string BookmarkedArticles { get; set; }
-
-    public User(string email, string password, string preferredTopics,string bookmarkedArticles)
+    public class User : IdentityUser<int>
     {
-        Email = email;
-        Password = password;
-        PreferredTopics = preferredTopics;
-        BookmarkedArticles = bookmarkedArticles;
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public override int Id { get; set; }
+
+        [Column("preferredTopics")]
+        public string PreferredTopics { get; set; }
+
+        [Column("bookmarkedArticles")]
+        public string BookmarkedArticles { get; set; }
+        public User(string email, string preferredTopics, string bookmarkedArticles = "")
+        {
+            UserName = email; // Set the username to be the same as the email
+            Email = email;
+            PreferredTopics = preferredTopics;
+            BookmarkedArticles = bookmarkedArticles;
+        }
     }
 }
