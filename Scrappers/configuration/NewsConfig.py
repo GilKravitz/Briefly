@@ -1,14 +1,14 @@
 import json
+import os
 
-with open('config.json') as f:
+# Get the absolute path to the directory containing this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(script_dir, 'NewsConfig.json')
+
+with open(config_file_path) as f:
     config = json.load(f)
 
-DB_HOST = config['DATABASE']['DB_HOST']
-DB_PORT = config['DATABASE']['DB_PORT']
-DB_NAME = config['DATABASE']['DB_NAME']
-DB_USER = config['DATABASE']['DB_USER']
-DB_PASSWORD = config['DATABASE']['DB_PASSWORD']
-DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
 
 N12_BASE_URL = config['N12']['BASE_URL']
 N12_NEWS_TYPE = config['N12']['NEWS_TYPE']

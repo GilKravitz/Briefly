@@ -1,0 +1,16 @@
+{
+    "NEWS_SITES":["N12","N13","YNET"],
+    "N12":{
+        "BASE_URL":"https://www.mako.co.il",
+        "NEWS_TYPE":["news-military" , "news-sport"]
+    },
+    "N13":{
+        "BASE_URL":"https://13tv.co.il/news",
+        "NEWS_TYPE":["politics/politics/" , "politics/security/"]
+    },
+    "YNET":{
+        "BASE_URL":"https://www.ynet.co.il",
+        "NEWS_TYPE":["news/category/185" , "sport"]  
+    },
+    "NUMBER_OF_ARTICLES":2
+}

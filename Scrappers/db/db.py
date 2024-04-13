@@ -1,7 +1,23 @@
 from sqlalchemy import create_engine, Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from config import DB_URL
+import json
+import os
+
+# Get the absolute path to the directory containing this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(script_dir, 'DbConfig.json')
+
+with open(config_file_path) as f:
+    config = json.load(f)
+
+
+DB_HOST = config['DB_HOST']
+DB_PORT = config['DB_PORT']
+DB_NAME = config['DB_NAME']
+DB_USER = config['DB_USER']
+DB_PASSWORD = config['DB_PASSWORD']
+DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 engine = create_engine(DB_URL)
 

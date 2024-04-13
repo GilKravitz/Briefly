@@ -1,69 +1,43 @@
 import requests
 from bs4 import BeautifulSoup
-from concurrent.futures import ThreadPoolExecutor
-from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD , DB_URL
+from datetime import datetime
+from BaseClasses import Article , BaseScrapper
 
-ARTICLE_SOURCE= "YNET"
-BASE_URL= "https://www.ynet.co.il"
+class Ynet_Scrapper(BaseScrapper):
+    def __init__(self,base_url,site_name,news_type):
+        BaseScrapper.__init__(self,base_url,site_name,news_type)
 
-newsType = ["news/category/185" , "sport"] 
-
-def filter_links(href):
-    return href and 'article' in href
-            
-def print_article(link):
-    article=""
-    #need to check against the database if the link exists.
-    response = requests.get(link)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
-        all_content = soup.find_all(['span', 'h1', 'h2','strong'])
-        print("------------------------------------------start----------------------------------------------")
+    def filter_links(href):
+        return href and 'article' in href
+    
+    def get_publish_date(self):
+        try:
+            return publish_date
+        except Exception as e:
+            print(e)
+            return None
+    
+def get_article(self , link ,article_type):
+    article_data = ""
+    title = ""
+    try:
+        response = requests.get(link)
+        response.raise_for_status()
+        self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
+        publish_date = self.get_publish_date(self.article_soup)
+        all_content = self.article_soup.find_all(['span', 'h1', 'h2','strong'])
         for tag in all_content:
             if tag.name == 'span' and tag.get('data-text') != 'true':
                 continue
-            article+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
-            article+=" "
-        print(article)#for tests purposes
-        print("------------------------------------------end----------------------------------------------")
-        #send the article to the database.
-        #return successful code status.
-    else:
-        pass
-        #reuturn error code status
-        
-def main(type):
-    response = requests.get(BASE_URL + "/" + type)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        article_links = set()
-        max_links = 3 #number of actual article's links.
-        skip_links = 3
-        counter = 0
-
-        for a_tag in soup.find_all('a', href=filter_links):
-            if counter < skip_links:
-                counter += 1
-                continue
-
-            if len(article_links) < max_links:
-                link = a_tag.get('href')
-                article_links.add(link)
-            else:
-                break
-
-        article_links = list(article_links)[:max_links]
-        for link in article_links:
-            print_article(link)
-        
-    else:
-        print(f"Error: {response.status_code}")
-    print("----------------------------------------------------")
-            
-if __name__ == '__main__':
-    with ThreadPoolExecutor(max_workers=len(newsType)) as executor:
-        executor.map(main, newsType)
+            if tag.name == 'h1':
+                title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
+            article_data+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
+            article_data+=" "
+        article = Article(link,article_data,title,publish_date,article_type)
+        return article
+    except requests.RequestException as e:
+        print(f"Error fetching article from {link}: {e}")
+        return -1
 
 
 

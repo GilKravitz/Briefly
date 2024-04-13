@@ -1,0 +1,7 @@
+{
+    "DB_HOST" : "c2dr1dq7r4d57i.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com",
+    "DB_PORT" : 5432,
+    "DB_NAME" : "d4qf0b048n7rtt",
+    "DB_USER" : "u8pv84gfm2e9fj",
+    "DB_PASSWORD" : "p86201993bc3e372fbaf71c6506f4ad6c591df2a65cd65dfa689ab624a0b847f6"
+}

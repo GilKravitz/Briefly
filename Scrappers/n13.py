@@ -1,66 +1,77 @@
 import requests
 from bs4 import BeautifulSoup
-from concurrent.futures import ThreadPoolExecutor
-from config import N13_BASE_URL , N13_SOURCE , N13_NEWS_TYPE
+from datetime import datetime , timedelta
+from BaseClasses import Article , BaseScrapper
+from configuration.NewsConfig import N13_BASE_URL , N13_NEWS_TYPE
 
-ARTICLE_SOURCE = "N13"
-BASE_URL = "https://13tv.co.il/news"
-newsType = ["politics/politics/"] # change this to add more news types..
+class N13_Scrapper(BaseScrapper):
+    def __init__(self,base_url,site_name,news_type):
+        BaseScrapper.__init__(self,base_url,site_name,news_type)
 
-
-def filter_links(href):
-    return href and 'item/news' in href
-
-def print_article(link):
-    article=""
-    str_link = str(link)
-    full_link = BASE_URL+str_link
-    #need to check against the database if the full_link exists.
-    response = requests.get(full_link)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
-        all_content = soup.find_all(['p', 'h1', 'h2','strong'])
-        print("------------------------------------------start----------------------------------------------")
-        for tag in all_content:
-            if tag.name == 'h1':
-                    title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
-            article+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
-            article+=" "
-        print(title)
-        print(article)#for tests purposes
-        print("------------------------------------------end----------------------------------------------")
-        #send the article to the database.
-        #return successful code status.
-    else:
-        pass
-        #return error code status
-        
-def main(type):
-    response = requests.get(BASE_URL + "/" + type)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        article_links = set()
-        max_links = 3 #number of actual article's links.
-
-        for a_tag in soup.find_all('a', href=filter_links):
-
-            if len(article_links) < max_links:
-                link = a_tag.get('href')
-                article_links.add(link)
+    def filter_links(self,href):
+        return href and 'item/news' in href
+    
+    def get_publish_date(self):
+        try:
+            display_date_span = self.article_soup.select_one('span[class^="ArticleCreditsstyles__DateContainer"]')
+            date_time_str = display_date_span.text.strip()
+            if '.' in date_time_str:
+                # Case: "dd:mm hh:mm"
+                date = date_time_str.split(',')[0]
+                time = date_time_str.split(',')[1]
+                year = datetime.now().strftime('%y')
+                month = date.split('.')[1]
+                day = date.split('.')[0]
+                formatted_date = f"{day}-{month}-{year} {time}"
+                publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
+                return publish_date
+            elif ',' in date_time_str:
+                # Case: "אתמול, HH:MM"
+                date_str, time = date_time_str.split(', ')
+                if date_str == "אתמול":
+                    yesterday = datetime.now() - timedelta(days=1)
+                    year = yesterday.strftime('%y')
+                    month = yesterday.strftime('%m')
+                    day = yesterday.strftime('%d')
+                    formatted_date = f"{day}-{month}-{year} {time}"
+                    publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
+                    return publish_date
             else:
-                break
+                #case : HH:MM
+                today = datetime.now()
+                year = today.strftime('%y')
+                month = today.strftime('%m')
+                day = today.strftime('%d')
+                formatted_date = f"{day}-{month}-{year} {date_time_str}"
+                publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
+                return publish_date 
+        except Exception as e:
+            print(e)
+            return None
+    
+    def get_article(self,link , article_type):
+        article_data=""
+        title=""
+        try:
+            response = requests.get(link)
+            response.raise_for_status()
 
-        article_links = list(article_links)[:max_links]
-        for link in article_links:
-            print_article(link)
-    else:
-        print(f"Error: {response.status_code}")
-            
+            self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
+            publish_date = self.get_publish_date()
+            all_content = self.article_soup.find_all(['p', 'h1', 'h2','strong'])
+            for tag in all_content:
+                if tag.name == 'h1':
+                    title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
+                article_data+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
+                article_data+=" "
+            article = Article(link,article_data, title,publish_date,article_type,self.site_name)
+            return article
+        except requests.RequestException as e:
+            print(f"Error fetching article from {link}: {e}")
+            return -1
+
 if __name__ == '__main__':
-    with ThreadPoolExecutor(max_workers=len(newsType)) as executor:
-        executor.map(main, newsType)
-
-
+    n12_scrapper = N13_Scrapper(N13_BASE_URL,"N13",N13_NEWS_TYPE)
+    n12_scrapper.fetch_articles_and_commit()
 
 
