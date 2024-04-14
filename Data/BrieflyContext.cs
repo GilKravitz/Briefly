@@ -8,7 +8,7 @@ namespace BrieflyServer.Data
     public class BrieflyContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public DbSet<Article> Articles { get; set; }
-
+        public DbSet<ForgotPasswordToken> ForgotPassword { get; set; }
         public BrieflyContext(DbContextOptions<BrieflyContext> options) : base(options)
         {
         }
@@ -18,6 +18,7 @@ namespace BrieflyServer.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Article>().ToTable("merged_articles");
+            modelBuilder.Entity<ForgotPasswordToken>().ToTable("ForgotPasswordTokens");
         }
     }
 }

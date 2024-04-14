@@ -4,7 +4,6 @@ using DotNetEnv;
 using BrieflyServer.Services;
 using BrieflyServer.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Hosting;
 
 
 Env.Load();
@@ -20,7 +19,7 @@ builder.Services.AddDbContext<BrieflyContext>(options =>
 builder.Services.AddScoped<ArticleService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<EmailService>();
-builder.Services.AddScoped<LoggingService>();
+//builder.Services.AddScoped<LoggingService>();
 // Register authentication services
 //builder.Services.AddSingleton<IAuthService, FacebookAuth>();
 
@@ -37,8 +36,8 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
 var app = builder.Build();
 // Use authentication and authorization
 //app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthorization();
+
 app.UseHttpsRedirection();
 app.MapControllers();
-
 app.Run();

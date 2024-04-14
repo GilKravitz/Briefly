@@ -1,9 +1,11 @@
 ﻿using BrieflyServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrieflyServer.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ArticleController : ControllerBase
