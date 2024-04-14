@@ -51,9 +51,6 @@ class N12_Scrapper(BaseScrapper):
             return -1
         
 
-# if __name__ == '__main__':
-#     with ThreadPoolExecutor(max_workers=len(N12_NEWS_TYPE)) as executor:
-#         executor.map(main, N12_NEWS_TYPE)
 
 
 if __name__ == '__main__':
