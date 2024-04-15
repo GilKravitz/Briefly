@@ -23,6 +23,18 @@ const en: I18nKeys = {
     privacyPolicy: "Privacy Policy",
     getStarted: "GET STARTED",
   },
+  forgotPassword: {
+    title: "Reset Password",
+    btnText: "SEND CODE TO EMAIL",
+  },
+  otp: {
+    title: "Enter Code",
+    btnText: "CONFIRM",
+  },
+  setNewPassword: {
+    title: "Set New Password",
+    btnText: "SET",
+  },
 };
 
 export default en;

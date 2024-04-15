@@ -23,6 +23,18 @@ const he: I18nKeys = {
     privacyPolicy: "מדיניות פרטיות",
     getStarted: "התחל",
   },
+  forgotPassword: {
+    title: "שכחת סיסמה",
+    btnText: "שלח",
+  },
+  otp: {
+    title: "הזן קוד",
+    btnText: "אישור",
+  },
+  setNewPassword: {
+    title: "הגדר סיסמה חדשה",
+    btnText: "הגדר",
+  },
 };
 
 // create type for the i18n keys

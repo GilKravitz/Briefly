@@ -22,4 +22,16 @@ export type I18nKeys = {
     privacyPolicy: string;
     getStarted: string;
   };
+  forgotPassword: {
+    title: string;
+    btnText: string;
+  };
+  otp: {
+    title: string;
+    btnText: string;
+  };
+  setNewPassword: {
+    title: string;
+    btnText: string;
+  };
 };

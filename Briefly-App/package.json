@@ -35,7 +35,8 @@
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
     "expo-updates": "~0.24.12",
-    "expo-checkbox": "~2.7.0"
+    "expo-checkbox": "~2.7.0",
+    "lottie-react-native": "6.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
