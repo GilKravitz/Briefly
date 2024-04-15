@@ -25,6 +25,8 @@ export function useThemeColor(
   colorInverted?: boolean
 ) {
   let theme = useColorScheme() ?? "light";
+  //
+  theme = "light";
   if (colorInverted) {
     theme = theme === "light" ? "dark" : "light";
   }

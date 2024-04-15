@@ -73,7 +73,7 @@ export default function SignUp() {
               <Checkbox value={checked} onValueChange={setChecked} />
             </View>
           </View>
-          <Button onPress={() => {}}>{t.signUp.getStarted}</Button>
+          <Button onPress={() => router.replace("/(app)/SelectTopics")}>{t.signUp.getStarted}</Button>
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>

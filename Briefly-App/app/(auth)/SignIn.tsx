@@ -45,7 +45,7 @@ export default function SignIn() {
               onChangeText={setPassword}
             />
           </View>
-          <Button onPress={() => {}}>{t.signUp.getStarted}</Button>
+          <Button onPress={() => router.replace("/(app)/SelectTopics")}>{t.signUp.getStarted}</Button>
           <Link style={styles.forgotPassLink} push href="/(auth)/ForgotPassword">
             <Heading3 size={16}>{t.signIn.forgotPassword}</Heading3>
           </Link>
