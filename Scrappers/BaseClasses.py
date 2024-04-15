@@ -31,7 +31,13 @@ class BaseScrapper(ABC):
                 for a_tag in self.article_type_homepage_soup.find_all('a', href=self.filter_links):
                     if len(article_links) < NUMBER_OF_ARTICLES:
                         link = a_tag.get('href')
-                        full_link = self.base_url + str(link)
+                        if "facebook" in link or "twitter" in link or "wa.me" in link or "spirituality-popular_culture" in link or "AjaxPage" in link:
+                            #put all of this in the json file under list for each news site , this above is for N12
+                            continue
+                        if link.startswith(self.base_url):
+                            full_link = link
+                        else:
+                            full_link = self.base_url + str(link)
                         duplicate_article = check_duplicate_article(full_link)
                         if duplicate_article:
                             article_links = list(article_links)[:NUMBER_OF_ARTICLES]
@@ -42,7 +48,8 @@ class BaseScrapper(ABC):
                 article_links = list(article_links)[:NUMBER_OF_ARTICLES]
                 return article_links
         except Exception as e:
-            print(f"Error occurred {e}")
+            print("Error Ocuured on line 48 in file BaseClasses.py : " )
+            print(e)
         
     @abstractmethod
     def get_article(self,link,article_type):
@@ -56,9 +63,10 @@ class BaseScrapper(ABC):
                 if article == -1:
                     print(f"Error fetching article from {link}")
                 else:
-                    #commit_article(article)
-                    print(f"Successfully fetched article")
-                    print(article.title)
+                    if commit_article(article):
+                        print(f"article sent to database")
+                    else:
+                        print(f"Error commiting article to database")
 
 
 

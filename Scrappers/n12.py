@@ -23,6 +23,7 @@ class N12_Scrapper(BaseScrapper):
             publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
             return publish_date
         except Exception as e:
+            print("Error Ocuured on line 26 in file n12.py : " )
             print(e)
             return None
     
@@ -33,6 +34,7 @@ class N12_Scrapper(BaseScrapper):
             response = requests.get(link)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
+            print(link)
             publish_date = self.get_publish_date()
             all_content = self.article_soup.find_all(['p', 'h1', 'h2', 'strong'])
 

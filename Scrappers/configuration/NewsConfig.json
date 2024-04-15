@@ -2,15 +2,18 @@
     "NEWS_SITES":["N12","N13","YNET"],
     "N12":{
         "BASE_URL":"https://www.mako.co.il",
-        "NEWS_TYPE":["news-military" , "news-sport"]
+        "NEWS_TYPE":["news-military" , "news-sport" , "news-money" , "food"],
+        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
     },
     "N13":{
         "BASE_URL":"https://13tv.co.il/news",
-        "NEWS_TYPE":["politics/politics/" , "politics/security/"]
+        "NEWS_TYPE":["politics/politics/" , "tags/sport/" , "news/consumers/" , "yummies/food-news/"],
+        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
     },
     "YNET":{
         "BASE_URL":"https://www.ynet.co.il",
-        "NEWS_TYPE":["news/category/185" , "sport"]  
+        "NEWS_TYPE":["news/category/185" , "sport" , "economy/category/429" ,"food/foodnews"],
+        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
     },
     "NUMBER_OF_ARTICLES":2
 }

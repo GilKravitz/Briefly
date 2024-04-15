@@ -46,6 +46,7 @@ class N13_Scrapper(BaseScrapper):
                 publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
                 return publish_date 
         except Exception as e:
+            print("Error Ocuured on line 49 in file n13.py : ")
             print(e)
             return None
     

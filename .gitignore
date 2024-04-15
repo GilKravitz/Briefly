@@ -37,7 +37,7 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/macos
 
 # Ignore virtual environment directory
-myvenv/
+Scrappers/myvenv/
 
 # Ignore database configuration file
-db/DbConfig.json
+Scrappers/db/DbConfig.json

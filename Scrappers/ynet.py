@@ -21,6 +21,7 @@ class Ynet_Scrapper(BaseScrapper):
             return formatted_date
 
         except Exception as e:
+            print("Error Ocuured on line 24 in file ynet.py : ")
             print(e)
             return None
     

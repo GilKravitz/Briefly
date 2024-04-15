@@ -3,11 +3,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import json
 import os
+from configuration.NewsConfig import NewsCategory
 
 # Get the absolute path to the directory containing this script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(script_dir, 'DbConfig.json')
-
 with open(config_file_path) as f:
     config = json.load(f)
 
@@ -57,17 +57,20 @@ def check_duplicate_article(link_to_check):
         else:
             return False
     except Exception as e:
+        print("Error Ocuured on line 60 in file db.py : ")
         print(e)
         return True
 
 def commit_article(article):
     try:
-        session = connect()
-        new_article_for_db = Article(link=article.link, data=article.data, title=article.title, publish_date=article.publish_date, category=article.category, source=article.source)
-        session.add(new_article_for_db)
-        session.commit()
-        disconnect(session)
+        # session = connect()
+        article.category = NewsCategory.get_category(article.category)
+        print(article.category)
+        # new_article_for_db = Article(link=article.link, data=article.data, title=article.title, publish_date=article.publish_date, category=article.category, source=article.source)
+        # session.add(new_article_for_db)
+        # session.commit()
+        # disconnect(session)
         return True
     except Exception as e:
-        print(e)
+        print("Error Ocuured on line 74 in file db.py : " +e)
         return False
