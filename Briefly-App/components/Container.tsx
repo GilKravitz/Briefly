@@ -34,10 +34,15 @@ const Container = (props: ContainerProps) => {
 
 export default Container;
 
+import { Dimensions } from "react-native";
+
+const { height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
     alignItems: "center",
+    minHeight: height,
   },
 });

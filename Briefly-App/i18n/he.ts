@@ -1,19 +1,19 @@
 import { I18nKeys } from "./i18nKeys";
 const he: I18nKeys = {
   index: {
-    heading: "קצר.",
-    subheading: "קבל את התלבושת שלך מותאמת אישית\nלהזמנת חדשות",
-    signupBtn: "הירשם",
+    heading: "תמציתי.",
+    subheading: "קבל/י את עדכוני החדשות שלך\n בהתאמה אישית",
+    signupBtn: "הרשמה",
     signInMsg: "כבר יש לך חשבון?",
-    signInLink: "התחבר",
+    signInLink: "התחברות",
   },
   signIn: {
     welcome: "ברוך הבא!",
-    signInMutedMsg: "או התחבר עם דואר אלקטרוני",
-    signInBtn: "התחבר",
+    signInMutedMsg: "או התחבר/י עם דואר אלקטרוני",
+    signInBtn: "כניסה",
     forgotPassword: "שכחת סיסמה?",
     createAccount: "אין לך חשבון?",
-    signupLink: "הירשם",
+    signupLink: "הרשמה",
   },
   signUp: {
     title: "הירשם",

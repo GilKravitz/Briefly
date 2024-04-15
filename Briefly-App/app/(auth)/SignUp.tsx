@@ -8,111 +8,93 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { View } from "@/components/Themed";
-import { Text, Heading } from "@/components/StyledText";
+import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React, { useRef, useState } from "react";
-import i18n from "@/i18n";
+import { t } from "@/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
 import Checkbox from "expo-checkbox";
 import Button from "@/components/pressable/Button";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 
-const SignIn = () => {
-  const [isChecked, setChecked] = useState(false);
+export default function SignUp() {
   const nameRef = useRef<TextInput>(null);
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
-  const FormView = () => {
-    return (
-      <>
-        <View style={styles.inputsWrapper}>
-          <Input
-            ref={nameRef}
-            placeholder="Name"
-            returnKeyType="next"
-            onSubmitEditing={() => emailRef.current?.focus()}
-          />
-          <Input
-            ref={emailRef}
-            placeholder="Email Address"
-            returnKeyType="next"
-            keyboardType="email-address"
-            onSubmitEditing={() => passwordRef.current?.focus()}
-          />
-          <Input
-            ref={passwordRef}
-            placeholder="Password"
-            onSubmitEditing={() => Keyboard.dismiss}
-            secureTextEntry={true}
-          />
-        </View>
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-        <View row style={styles.privacyPolicyWrapper}>
-          <Text colorName="textMuted">
-            {i18n.t("signUp.iHaveRead")} {i18n.t("signUp.privacyPolicy")}
-          </Text>
-          <Checkbox value={isChecked} onValueChange={setChecked} />
-        </View>
-      </>
-    );
-  };
-
+  const [checked, setChecked] = useState(false);
   return (
-    <Container style={{ alignItems: "flex-start" }}>
-      <BackButton style={styles.backBtn} onPress={() => router.back()} />
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView contentContainerStyle={{}}>
-            <View style={styles.container}>
-              <Heading>{i18n.t("signUp.title")}</Heading>
-              <SocialButtons style={{ marginTop: 40 }} />
-
-              <Text style={{ marginTop: 40 }} colorName="textMuted">
-                {i18n.t("signUp.signUpMutedMsg")}
-              </Text>
-
-              <FormView />
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
+      <ScrollView>
+        <Container>
+          <View style={styles.backButtonWrapper}>
+            <BackButton onPress={() => router.back()} />
+          </View>
+          <Heading style={styles.title}>{t.signUp.title}</Heading>
+          <SocialButtons style={styles.socialButtons} />
+          <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text>
+          <View style={styles.form}>
+            <Input
+              ref={nameRef}
+              placeholder="Name"
+              returnKeyType="next"
+              onSubmitEditing={() => emailRef.current?.focus()}
+              value={name}
+              onChangeText={setName}
+            />
+            <Input
+              ref={emailRef}
+              placeholder="Email Address"
+              returnKeyType="next"
+              keyboardType="email-address"
+              onSubmitEditing={() => passwordRef.current?.focus()}
+              value={email}
+              onChangeText={setEmail}
+            />
+            <Input
+              ref={passwordRef}
+              placeholder="Password"
+              onSubmitEditing={() => Keyboard.dismiss}
+              secureTextEntry={true}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <View row style={{ justifyContent: "space-between", paddingVertical: 5, width: "100%" }}>
+              <View row style={{ gap: 5 }}>
+                <Text colorName="textMuted">{t.signUp.iHaveRead}</Text>
+                <Link push href="/(auth)/PrivacyPolicy">
+                  <Heading3 size={16}>{t.signUp.privacyPolicy}</Heading3>
+                </Link>
+              </View>
+              <Checkbox value={checked} onValueChange={setChecked} />
             </View>
-          </ScrollView>
-        </TouchableWithoutFeedback>
-        <Button style={styles.signUpBtn} onPress={() => console.log("ok")}>
-          {i18n.t("signUp.getStarted")}
-        </Button>
-      </KeyboardAvoidingView>
-    </Container>
+          </View>
+          <Button onPress={() => {}}>{t.signUp.getStarted}</Button>
+        </Container>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
-};
-
-export default SignIn;
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    paddingTop: 20,
-  },
-  backBtn: {
-    alignSelf: "flex-start",
-  },
-  inputsWrapper: {
-    marginTop: 25,
-    gap: 20,
+  backButtonWrapper: {
     width: "100%",
   },
-  privacyPolicyWrapper: {
+  title: {
     marginTop: 20,
-    gap: 10,
-    justifyContent: "space-between",
-    width: "100%",
-    paddingHorizontal: 8,
   },
-  signUpBtn: {
-    marginBottom: 15,
-    // marginTop: "auto",
-    // flex: 1,
+  socialButtons: {
+    marginVertical: 40,
+  },
+  form: {
+    width: "100%",
+    gap: 20,
+    marginVertical: 20,
   },
 });

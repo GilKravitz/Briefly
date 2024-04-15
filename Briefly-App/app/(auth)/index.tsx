@@ -8,12 +8,11 @@ import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import * as Updates from "expo-updates";
-import i18n from "@/i18n";
+import i18n, { t } from "@/i18n";
 
 const Header = (props: SvgProps) => {
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-  // get the path height
   return (
     <Svg width={width} height={525} fill="none" {...props}>
       <Path
@@ -34,17 +33,17 @@ const index = () => {
     <Container paddingTop={0}>
       <Header style={styles.header} />
       <View style={styles.main}>
-        <Heading3>{i18n.t("index.heading")}</Heading3>
+        <Heading3>{t.index.heading}</Heading3>
         <Text style={styles.text} colorName="textMuted">
-          {i18n.t("index.subheading")}
+          {t.index.subheading}
         </Text>
       </View>
       <View style={styles.footer}>
-        <Button onPress={() => router.push("/(auth)/SignUp")}>{i18n.t("index.signupBtn")}</Button>
+        <Button onPress={() => router.push("/(auth)/SignUp")}>{t.index.signupBtn}</Button>
         <View row style={{ gap: 5, alignItems: "baseline" }}>
-          <Text colorName="textMuted">{i18n.t("index.signInMsg")}</Text>
+          <Text colorName="textMuted">{t.index.signInMsg}</Text>
           <Link push href="/(auth)/SignIn">
-            <Heading3 size={16}>{i18n.t("index.signInLink")}</Heading3>
+            <Heading3 size={16}>{t.index.signInLink}</Heading3>
           </Link>
         </View>
       </View>

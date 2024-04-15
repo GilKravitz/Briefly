@@ -2,7 +2,7 @@ import { I18nKeys } from "./i18nKeys";
 const en: I18nKeys = {
   index: {
     heading: "Concise.",
-    subheading: "Get your costume tailored\nNews-Feed",
+    subheading: "Get Your Costum Tailored\nNews-Feed",
     signupBtn: "SIGN UP",
     signInMsg: "Already have an account?",
     signInLink: "SIGN IN",
@@ -17,7 +17,7 @@ const en: I18nKeys = {
   },
   signUp: {
     title: "Create Your Account",
-    signUpMutedMsg: "OR Sign Up With Email",
+    signUpMutedMsg: "Or Sign Up With Email",
     signInBtn: "SIGN IN",
     iHaveRead: "I have read the",
     privacyPolicy: "Privacy Policy",
