@@ -33,9 +33,7 @@ export default function SignUp() {
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>
         <Container>
-          <View style={styles.backButtonWrapper}>
-            <BackButton onPress={() => router.back()} />
-          </View>
+          <BackButton onPress={() => router.back()} />
           <Heading style={styles.title}>{t.signUp.title}</Heading>
           <SocialButtons style={styles.socialButtons} />
           <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text>
@@ -83,9 +81,6 @@ export default function SignUp() {
 }
 
 const styles = StyleSheet.create({
-  backButtonWrapper: {
-    width: "100%",
-  },
   title: {
     marginTop: 20,
   },
