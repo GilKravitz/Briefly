@@ -34,4 +34,9 @@ export type I18nKeys = {
     title: string;
     btnText: string;
   };
+  selectTopics: {
+    title: string;
+    subheading: string;
+    btnText: string;
+  };
 };

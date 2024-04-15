@@ -33,7 +33,12 @@ const en: I18nKeys = {
   },
   setNewPassword: {
     title: "Set New Password",
-    btnText: "SET",
+    btnText: "SET PASSWORD",
+  },
+  selectTopics: {
+    title: "Get Your Custom Feed",
+    subheading: "Select Topics You Are Interested In",
+    btnText: "NEXT",
   },
 };
 
