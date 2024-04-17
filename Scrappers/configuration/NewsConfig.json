@@ -3,17 +3,20 @@
     "N12":{
         "BASE_URL":"https://www.mako.co.il",
         "NEWS_TYPE":["news-military" , "news-sport" , "news-money" , "food"],
-        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
+        "ONLY_RELEVANT_LINKS":["news-military" , "news-sport" , "news-money" , "food"],
+        "PROBLEMATIC_LINKS":["AjaxPage"]
     },
     "N13":{
-        "BASE_URL":"https://13tv.co.il/news",
+        "BASE_URL":"https://13tv.co.il",
         "NEWS_TYPE":["politics/politics/" , "tags/sport/" , "news/consumers/" , "yummies/food-news/"],
-        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
+        "ONLY_RELEVANT_LINKS":["news"],
+        "PROBLEMATIC_LINKS":[]
     },
     "YNET":{
         "BASE_URL":"https://www.ynet.co.il",
         "NEWS_TYPE":["news/category/185" , "sport" , "economy/category/429" ,"food/foodnews"],
-        "NO_RELEVANT_LINKS":["facebook" , "twitter" , "wa.me" , "spirituality-popular_culture" , "AjaxPage"]
+        "ONLY_RELEVANT_LINKS":["news" , "sport" , "economy" , "food"],
+        "PROBLEMATIC_LINKS":[]
     },
-    "NUMBER_OF_ARTICLES":2
+    "NUMBER_OF_ARTICLES":1
 }

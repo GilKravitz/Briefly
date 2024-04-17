@@ -13,11 +13,22 @@ class Article():
         self.source = source
 
 class BaseScrapper(ABC):
-    def __init__(self,base_url,site_name,news_type):
+    def __init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links=None):
         self.base_url = base_url
         self.site_name = site_name
         self.news_type = news_type
-        self.articles=[]
+        self.relevant_links = relevant_links
+        self.unrelevant_links = unrelevant_links
+    def filter_unrelevant_links(self , link):
+        if self.unrelevant_links:
+            for unrelevant_link in self.unrelevant_links:
+                if unrelevant_link in link:
+                    return True
+        for relevant_link in self.relevant_links:
+            if relevant_link in link:
+                return False
+        return True
+
     @abstractmethod
     def filter_links(self,href):
         pass
@@ -31,8 +42,7 @@ class BaseScrapper(ABC):
                 for a_tag in self.article_type_homepage_soup.find_all('a', href=self.filter_links):
                     if len(article_links) < NUMBER_OF_ARTICLES:
                         link = a_tag.get('href')
-                        if "facebook" in link or "twitter" in link or "wa.me" in link or "spirituality-popular_culture" in link or "AjaxPage" in link:
-                            #put all of this in the json file under list for each news site , this above is for N12
+                        if self.filter_unrelevant_links(link):
                             continue
                         if link.startswith(self.base_url):
                             full_link = link
@@ -48,7 +58,7 @@ class BaseScrapper(ABC):
                 article_links = list(article_links)[:NUMBER_OF_ARTICLES]
                 return article_links
         except Exception as e:
-            print("Error Ocuured on line 48 in file BaseClasses.py : " )
+            print("Error Ocuured on line 60 in file BaseClasses.py : " )
             print(e)
         
     @abstractmethod
@@ -64,7 +74,7 @@ class BaseScrapper(ABC):
                     print(f"Error fetching article from {link}")
                 else:
                     if commit_article(article):
-                        print(f"article sent to database")
+                        pass
                     else:
                         print(f"Error commiting article to database")
 

@@ -2,11 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 from BaseClasses import Article , BaseScrapper
 from datetime import datetime
-class Ynet_Scrapper(BaseScrapper):
-    def __init__(self,base_url,site_name,news_type):
-        BaseScrapper.__init__(self,base_url,site_name,news_type)
+from configuration.NewsConfig import YNET_BASE_URL , YNET_NEWS_TYPE , YNET_ONLY_RELEVANT_LINKS
 
-    def filter_links(href):
+
+class Ynet_Scrapper(BaseScrapper):
+    def __init__(self,base_url,site_name,news_type , relevant_links):
+        BaseScrapper.__init__(self,base_url,site_name,news_type , relevant_links)
+
+    def filter_links(self , href):
         return href and 'article' in href
     
     def get_publish_date(self):
@@ -29,10 +32,11 @@ class Ynet_Scrapper(BaseScrapper):
         article_data = ""
         title = ""
         try:
+            print(link)
             response = requests.get(link)
             response.raise_for_status()
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
-            publish_date = self.get_publish_date(self.article_soup)
+            publish_date = self.get_publish_date()
             all_content = self.article_soup.find_all(['span', 'h1', 'h2','strong'])
             for tag in all_content:
                 if tag.name == 'span' and tag.get('data-text') != 'true':
@@ -47,7 +51,9 @@ class Ynet_Scrapper(BaseScrapper):
             print(f"Error fetching article from {link}: {e}")
             return -1
 
-
+if __name__ == '__main__':
+    n12_scrapper = Ynet_Scrapper(YNET_BASE_URL,"YNET",YNET_NEWS_TYPE , YNET_ONLY_RELEVANT_LINKS)
+    n12_scrapper.fetch_articles_and_commit()
 
 
 

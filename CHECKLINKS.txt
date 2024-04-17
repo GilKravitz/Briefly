@@ -1,0 +1,11 @@
+https://www.ynet.co.il/article/h1oypwysn - מדיניות פרטיות
+
+
+https://www.ynet.co.il/news/article/hjmgunyvt#autoplay - לבדוק אם עדיןן קביל
+
+
+
+filters:
+"facebook" in link or "twitter" in link or "wa.me" in link or "spirituality-popular_culture" in link or "AjaxPage" in link 
+or "general" in link 
+or ("food" not in link and "news" not in link and "sport" not in link and "economy" not in link):

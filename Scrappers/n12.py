@@ -2,10 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from BaseClasses import Article , BaseScrapper
-from configuration.NewsConfig import N12_BASE_URL , N12_NEWS_TYPE
+from configuration.NewsConfig import N12_BASE_URL , N12_NEWS_TYPE ,N12_ONLY_RELEVANT_LINKS , N12_PROBLEMATIC_LINKS
 class N12_Scrapper(BaseScrapper):
-    def __init__(self,base_url,site_name,news_type):
-        BaseScrapper.__init__(self,base_url,site_name,news_type)
+    def __init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links):
+        BaseScrapper.__init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links)
+
 
     def filter_links(self,href):
         return href and 'Article' in href
@@ -56,5 +57,5 @@ class N12_Scrapper(BaseScrapper):
 
 
 if __name__ == '__main__':
-    n12_scrapper = N12_Scrapper(N12_BASE_URL,"N12",N12_NEWS_TYPE)
+    n12_scrapper = N12_Scrapper(N12_BASE_URL,"N12",N12_NEWS_TYPE , N12_ONLY_RELEVANT_LINKS , N12_PROBLEMATIC_LINKS)
     n12_scrapper.fetch_articles_and_commit()
