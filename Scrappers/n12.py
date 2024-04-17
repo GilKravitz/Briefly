@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from BaseClasses import Article , BaseScrapper
-from configuration.NewsConfig import N12_BASE_URL , N12_NEWS_TYPE ,N12_ONLY_RELEVANT_LINKS , N12_PROBLEMATIC_LINKS
+
 class N12_Scrapper(BaseScrapper):
     def __init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links):
         BaseScrapper.__init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links)
@@ -24,7 +24,7 @@ class N12_Scrapper(BaseScrapper):
             publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
             return publish_date
         except Exception as e:
-            print("Error Ocuured on line 26 in file n12.py : " )
+            print("Error Ocuured on line 27 in file n12.py : " )
             print(e)
             return None
     
@@ -35,7 +35,6 @@ class N12_Scrapper(BaseScrapper):
             response = requests.get(link)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
-            print(link)
             publish_date = self.get_publish_date()
             all_content = self.article_soup.find_all(['p', 'h1', 'h2', 'strong'])
 
@@ -54,8 +53,3 @@ class N12_Scrapper(BaseScrapper):
             return -1
         
 
-
-
-if __name__ == '__main__':
-    n12_scrapper = N12_Scrapper(N12_BASE_URL,"N12",N12_NEWS_TYPE , N12_ONLY_RELEVANT_LINKS , N12_PROBLEMATIC_LINKS)
-    n12_scrapper.fetch_articles_and_commit()

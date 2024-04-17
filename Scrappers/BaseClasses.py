@@ -20,7 +20,7 @@ class BaseScrapper(ABC):
         self.relevant_links = relevant_links
         self.unrelevant_links = unrelevant_links
     def filter_unrelevant_links(self , link):
-        if self.unrelevant_links:
+        if self.unrelevant_links: #Not every scrapper has unrelevant links.
             for unrelevant_link in self.unrelevant_links:
                 if unrelevant_link in link:
                     return True
@@ -39,7 +39,8 @@ class BaseScrapper(ABC):
             if response.status_code == 200:
                 self.article_type_homepage_soup = BeautifulSoup(response.text, 'html.parser')
                 article_links = set() # defined as set to prevent duplicate article links.
-                for a_tag in self.article_type_homepage_soup.find_all('a', href=self.filter_links):
+                all_a_tags = self.article_type_homepage_soup.find_all('a', href=self.filter_links)
+                for a_tag in all_a_tags:
                     if len(article_links) < NUMBER_OF_ARTICLES:
                         link = a_tag.get('href')
                         if self.filter_unrelevant_links(link):
@@ -48,17 +49,18 @@ class BaseScrapper(ABC):
                             full_link = link
                         else:
                             full_link = self.base_url + str(link)
-                        duplicate_article = check_duplicate_article(full_link)
-                        if duplicate_article:
-                            article_links = list(article_links)[:NUMBER_OF_ARTICLES]
-                            return article_links #after duplicate article all links will be duplicates as well
+
+                        if check_duplicate_article(full_link):
+                            print(f"article that already exists in database {self.site_name}, skipping...")
+                            continue
                         article_links.add(full_link)
                     else:
                         break
                 article_links = list(article_links)[:NUMBER_OF_ARTICLES]
+                print(f"articles that are about to be commited : {article_links}")
                 return article_links
         except Exception as e:
-            print("Error Ocuured on line 60 in file BaseClasses.py : " )
+            print("Error Ocuured on line 61 in file BaseClasses.py : " )
             print(e)
         
     @abstractmethod
@@ -74,12 +76,6 @@ class BaseScrapper(ABC):
                     print(f"Error fetching article from {link}")
                 else:
                     if commit_article(article):
-                        pass
+                        print(f"Successfully committed article to database")
                     else:
                         print(f"Error commiting article to database")
-
-
-
-
-
-

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime , timedelta
 from BaseClasses import Article , BaseScrapper
-from configuration.NewsConfig import N13_BASE_URL , N13_NEWS_TYPE , N13_ONLY_RELEVANT_LINKS
+
 
 class N13_Scrapper(BaseScrapper):
     def __init__(self,base_url,site_name,news_type , relevant_links):
@@ -55,7 +55,6 @@ class N13_Scrapper(BaseScrapper):
         title=""
         try:
             response = requests.get(link)
-            print(link)
             response.raise_for_status()
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
             publish_date = self.get_publish_date()
@@ -71,8 +70,5 @@ class N13_Scrapper(BaseScrapper):
             print(f"Error fetching article from {link}: {e}")
             return -1
 
-if __name__ == '__main__':
-    n12_scrapper = N13_Scrapper(N13_BASE_URL,"N13",N13_NEWS_TYPE , N13_ONLY_RELEVANT_LINKS)
-    n12_scrapper.fetch_articles_and_commit()
 
 

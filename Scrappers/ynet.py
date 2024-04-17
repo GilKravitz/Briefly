@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from BaseClasses import Article , BaseScrapper
 from datetime import datetime
-from configuration.NewsConfig import YNET_BASE_URL , YNET_NEWS_TYPE , YNET_ONLY_RELEVANT_LINKS
 
 
 class Ynet_Scrapper(BaseScrapper):
@@ -24,7 +23,7 @@ class Ynet_Scrapper(BaseScrapper):
             return formatted_date
 
         except Exception as e:
-            print("Error Ocuured on line 24 in file ynet.py : ")
+            print("Error Ocuured on line 27 in file ynet.py : ")
             print(e)
             return None
     
@@ -32,7 +31,6 @@ class Ynet_Scrapper(BaseScrapper):
         article_data = ""
         title = ""
         try:
-            print(link)
             response = requests.get(link)
             response.raise_for_status()
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
@@ -51,9 +49,6 @@ class Ynet_Scrapper(BaseScrapper):
             print(f"Error fetching article from {link}: {e}")
             return -1
 
-if __name__ == '__main__':
-    n12_scrapper = Ynet_Scrapper(YNET_BASE_URL,"YNET",YNET_NEWS_TYPE , YNET_ONLY_RELEVANT_LINKS)
-    n12_scrapper.fetch_articles_and_commit()
 
 
 
