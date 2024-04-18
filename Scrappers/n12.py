@@ -8,10 +8,10 @@ class N12_Scrapper(BaseScrapper):
         BaseScrapper.__init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links)
 
 
-    def filter_links(self,href):
+    def filter_fetched_links(self,href):
         return href and 'Article' in href
     
-    def get_publish_date(self):
+    def get_article_publish_date(self):
         try:
             display_date_span = self.article_soup.find('span', class_='display-date')
             date_span = display_date_span.find_all('span')[0]
@@ -28,25 +28,25 @@ class N12_Scrapper(BaseScrapper):
             print(e)
             return None
     
-    def get_article(self, link,article_type):
+    def get_article_content(self, link,article_type):
         article_data = ""
         title = ""
         try:
             response = requests.get(link)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
-            publish_date = self.get_publish_date()
-            all_content = self.article_soup.find_all(['p', 'h1', 'h2', 'strong'])
+            article_publish_date = self.get_article_publish_date()
+            all_content_tags = self.article_soup.find_all(['p', 'h1', 'h2', 'strong'])
 
             # Collect all the data of the article
-            for tag in all_content:
+            for tag in all_content_tags:
                 if not tag.find_parent('section', class_='mako_comments') and 'content' not in tag.get('class', []):
                     if tag.name == 'h1':
                         title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                     article_data += tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                     article_data += " "
             
-            article = Article(link,article_data, title,publish_date,article_type,self.site_name)
+            article = Article(link,article_data, title,article_publish_date,article_type,self.site_name)
             return article
         except requests.RequestException as e:
             print(f"Error fetching article from {link}: {e}")

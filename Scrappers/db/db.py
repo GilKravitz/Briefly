@@ -5,9 +5,9 @@ import json
 import os
 from configuration.NewsConfig import NewsCategoryConvert
 
-# Get the absolute path to the directory containing this script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-config_file_path = os.path.join(script_dir, 'DbConfig.json')
+
+absolute_dir_path = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(absolute_dir_path, 'DbConfig.json')
 with open(config_file_path) as f:
     config = json.load(f)
 
