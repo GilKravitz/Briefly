@@ -13,10 +13,10 @@ class AiTextProcessor:
             api_key (str): The API key for accessing the OpenAI services.
             embedding_model_name (str): The name of the embedding model to use for generating embeddings.
         """
-        self.client = OpenAI(api_key=api_key)
-        self.embedding_model_name = embedding_model_name
+        self.__client = OpenAI(api_key=api_key)
+        self.__embedding_model_name = embedding_model_name
 
-    def num_tokens_from_string(self, string, encoding_name):
+    def __num_tokens_from_string(self, string, encoding_name):
         """
         Calculates the number of tokens in the given string using the specified encoding model.
 
@@ -30,7 +30,7 @@ class AiTextProcessor:
         encoding = tiktoken.get_encoding(encoding_name)
         return len(encoding.encode(string))
     
-    def get_embeddings(self, text: str, model: str, max_tokens: int = 8100, encoding_name: str = "cl100k_base"):
+    def __get_embeddings(self, text: str, model: str, max_tokens: int = 8100, encoding_name: str = "cl100k_base"):
         """
         Generates embeddings for the given text using the specified OpenAI model.
 
@@ -45,13 +45,13 @@ class AiTextProcessor:
         """
 
         # Encode the text to check the token count in the API model bounds.
-        num_tokens = self.num_tokens_from_string(text, encoding_name)
+        num_tokens = self.__num_tokens_from_string(text, encoding_name)
         if num_tokens > max_tokens:
             encoded_text = tiktoken.get_encoding(encoding_name).encode(text)
             text = tiktoken.get_encoding(encoding_name).decode(encoded_text[:max_tokens])
 
         # Create embeddings using the OpenAI API
-        res = self.client.embeddings.create(
+        res = self.__client.embeddings.create(
             model=model,
             input=text,
             encoding_format="float"
@@ -73,6 +73,6 @@ class AiTextProcessor:
         """
         if len(articles) < 2:
             return None
-        embeddings = [self.get_embeddings(article['data'], self.embedding_model_name) for article in articles]
+        embeddings = [self.__get_embeddings(article['data'], self.__embedding_model_name) for article in articles]
         similarity_matrix = cosine_similarity(embeddings)
         return similarity_matrix

@@ -11,9 +11,9 @@ class DatabaseManager:
         Initializes the DatabaseManager instance by loading environment variables and establishing a database connection.
         """
         load_dotenv()
-        self.db_connection = self.connect_to_database()
+        self.__db_connection = self.__connect_to_database()
 
-    def connect_to_database(self) -> Optional[psycopg2.extensions.connection]:
+    def __connect_to_database(self) -> Optional[psycopg2.extensions.connection]:
         """
         Establishes a connection to the PostgreSQL database using credentials obtained from environment variables.
 
@@ -51,7 +51,7 @@ class DatabaseManager:
             # Define the time range for the last X hours from the current time
             current_time = datetime.now()
             time_x_hours_ago = current_time - timedelta(hours=hours)
-            cursor = self.db_connection.cursor()
+            cursor = self.__db_connection.cursor()
 
             # Execute a SELECT query to retrieve all scraped articles within the specified time range
             query = "SELECT * FROM scraped_articles WHERE publish_date >= %s"
@@ -67,7 +67,7 @@ class DatabaseManager:
             if cursor is not None:   # Close cursor
                 cursor.close()
 
-    def insert_summarized_article(self, title: str, article: str, category: str) -> None:
+    def __insert_summarized_article(self, title: str, article: str, category: str) -> None:
         """
         Inserts a summarized article into the 'merged_articles' table.
 
@@ -81,20 +81,20 @@ class DatabaseManager:
         """
         try:
             # Create a cursor object
-            cursor = self.db_connection.cursor()
+            cursor = self.__db_connection.cursor()
 
             # SQL query to insert the summarized article into the merged_articles table
             insert_query = "INSERT INTO merged_articles (title, article, category) VALUES (%s, %s, %s)"
             cursor.execute(insert_query, (title, article, category))
 
             # Commit the changes to the database
-            self.db_connection.commit()
+            self.__db_connection.commit()
             print("Article inserted successfully into merged_articles table.")
 
         except Exception as e:
             # Rollback in case of any error
             print(f"Error inserting article into database: {e}")
-            self.db_connection.rollback()
+            self.__db_connection.rollback()
         finally:
             # Close the cursor
             if cursor is not None:
@@ -112,7 +112,7 @@ class DatabaseManager:
         """
         if article_summaries:
             for summary in article_summaries:
-                self.insert_summarized_article(summary['title'],summary['data'].choices[0].message.content,summary['category'])
+                self.__insert_summarized_article(summary['title'],summary['data'].choices[0].message.content,summary['category'])
 
     def close_connection(self) -> None:
         """
@@ -121,5 +121,5 @@ class DatabaseManager:
         Returns:
             None
         """
-        if self.db_connection:
-            self.db_connection.close()
+        if self.__db_connection:
+            self.__db_connection.close()
