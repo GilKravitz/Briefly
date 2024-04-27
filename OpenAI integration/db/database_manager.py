@@ -67,7 +67,7 @@ class DatabaseManager:
             if cursor is not None:   # Close cursor
                 cursor.close()
 
-    def __insert_summarized_article(self, title: str, article: str, category: str) -> None:
+    def __insert_summarized_article(self, title: str, article: str, category: str,publish_date: str, links: str) -> None:
         """
         Inserts a summarized article into the 'merged_articles' table.
 
@@ -75,6 +75,8 @@ class DatabaseManager:
             title (str): The title of the article.
             article (str): The content of the summarized article.
             category (str): The category of the article.
+            publish_date (str): The category of the publish_date.
+            links (str): The category of the links.
 
         Returns:
             None: Returns None but prints the result status to the console.
@@ -84,8 +86,8 @@ class DatabaseManager:
             cursor = self.__db_connection.cursor()
 
             # SQL query to insert the summarized article into the merged_articles table
-            insert_query = "INSERT INTO merged_articles (title, article, category) VALUES (%s, %s, %s)"
-            cursor.execute(insert_query, (title, article, category))
+            insert_query = "INSERT INTO merged_articles (title, article, category,publish_date,links) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(insert_query, (title, article, category, publish_date, links))
 
             # Commit the changes to the database
             self.__db_connection.commit()
@@ -112,7 +114,7 @@ class DatabaseManager:
         """
         if article_summaries:
             for summary in article_summaries:
-                self.__insert_summarized_article(summary['title'],summary['data'].choices[0].message.content,summary['category'])
+                self.__insert_summarized_article(summary['title'],summary['data'],summary['category'], summary['publish_date'], summary['links'])
 
     def close_connection(self) -> None:
         """

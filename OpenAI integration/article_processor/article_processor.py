@@ -2,13 +2,15 @@ from sklearn.cluster import AgglomerativeClustering
 from openai import OpenAI
 import tiktoken
 from typing import List, Dict, Any
+import google.generativeai as genai
 
 class ArticleProcessor:
-    MAX_TOKENS = 15000  # Max number of token be able to send the api
-    SUMMERY_AI_MODEL = "gpt-3.5-turbo-0125"
-    PROMPT = '''Please summarize the following Hebrew articles As if you are the writer of the article,
-    into a English summery of the articles,
-    pay attention that you must end the summary accordingly to the max tokens given at end of sentence.
+    # MAX_TOKENS = 15000  # Max number of token be able to send the api
+    SUMMERY_AI_MODEL = "gemini-1.0-pro"
+    PROMPT = '''Summarize the following article,
+    into a Hebrew article as if you are the writter of the article,
+    do not summarize into points, 
+    the summary should not exceed 500 words,
     focusing on the main points, arguments, and conclusions.
     Highlight any significant data, quotes, or statistics mentioned,
     and note the context in which they are presented. 
@@ -16,14 +18,11 @@ class ArticleProcessor:
     please outline these distinctly. Additionally,
     if there are any implications or recommendations made by the author,
     include these in the summary.
-    Finally, if the article references specific events, individuals, or sources, 
+    if the article references specific events, individuals, or sources, 
     please identify these and their relevance to the article's overall message.
-    pay attention to correct syntax and grammar in English.'''
+    pay attention to correct syntax and grammar in English:\n'''
 
-    TEST_PROMPT = '''Translate the following English news article,
-    into a hebrew article, pay attention to correct syntax and grammar in Hebrew.'''
-
-    def __init__(self, api_key: str, similarity_threshold: float, encoding_name: str = "cl100k_base", linkage: str = 'average'):
+    def __init__(self, api_key: str, similarity_threshold: float):
         """
         Initializes the ArticleProcessor with API credentials and configuration for clustering and summarization.
 
@@ -33,25 +32,41 @@ class ArticleProcessor:
             encoding_name (str): The name of the encoding model used for tokenizing text.
             linkage (str): The linkage criterion to use for clustering (e.g., 'average', 'complete').
         """
-        self.__client = OpenAI(api_key=api_key)
         self.__similarity_threshold = similarity_threshold
-        self.__encoding_name = encoding_name
-        self.__linkage = linkage
+        genai.configure(api_key=api_key)
 
-    def __num_tokens_from_string(self, string: str) -> int:
-        """
-        Calculates the number of tokens in a text string using the specified encoding model.
+        # Set up the model
+        generation_config = {
+            "temperature": 1,
+            "top_p": 1,
+            "top_k": 1,
+            "max_output_tokens": 2048,
+        }
 
-        Args:
-            string (str): The text to be tokenized.
-            encoding_name (str): The encoding to use for tokenization.
+        safety_settings = [
+            {
+                "category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_NONE"
+            },
+            {
+                "category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_NONE"
+            },
+            {
+                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_NONE"
+            },
+            {
+                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_NONE"
+            },
+        ]
 
-        Returns:
-            int: The number of tokens in the text.
-        """
-        encoding = tiktoken.get_encoding(self.__encoding_name)
-        num_tokens = len(encoding.encode(string))
-        return num_tokens
+        self.model = genai.GenerativeModel(model_name=self.SUMMERY_AI_MODEL,
+                                    generation_config=generation_config,
+                                    safety_settings=safety_settings)
+        
+        self.convorsation = self.model.start_chat()
 
     def __make_clusters(self, similarity_matrix: List[List[float]], articles: List[Dict[str, Any]]) -> List[List[Dict[str, Any]]]:
         """
@@ -65,18 +80,18 @@ class ArticleProcessor:
             List[List[Dict[str, Any]]]: A list of clusters, each cluster being a list of article dictionaries.
         """
 
-        clustering_model = AgglomerativeClustering(n_clusters=None, distance_threshold= self.__similarity_threshold, linkage=self.__linkage)
+        clustering_model = AgglomerativeClustering(n_clusters=None, distance_threshold= self.__similarity_threshold, linkage='average')
         clusters = clustering_model.fit_predict(similarity_matrix)
         clustered_articles = [[] for _ in range(len(set(clusters)))]
         
         for i in range(len(articles)):
             # Append each article to its corresponding cluster based on the cluster assignment.
             # The 'articles[i]' part assumes there's an 'articles' list available in the scope where each article's index corresponds to its position in the similarity matrix.
-            clustered_articles[clusters[i]].append({'data': articles[i]['data'],'category': articles[i]['category'],'title': articles[i]['title']})
+            clustered_articles[clusters[i]].append({'publish_date': articles[i]['publish_date'],'link': articles[i]['link'],'data': articles[i]['data'],'category': articles[i]['category'],'title': articles[i]['title']})
 
         return clustered_articles
     
-    def __summarize_cluster(self, cluster: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def __summarize_cluster_gimini(self, cluster: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         Summarizes a cluster of articles using the OpenAI API, by combining all articles in the cluster into one text.
 
@@ -89,38 +104,19 @@ class ArticleProcessor:
         cluster_string = " ".join(article['data'] for article in cluster)
         cluster_category = cluster[0]['category'] if cluster else None
         cluster_title = cluster[0]['title'] if cluster else None
+        cluster_published_date = cluster[0]['publish_date'] if cluster else None
+        cluster_links = ''
 
-        # get the number of tokens in the cluster - and adjust if needed to maximum
-        num_tokens = self.__num_tokens_from_string(cluster_string)
-        if num_tokens > self.MAX_TOKENS:
-            encoded_text = tiktoken.get_encoding(self.__encoding_name).encode(cluster_string)
-            cluster_string = tiktoken.get_encoding(self.__encoding_name).decode(encoded_text[:self.MAX_TOKENS])
+        for article in cluster:
+            cluster_links += article['link']
+            cluster_links += ' '
 
-        # summarize the cluster into an english article.
-        summary_in_english = self.__client.chat.completions.create(
-            model = self.SUMMERY_AI_MODEL,
-            messages=[
-                {"role": "system", "content": self.PROMPT},
-                {"role": "user", "content": f"Article: {cluster_string}"},
-            ],
-            max_tokens= max(int(num_tokens * 0.1), 250), # summery length at least 5 lines
-        )
+        self.convorsation.send_message(self.PROMPT + cluster_string)
 
-        # translate the summary to hebrew 
-        summary = self.__client.chat.completions.create(
-            model = self.SUMMERY_AI_MODEL,
-            messages=[
-                {"role": "system", "content": self.TEST_PROMPT},
-                {"role": "user", "content": f"Article: {summary_in_english.choices[0].message.content}"},
-            ],
-        )
-
-        # Include the category and title in the summary
-        full_detailed_summary = {'title': cluster_title,'category': cluster_category, 'data': summary}
+        full_detailed_summary = {'links': cluster_links,'publish_date': cluster_published_date,'title': cluster_title,'category': cluster_category, 'data': self.convorsation.last.text}
         
         return full_detailed_summary
-
-
+    
     def process_articles(self, articles: List[Dict[str, Any]], similarity_matrix: List[List[float]]) -> List[Dict[str, Any]]:
         """
         Processes a list of articles by clustering and summarizing them.
@@ -137,22 +133,10 @@ class ArticleProcessor:
             return None
         
         clusters = self.__make_clusters(similarity_matrix, articles)
-        self.write_clusters_to_file(clusters, "output clusters")
-        summaries = [self.__summarize_cluster(cluster) for cluster in clusters]
-        self.write_summaries_to_file(summaries, "output summeries")
+        self.write_clusters_to_file(clusters, "output clusters.txt")
+        summaries = [self.__summarize_cluster_gimini(cluster) for cluster in clusters]
+        self.write_summaries_to_file(summaries, "output summeries.txt")
         return summaries
-    
-    def __print_clusters(self, clusters: List[Dict[str, Any]]) -> None:
-        for i, cluster in enumerate(clusters):
-            print(f"-----Cluster {i}-----")
-            for article in cluster:
-                print(article['data'])
-                print("")
-            print("")
-
-
-
-
 
     def __clusters_to_text(self, clusters: List[Dict[str, Any]]) -> str:
         text = ""
@@ -168,24 +152,9 @@ class ArticleProcessor:
         with open(filename, "w", encoding="utf-8") as file:
             file.write(text)
 
-    def __print_summerize(self, summaries: List[Dict[str, Any]]) -> None:
-        for i, summary in enumerate(summaries):
-            print(f"-----Cluster {i}-----")
-            for line in summary['data'].choices[0].message.content.split("."):
-                print(line)
-                print("")
-            print("")
-
     def write_summaries_to_file(self, summaries: List[Dict[str, Any]], filename: str) -> None:
-        text = self.__summaries_to_text(summaries)
         with open(filename, 'w', encoding="utf-8") as file:
-            file.write(text)
-
-    def __summaries_to_text(self, summaries: List[Dict[str, Any]]) -> str:
-        text = ""
-        for i, summary in enumerate(summaries):
-            text += f"-----Cluster {i}-----\n"
-            for line in summary['data'].choices[0].message.content.split("."):
-                text += line + "\n\n"
-            text += "\n"
-        return text
+            for i, summary in enumerate(summaries):
+                file.write(f"-----Cluster {i}-----\n")
+                file.write(summary['data'])
+                file.write("\n")

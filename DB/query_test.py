@@ -51,8 +51,26 @@ try:
     rows = cursor.fetchall()
 
     # Print the rows
-    for row in rows:
-        print(row)
+    with open("articles.txt", "w", encoding="utf-8") as file:
+        for row in rows:
+            file.write("id: ")
+            file.write(str(row[0]))
+            file.write("\n")
+            file.write("link: ")
+            file.write(str(row[1]))
+            file.write("\n")
+            file.write("data:\n")
+            file.write(str(row[2]))
+            file.write("\n")
+            file.write("title: ")
+            file.write(str(row[3]))
+            file.write("\n")  
+            file.write("time: ")
+            file.write(str(row[4]))
+            file.write("\n")
+            file.write("category: ")
+            file.write(str(row[5]))
+            file.write("\n\n")             
 
 except psycopg2.Error as e:
     print(f"Error connecting to database: {e}")
