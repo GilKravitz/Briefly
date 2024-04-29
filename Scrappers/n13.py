@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime , timedelta
 from BaseClasses import Article , BaseScrapper
-
+from logger import logger
 
 class N13_Scrapper(BaseScrapper):
     def __init__(self,base_url,site_name,news_type , relevant_links):
@@ -46,8 +46,7 @@ class N13_Scrapper(BaseScrapper):
                 publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
                 return publish_date 
         except Exception as e:
-            print("Error Ocuured on line 49 in file n13.py : ")
-            print(e)
+            logger.log_warning(f"{e} : No date found in article")
             return None
     
     def get_article_content(self,link , article_type):
@@ -58,16 +57,27 @@ class N13_Scrapper(BaseScrapper):
             response.raise_for_status()
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
             article_publish_date = self.get_article_publish_date()
-            all_content = self.article_soup.find_all(['p', 'h1', 'h2','strong'])
+            if article_publish_date is None:
+                return -1
+            
+            imageLink = self.get_image_link()
+            all_content =[]
+            content_article = self.article_soup.find('article', class_=lambda c: c and c.startswith('Articlestyles__Content'))
+            if content_article is None:
+                content_article = self.article_soup.find_all('div', class_=lambda c: c and c.startswith('ArticleTimeLinestyles'))
+                for contentDiv in content_article:
+                    all_content.extend(contentDiv.find_all(['p', 'h1', 'h2', 'strong']) if content_article else [])
+            else:
+                all_content = content_article.find_all(['p', 'h1', 'h2', 'strong']) if content_article else []
             for tag in all_content:
                 if tag.name == 'h1':
                     title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                 article_data+=tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                 article_data+=" "
-            article = Article(link,article_data, title,article_publish_date,article_type,self.site_name)
+            article = Article(link,article_data, title,article_publish_date,article_type,imageLink,self.site_name)
             return article
         except requests.RequestException as e:
-            print(f"Error fetching article from {link}: {e}")
+            logger.log_warning(f"{e} : Error fetching article from {link}")
             return -1
 
 

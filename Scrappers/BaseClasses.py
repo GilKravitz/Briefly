@@ -3,13 +3,16 @@ import requests
 from bs4 import BeautifulSoup
 from configuration.NewsConfig import NUMBER_OF_ARTICLES
 from db.db import check_duplicate_article ,commit_article
+from logger import logger
+
 class Article():
-    def __init__(self, link, data, title, publish_date, category,source):
+    def __init__(self, link, data, title, publish_date, category,imageLink,source):
         self.link = link
         self.data = data
         self.title = title
         self.publish_date = publish_date
         self.category = category
+        self.image = imageLink
         self.source = source
 
 class BaseScrapper(ABC):
@@ -28,6 +31,28 @@ class BaseScrapper(ABC):
             if relevant_link_filter in link:
                 return False
         return True
+
+    def get_image_link(self):
+        try:
+            article_tag = self.article_soup.find('article')
+            if article_tag:
+                figure_tag = article_tag.find('figure')
+            else:
+                figure_tag = self.article_soup.find('figure')
+
+            if figure_tag:
+                # Find the img tag inside the figure tag
+                img_tag = figure_tag.find('img')
+                if img_tag:
+                    # Extract src attribute
+                    image_link = img_tag.get('src')
+                    return image_link
+                else:
+                    return None
+            else:
+                return None
+        except Exception as e:
+            logger.log_warning(f"{e} : didnt fetch imageLink from article")
 
     @abstractmethod
     def filter_fetched_links(self,href):
@@ -51,17 +76,14 @@ class BaseScrapper(ABC):
                             full_link = self.base_url + str(link)
 
                         if check_duplicate_article(full_link):
-                            print(f"article that already exists in database {self.site_name}, skipping...")
                             continue
                         articles_links.add(full_link)
                     else:
                         break
                 articles_links = list(articles_links)[:NUMBER_OF_ARTICLES]
-                print(f"articles that are about to be commited : {articles_links}")
                 return articles_links
         except Exception as e:
-            print("Error Ocuured on line 61 in file BaseClasses.py : " )
-            print(e)
+            logger.log_error(f"{e} : Occured on {self.site_name}")
         
     @abstractmethod
     def get_article_content(self,link,article_type):
@@ -73,9 +95,9 @@ class BaseScrapper(ABC):
             for link in article_links:
                 article = self.get_article_content(link , article_type)
                 if article == -1:
-                    print(f"Error fetching article from {link}")
+                    logger.log_warning(f"didnt manage to fetch article from {link}")
                 else:
                     if commit_article(article):
-                        print(f"Successfully committed article to database")
+                        logger.log_info(f"{article.title} from {article.source} Successfully committed article to database")
                     else:
-                        print(f"Error commiting article to database")
+                        logger.log_error(f"Failed to commit article to database")

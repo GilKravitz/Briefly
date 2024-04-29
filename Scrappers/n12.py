@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from BaseClasses import Article , BaseScrapper
+from logger import logger
 
 class N12_Scrapper(BaseScrapper):
     def __init__(self,base_url,site_name,news_type , relevant_links , unrelevant_links):
@@ -24,10 +25,10 @@ class N12_Scrapper(BaseScrapper):
             publish_date = datetime.strptime(formatted_date, '%d-%m-%y %H:%M')
             return publish_date
         except Exception as e:
-            print("Error Ocuured on line 27 in file n12.py : " )
-            print(e)
+            logger.log_warning(f"{e} : No date found in article")
             return None
-    
+        
+
     def get_article_content(self, link,article_type):
         article_data = ""
         title = ""
@@ -36,20 +37,24 @@ class N12_Scrapper(BaseScrapper):
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             self.article_soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
             article_publish_date = self.get_article_publish_date()
-            all_content_tags = self.article_soup.find_all(['p', 'h1', 'h2', 'strong'])
-
+            if article_publish_date is None:
+                return -1
+            
+            imageLink = self.get_image_link()
+            content_article = self.article_soup.find('article')
+            all_content = content_article.find_all(['p', 'h1', 'h2', 'strong']) if content_article else []
             # Collect all the data of the article
-            for tag in all_content_tags:
+            for tag in all_content:
                 if not tag.find_parent('section', class_='mako_comments') and 'content' not in tag.get('class', []):
                     if tag.name == 'h1':
                         title = tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                     article_data += tag.get_text(strip=True).encode('utf-8').decode('utf-8')
                     article_data += " "
             
-            article = Article(link,article_data, title,article_publish_date,article_type,self.site_name)
+            article = Article(link,article_data, title,article_publish_date,article_type,imageLink,self.site_name)
             return article
         except requests.RequestException as e:
-            print(f"Error fetching article from {link}: {e}")
+            logger.log_warning(f"{e} : Error fetching article from {link}")
             return -1
         
 
