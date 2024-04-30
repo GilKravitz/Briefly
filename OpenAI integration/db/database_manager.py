@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import psycopg2.extras
+import logging
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from typing import List, Optional, Dict,Any
@@ -12,6 +13,8 @@ class DatabaseManager:
         """
         load_dotenv()
         self.__db_connection = self.__connect_to_database()
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("DatabaseManager initialized")
 
     def __connect_to_database(self) -> Optional[psycopg2.extensions.connection]:
         """
@@ -20,22 +23,18 @@ class DatabaseManager:
         Returns:
             psycopg2.extensions.connection: A connection object if successful, None otherwise.
         """
-        try:
-            db_host = os.getenv("DB_HOST")
-            db_port = os.getenv("DB_PORT")
-            db_name = os.getenv("DB_NAME")
-            db_user = os.getenv("DB_USER")
-            db_password = os.getenv("DB_PASSWORD")
+        db_host = os.getenv("DB_HOST")
+        db_port = os.getenv("DB_PORT")
+        db_name = os.getenv("DB_NAME")
+        db_user = os.getenv("DB_USER")
+        db_password = os.getenv("DB_PASSWORD")
 
-            db_connection = psycopg2.connect(
-                host=db_host, port=db_port, database=db_name,
-                user=db_user, password=db_password,
-                cursor_factory=psycopg2.extras.DictCursor
-            )
-            return db_connection
-        except Exception as e:
-            print(f"Error connecting to database: {e}")
-            return None
+        db_connection = psycopg2.connect(
+            host=db_host, port=db_port, database=db_name,
+            user=db_user, password=db_password,
+            cursor_factory=psycopg2.extras.DictCursor
+        )
+        return db_connection
 
     def fetch_articles(self, hours: int = 24) -> Optional[List[Dict]]:
         """
@@ -53,6 +52,8 @@ class DatabaseManager:
             time_x_hours_ago = current_time - timedelta(hours=hours)
             cursor = self.__db_connection.cursor()
 
+            self.logger.info(f"Fetching articles from the last {hours} hours.")
+
             # Execute a SELECT query to retrieve all scraped articles within the specified time range
             query = "SELECT * FROM scraped_articles WHERE publish_date >= %s"
             cursor.execute(query, (time_x_hours_ago,))
@@ -61,7 +62,7 @@ class DatabaseManager:
             return articles
         
         except psycopg2.Error as e:
-            print(f"Error executing query: {e}")
+            self.logger.error(f"Error executing query: {e}")
             return None
         finally:
             if cursor is not None:   # Close cursor
@@ -82,7 +83,6 @@ class DatabaseManager:
             None: Returns None but prints the result status to the console.
         """
         try:
-            # Create a cursor object
             cursor = self.__db_connection.cursor()
 
             # SQL query to insert the summarized article into the merged_articles table
@@ -91,30 +91,30 @@ class DatabaseManager:
 
             # Commit the changes to the database
             self.__db_connection.commit()
-            print("Article inserted successfully into merged_articles table.")
+            self.logger.info(F"Article titled {title} inserted successfully into merged_articles table.")
 
         except Exception as e:
-            # Rollback in case of any error
-            print(f"Error inserting article into database: {e}")
+            self.logger.error(f"Error inserting article into database: {e}")
             self.__db_connection.rollback()
         finally:
-            # Close the cursor
             if cursor is not None:
                 cursor.close()
 
-    def insert_summarized_articles(self, article_summaries: List[Dict[str, Any]]) -> None:
+    def insert_summarized_articles(self, summaries_article: List[Dict[str, Any]]) -> None:
         """
         Inserts multiple summarized articles into the database.
 
         Args:
-            article_summaries (List[Dict[str, Any]]): A list of summaries to be inserted, each containing the necessary data.
+            summaries_article (List[Dict[str, Any]]): A list of summaries to be inserted, each containing the necessary data.
 
         Returns:
             None
         """
-        if article_summaries:
-            for summary in article_summaries:
-                self.__insert_summarized_article(summary['title'],summary['data'],summary['category'], summary['publish_date'], summary['links'])
+        self.logger.info(f"Inserting {len(summaries_article)} summarized articles into the database.")
+        if summaries_article:
+            for summary in summaries_article:
+                if summary:
+                    self.__insert_summarized_article(summary['title'],summary['data'],summary['category'], summary['publish_date'], summary['links'])
 
     def close_connection(self) -> None:
         """
@@ -125,3 +125,4 @@ class DatabaseManager:
         """
         if self.__db_connection:
             self.__db_connection.close()
+            self.logger.info("Database connection closed")

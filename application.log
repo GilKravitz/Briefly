@@ -1,0 +1,68 @@
+2024-04-30 13:56:58,837 - INFO - DatabaseManager initialized
+2024-04-30 13:56:59,002 - INFO - AiTextProcessor initialized with OpenAI embedding model: text-embedding-3-large
+2024-04-30 13:56:59,002 - INFO - ArticleProcessor initialized with AI summery model: gemini-1.0-pro with similarity threshold: 0.6
+2024-04-30 13:56:59,002 - INFO - Application initialized with API keys.
+2024-04-30 13:56:59,002 - INFO - Fetching articles from the last 100 hours.
+2024-04-30 13:56:59,390 - INFO - Calculating similarity matrix for given articles.
+2024-04-30 13:57:00,345 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:00,891 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:01,617 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:02,560 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:04,306 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:05,240 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:06,204 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:07,181 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:07,948 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:08,742 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:09,526 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:10,300 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:10,825 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:11,561 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:12,764 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:13,641 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:14,354 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:15,086 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:15,773 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:16,366 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:17,070 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:17,787 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:18,689 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:19,740 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:20,561 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:21,428 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:22,143 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:22,923 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:23,928 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:24,689 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:25,774 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:26,648 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:27,438 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2024-04-30 13:57:27,805 - INFO - Clustering articles based on similarity matrix.
+2024-04-30 13:57:27,815 - INFO - summerizing clusters.
+2024-04-30 14:04:30,550 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:06:33,009 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:10:02,296 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:10:06,623 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:10:14,593 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:10:22,234 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:11:41,197 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:11:44,254 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:11:47,603 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:11:49,937 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:13:01,823 - ERROR - Failed to summarize cluster due to: 500 An internal error has occurred. Please retry or report in https://developers.generativeai.google/guide/troubleshooting
+2024-04-30 14:13:04,382 - INFO - Inserting 29 summarized articles into the database.
+2024-04-30 14:13:04,530 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:04,746 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:04,966 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:05,186 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:05,410 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:05,624 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:05,850 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:06,069 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:06,302 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:06,522 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:06,738 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:06,967 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:07,189 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:07,406 - INFO - Article titled {title} inserted successfully into merged_articles table.
+2024-04-30 14:13:07,642 - INFO - Article titled {title} inserted successfully into merged_articles table.

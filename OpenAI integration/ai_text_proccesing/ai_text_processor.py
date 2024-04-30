@@ -1,4 +1,5 @@
 import tiktoken
+import logging
 from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 from typing import List, Dict
@@ -15,6 +16,8 @@ class AiTextProcessor:
         """
         self.__client = OpenAI(api_key=api_key)
         self.__embedding_model_name = embedding_model_name
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("AiTextProcessor initialized with OpenAI embedding model: " + embedding_model_name)
 
     def __num_tokens_from_string(self, string, encoding_name):
         """
@@ -43,22 +46,25 @@ class AiTextProcessor:
         Returns:
             list: The embedding vector as a list of floats.
         """
+        try:
+            # Encode the text to check the token count in the API model bounds.
+            num_tokens = self.__num_tokens_from_string(text, encoding_name)
+            if num_tokens > max_tokens:
+                encoded_text = tiktoken.get_encoding(encoding_name).encode(text)
+                text = tiktoken.get_encoding(encoding_name).decode(encoded_text[:max_tokens])
 
-        # Encode the text to check the token count in the API model bounds.
-        num_tokens = self.__num_tokens_from_string(text, encoding_name)
-        if num_tokens > max_tokens:
-            encoded_text = tiktoken.get_encoding(encoding_name).encode(text)
-            text = tiktoken.get_encoding(encoding_name).decode(encoded_text[:max_tokens])
+            # Create embeddings using the OpenAI API
+            res = self.__client.embeddings.create(
+                model=model,
+                input=text,
+                encoding_format="float"
+            )
 
-        # Create embeddings using the OpenAI API
-        res = self.__client.embeddings.create(
-            model=model,
-            input=text,
-            encoding_format="float"
-        )
-
-        embedding_vector = res.data[0].embedding
-        return embedding_vector
+            embedding_vector = res.data[0].embedding
+            return embedding_vector
+        except Exception as e:
+            self.logger.error(f"Error in generating embeddings: {e}")
+            return None
     
     def get_similarity_matrix(self, articles: List[Dict]) -> List[List[float]]:
         """
@@ -71,8 +77,13 @@ class AiTextProcessor:
         Returns:
             List[List[float]]: A 2D list (matrix) of cosine similarity scores between the articles.
         """
-        if len(articles) < 2:
+        try:
+            self.logger.info("Calculating similarity matrix for given articles.")
+            if len(articles) < 2:
+                return None
+            embeddings = [self.__get_embeddings(article['data'], self.__embedding_model_name) for article in articles]
+            similarity_matrix = cosine_similarity(embeddings)
+            return similarity_matrix
+        except Exception as e:
+            self.logger.error(f"Error in calculating similarity matrix: {e}")
             return None
-        embeddings = [self.__get_embeddings(article['data'], self.__embedding_model_name) for article in articles]
-        similarity_matrix = cosine_similarity(embeddings)
-        return similarity_matrix
