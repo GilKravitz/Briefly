@@ -4,21 +4,14 @@ using BrieflyServer.Models;
 
 namespace BrieflyServer.Services
 {
-    public class ArticleService
+    public class ArticleService(BrieflyContext context)
     {
-        private readonly BrieflyContext _context;
-
-        public ArticleService(BrieflyContext context)
-        {
-            _context = context;
-        }
-
         public List<Article> GetArticles(int page, int pageSize,string email)
         {
             // Calculate the number of items to skip
             int skip = (page - 1) * pageSize;
 
-            var preferredCategoriesString = _context.Users
+            var preferredCategoriesString = context.Users
                 .Where(user => user.Email == email)
                 .Select(user => user.PreferredTopics)
                 .FirstOrDefault();
@@ -37,7 +30,7 @@ namespace BrieflyServer.Services
                 throw new ArgumentException("One or more categories are invalid.");
             }
             // Query the articles based on categories, skipping the appropriate number and taking the desired number
-            var articles = _context.Articles
+            var articles = context.Articles
                 .Where(article => preferredCategories.Contains(article.Category))
                 .OrderByDescending(article => article.PublishDate)
                 .Skip(skip)
@@ -47,7 +40,7 @@ namespace BrieflyServer.Services
         }
         public List<Article> SearchArticles(string searchString)
         {
-            var articles = _context.Articles
+            var articles = context.Articles
                 .Where(article => article.Title.Contains(searchString) || article.ArticleText.Contains(searchString))
                 .OrderByDescending(article => article.Title.Contains(searchString))
                 .ToList();

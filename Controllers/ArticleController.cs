@@ -8,15 +8,8 @@ namespace BrieflyServer.Controllers
     //[Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ArticleController : ControllerBase
+    public class ArticleController(ArticleService articleService) : ControllerBase
     {
-        private readonly ArticleService _articleService;
-
-        public ArticleController(ArticleService articleService)
-        {
-            _articleService = articleService;
-        }
-
         [HttpGet]
         public IActionResult GetArticles([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
@@ -32,7 +25,7 @@ namespace BrieflyServer.Controllers
 
             try
             {
-                var articlesByCategory = _articleService.GetArticles(page, pageSize, email);
+                var articlesByCategory = articleService.GetArticles(page, pageSize, email);
                 return Ok(articlesByCategory);
             }
             catch (ArgumentException invalidCategory)
@@ -53,7 +46,7 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Search string cannot be empty.");
             }
 
-            var articles = _articleService.SearchArticles(searchString);
+            var articles = articleService.SearchArticles(searchString);
             return Ok(articles);
         }
     }

@@ -30,7 +30,7 @@ namespace BrieflyServer.Migrations
                 newName: "Email");
 
             migrationBuilder.RenameColumn(
-                name: "id",
+                name: "Id",
                 table: "AspNetUsers",
                 newName: "Id");
 
@@ -390,7 +390,7 @@ namespace BrieflyServer.Migrations
             migrationBuilder.RenameColumn(
                 name: "Id",
                 table: "users",
-                newName: "id");
+                newName: "Id");
 
             migrationBuilder.AlterColumn<string>(
                 name: "email",
@@ -413,7 +413,7 @@ namespace BrieflyServer.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_users",
                 table: "users",
-                column: "id");
+                column: "Id");
         }
     }
 }

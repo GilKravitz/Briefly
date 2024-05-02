@@ -14,14 +14,11 @@ namespace BrieflyServer.Models
         [Column("preferredTopics")]
         public string PreferredTopics { get; set; }
 
-        [Column("bookmarkedArticles")]
-        public string BookmarkedArticles { get; set; }
-        public User(string email, string preferredTopics, string bookmarkedArticles = "")
+        public User(string email, string preferredTopics)
         {
             UserName = email; // Set the username to be the same as the email
             Email = email;
             PreferredTopics = preferredTopics;
-            BookmarkedArticles = bookmarkedArticles;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace BrieflyServer.Data
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<ForgotPasswordToken> ForgotPassword { get; set; }
+        public DbSet<Bookmarked> Bookmarks { get; set; }
+
         public BrieflyContext(DbContextOptions<BrieflyContext> options) : base(options)
         {
         }
@@ -19,6 +21,7 @@ namespace BrieflyServer.Data
 
             modelBuilder.Entity<Article>().ToTable("merged_articles");
             modelBuilder.Entity<ForgotPasswordToken>().ToTable("ForgotPasswordTokens");
+            modelBuilder.Entity<Bookmarked>().ToTable("Bookmarks");
         }
     }
 }
