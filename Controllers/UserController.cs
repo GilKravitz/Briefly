@@ -1,6 +1,7 @@
 ﻿using BrieflyServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BrieflyServer.Controllers
 {
@@ -9,9 +10,10 @@ namespace BrieflyServer.Controllers
     [Route("[controller]")]
     public class UserController(UserService userService) : ControllerBase
     {
-        [HttpGet("categories")]
-        public IActionResult GetPreferredCategories(string email)
+        [HttpGet("PreferredTopics")]
+        public IActionResult GetPreferredCategories()
         {
+            string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
                 var categories = userService.GetPreferredCategories(email);
@@ -23,12 +25,13 @@ namespace BrieflyServer.Controllers
             }
         }
 
-        [HttpPut("categories")]
-        public IActionResult UpdatePreferredCategories(string email, string categories)
+        [HttpPut("PreferredTopics")]
+        public IActionResult UpdatePreferredCategories([FromBody] string preferredTopics)
         {
+            string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                userService.UpdatePreferredCategories(email, categories);
+                userService.UpdatePreferredCategories(email, preferredTopics);
                 return Ok("Preffered categories updated successfully");
             }
             catch (Exception ex)

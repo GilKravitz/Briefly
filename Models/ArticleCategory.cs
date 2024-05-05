@@ -5,7 +5,9 @@ namespace BrieflyServer.Models;
 public enum ArticleCategory
 {
    Politics,
-   Sport
+   Sport,
+   Food,
+   Economics
 }
 
 public class EnumValidationAttribute : ValidationAttribute

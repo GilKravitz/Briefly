@@ -19,8 +19,6 @@ public class AuthenticationController(
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody]RegistrationModel model)
     {
-        //var user2 = await _userManager.FindByEmailAsync("maorhalevi@gmail.com");
-        //_userManager.DeleteAsync(user2);
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -105,10 +103,18 @@ public class AuthenticationController(
         {
             return Ok("If your email is registered, you will receive an email with instructions on how to reset your password");
         }
+        var existingToken = await context.ForgotPassword.FirstOrDefaultAsync(t => t.Email == request.Email);
         var otp = new Random().Next(1000, 9999).ToString();
         var hashedOtp = BCrypt.Net.BCrypt.HashPassword(otp);
-        var forgotPasswordToken = new ForgotPasswordToken(request.Email, hashedOtp);
-        context.ForgotPassword.Add(forgotPasswordToken);
+        if (existingToken != null)
+        {
+            existingToken.HashedOtp = hashedOtp;
+        }
+        else
+        {
+            var forgotPasswordToken = new ForgotPasswordToken(request.Email, hashedOtp);
+            context.ForgotPassword.Add(forgotPasswordToken);
+        }
         await context.SaveChangesAsync();
         emailService.SendMail(request.Email, otp);
         return Ok("Email verification sent");

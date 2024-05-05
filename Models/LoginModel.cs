@@ -12,5 +12,4 @@ namespace BrieflyServer.Models
         [EmailAddress]
         public string Email { get; set; } = email;
     }
-
 }

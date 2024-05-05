@@ -5,6 +5,7 @@ namespace BrieflyServer.Models;
 public class Article
 {
     [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     [Column("article")] // Specify the column name in the database
