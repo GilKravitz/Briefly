@@ -1,2 +1,1 @@
-ALTER TABLE merged_articles
-ADD links text;
+DELETE FROM scraped_articles;

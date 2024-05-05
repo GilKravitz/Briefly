@@ -1,11 +1,15 @@
 import tiktoken
 import logging
 from openai import OpenAI
+from sklearn.cluster import AgglomerativeClustering
 from sklearn.metrics.pairwise import cosine_similarity
-from typing import List, Dict
+from typing import List, Dict, Any
 
 
 class AiTextProcessor:
+
+    SIMILARITY_THRESHOLD = 0.6
+
     def __init__(self, api_key: str, embedding_model_name: str):
         """
         Initializes the AiTextProcessor with an API key and a specific embedding model name.
@@ -87,3 +91,34 @@ class AiTextProcessor:
         except Exception as e:
             self.logger.error(f"Error in calculating similarity matrix: {e}")
             return None
+
+    @staticmethod
+    def make_clusters(similarity_matrix: List[List[float]], articles: List[Dict[str, Any]]) -> List[List[Dict[str, Any]]]:
+        """
+        Groups articles into clusters based on a similarity matrix and a pre-defined similarity threshold.
+
+        Args:
+            similarity_matrix (List[List[float]]): A matrix representing the pairwise similarities between articles.
+            articles (List[Dict[str, Any]]): A list of articles, where each article is a dictionary.
+
+        Returns:
+            List[List[Dict[str, Any]]]: A list of clusters, each cluster being a list of article dictionaries.
+        """
+
+        clustering_model = AgglomerativeClustering(n_clusters=None, distance_threshold= AiTextProcessor.SIMILARITY_THRESHOLD, linkage='average')
+        clusters = clustering_model.fit_predict(similarity_matrix)
+        clustered_articles = [[] for _ in range(len(set(clusters)))]
+        
+        for i in range(len(articles)):
+            # Append each article to its corresponding cluster based on the cluster assignment.
+            # The 'articles[i]' part assumes there's an 'articles' list available in the scope where each article's index corresponds to its position in the similarity matrix.
+            clustered_articles[clusters[i]].append({
+                'publish_date': articles[i]['publish_date'],
+                'link': articles[i]['link'],
+                'data': articles[i]['data'],
+                'category': articles[i]['category'],
+                'title': articles[i]['title'],
+                'id': articles[i]['id']})
+            
+
+        return clustered_articles

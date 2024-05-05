@@ -1,4 +1,3 @@
-from sklearn.cluster import AgglomerativeClustering
 import logging
 import time
 import traceback
@@ -6,28 +5,26 @@ import backoff
 from ratelimit import limits, RateLimitException
 from typing import List, Dict, Any
 import google.generativeai as genai
+from ai_text_proccesing import ai_text_processor
 
 class ArticleProcessor:
-    MAX_TOKENS = 9000          # Max number of token be able to send the api
+    MAX_TOKENS_PER_CLUSTER = 9000          # Max number of token be able to send the api
     MAX_NUMBER_OF_WORDS = 3000
     MAX_REQUESTS_PER_MINUTE = 4
-    SUMMERY_AI_MODEL = "gemini-1.0-pro"
-    PROMPT = '''Summarize the following article,
-    into a Hebrew article as if you are the writter of the article,
-    do not summarize into points, 
-    the summary should not exceed 380 words,
-    focusing on the main points, arguments, and conclusions.
-    Highlight any significant data, quotes, or statistics mentioned,
-    and note the context in which they are presented. 
-    If the article discusses multiple perspectives or debates,
-    please outline these distinctly. Additionally,
-    if there are any implications or recommendations made by the author,
-    include these in the summary.
-    if the article references specific events, individuals, or sources, 
-    please identify these and their relevance to the article's overall message.
-    pay attention to correct syntax and grammar in English:\n'''
+    SUMMERY_AI_MODEL = "gemini-1.0-pro-001"
 
-    def __init__(self, api_key: str, similarity_threshold: float):
+    PROMPT = '''summerize the following articles into a single - article summery.
+    write the summery in hebrew as you are the journalist with 380 words maximum, do not reffer the article in Third person .
+    the summary structure follows standard article formatting with paragraphs 
+    Summarize the article by highlighting its main points, arguments, and conclusions.
+    Include significant data, quotes, or statistics, noting their context.
+    If the article covers multiple perspectives or debates, outline them distinctly.
+    Also, mention any implications or recommendations made by the author.
+    Identify specific events, individuals, or sources referenced in the article and explain their relevance to the overall message.
+    Please return JSON describing the the article_body, title, and hashtags from this articles using the following schema:
+    {"article_body": string, "title":string, "hashtags":list[string]}'''
+
+    def __init__(self, api_key: str):
         """
         Initializes the ArticleProcessor with API credentials and configuration for clustering and summarization.
 
@@ -37,12 +34,11 @@ class ArticleProcessor:
             encoding_name (str): The name of the encoding model used for tokenizing text.
             linkage (str): The linkage criterion to use for clustering (e.g., 'average', 'complete').
         """
-        self.__similarity_threshold = similarity_threshold
         genai.configure(api_key=api_key)
 
         # Set up the model
         generation_config = {
-            "temperature": 1,
+            "temperature": 0.75,
             "top_p": 1,
             "top_k": 1,
             "max_output_tokens": 2048,
@@ -68,7 +64,7 @@ class ArticleProcessor:
         ]
 
         self.logger = logging.getLogger(__name__)
-        self.logger.info(f"ArticleProcessor initialized with AI summery model: " + self.SUMMERY_AI_MODEL + " with similarity threshold: "+ str(similarity_threshold))
+        self.logger.info(f"ArticleProcessor initialized with AI summery model: " + self.SUMMERY_AI_MODEL)
 
         self.model = genai.GenerativeModel(model_name=self.SUMMERY_AI_MODEL,
                                     generation_config=generation_config,
@@ -76,37 +72,10 @@ class ArticleProcessor:
         
         self.convorsation = self.model.start_chat()
 
-    def __make_clusters(self, similarity_matrix: List[List[float]], articles: List[Dict[str, Any]]) -> List[List[Dict[str, Any]]]:
-        """
-        Groups articles into clusters based on a similarity matrix and a pre-defined similarity threshold.
-
-        Args:
-            similarity_matrix (List[List[float]]): A matrix representing the pairwise similarities between articles.
-            articles (List[Dict[str, Any]]): A list of articles, where each article is a dictionary.
-
-        Returns:
-            List[List[Dict[str, Any]]]: A list of clusters, each cluster being a list of article dictionaries.
-        """
-
-        clustering_model = AgglomerativeClustering(n_clusters=None, distance_threshold= self.__similarity_threshold, linkage='average')
-        clusters = clustering_model.fit_predict(similarity_matrix)
-        clustered_articles = [[] for _ in range(len(set(clusters)))]
-        
-        for i in range(len(articles)):
-            # Append each article to its corresponding cluster based on the cluster assignment.
-            # The 'articles[i]' part assumes there's an 'articles' list available in the scope where each article's index corresponds to its position in the similarity matrix.
-            clustered_articles[clusters[i]].append({
-                'publish_date': articles[i]['publish_date'],
-                'link': articles[i]['link'],
-                'data': articles[i]['data'],
-                'category': articles[i]['category'],
-                'title': articles[i]['title']})
-
-        return clustered_articles
     
     @backoff.on_exception(backoff.expo,RateLimitException,max_tries=10,max_time=300)
     @limits(calls=MAX_REQUESTS_PER_MINUTE, period=60)
-    def __summarize_cluster_gimini(self, cluster: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def __summarize_cluster_gimini(self, cluster: List[Dict[str, Any]], cluster_index: int) -> Dict[str, Any]:
         """
         Summarizes a cluster of articles using the OpenAI API, by combining all articles in the cluster into one text.
 
@@ -116,32 +85,42 @@ class ArticleProcessor:
         Returns:
             Dict[str, Any]: A dictionary containing the summary, category, and title of the cluster.
         """
-        cluster_string = " ".join(article['data'] for article in cluster)
+        cluster_string = " ".join(f'article number {i}:\n' + article['data'] for i,article in enumerate(cluster))
         cluster_category = cluster[0]['category'] if cluster else None
         cluster_title = cluster[0]['title'] if cluster else None
         cluster_published_date = cluster[0]['publish_date'] if cluster else None
         cluster_links = " ".join(article['link'] for article in cluster)
+        cluster_ids_of_articles = [article['id'] for article in cluster]
+
+        if len(cluster_ids_of_articles) > 1:
+            logging.debug("Article ids: {} were merged into one cluster".format(cluster_ids_of_articles))
         
         try:
             # makes sure that the cluster contains amount of words that is acceptable by the api
             tokens_in_message = self.model.count_tokens(self.PROMPT + cluster_string).total_tokens
-            if(tokens_in_message > self.MAX_TOKENS):
+            if(tokens_in_message > self.MAX_TOKENS_PER_CLUSTER):
                 words = cluster_string.split()[:self.MAX_NUMBER_OF_WORDS]
                 cluster_string = " ".join(words)
             
             self.convorsation.send_message(self.PROMPT + cluster_string)
+
+            logging.debug("Summarizing cluster number {} with article IDs: {}".format(cluster_index, ", ".join(map(str, cluster_ids_of_articles))))
 
             full_detailed_summary = {
                 'links': cluster_links,
                 'publish_date': cluster_published_date,
                 'title': cluster_title,
                 'category': cluster_category,
-                'data': self.convorsation.last.text}
+                'data': self.convorsation.last.text,
+                'ids': cluster_ids_of_articles}
+            
+            #TODO debug the summary 
+            self.write_summary_to_file(full_detailed_summary, "summeries.txt", cluster_index)
             
             return full_detailed_summary
         except Exception as e:
             logging.error(f"Failed to summarize cluster due to: {str(e)}")
-            logging.debug(traceback.format_exc())  # Provides traceback information in debug mode
+            self.convorsation = self.model.start_chat()
             return None
     
     def process_articles(self, articles: List[Dict[str, Any]], similarity_matrix: List[List[float]]) -> List[Dict[str, Any]]:
@@ -156,16 +135,19 @@ class ArticleProcessor:
             List[Dict[str, Any]]: A list of summarized articles.
         """
         if len(articles) < 2:  
+            ### handel for one summerizer
             # edge case: not able to cluster articles while there is less then 2 articles
             return None
         
         self.logger.info("Clustering articles based on similarity matrix.")
-        clusters = self.__make_clusters(similarity_matrix, articles)
-        self.write_clusters_to_file(clusters, "clusters.txt")
-        self.logger.info("summerizing clusters.")
-        summaries = self.__summery_all_clusters(clusters)
-        self.write_summaries_to_file(summaries, "summeries.txt")
+        clusters = ai_text_processor.AiTextProcessor.make_clusters(similarity_matrix, articles)
 
+        #TODO:debuging clusters to text file remove
+        self.write_clusters_to_file(clusters, "clusters.txt")
+
+        self.logger.info("summerizing clusters.")
+        summaries = [self.__summarize_cluster_gimini(cluster, i) for i,cluster in enumerate(clusters)]
+        #summaries = self.__summery_all_clusters(clusters)
         return summaries
     
     def __summery_all_clusters(self, clusters: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
@@ -191,9 +173,15 @@ class ArticleProcessor:
         text = ""
         for i, cluster in enumerate(clusters):
             text += f"-----Cluster {i}-----\n"
-            for article in cluster:
+            for j, article in enumerate(cluster):
                 if article:
-                    text += article['data'] + "\n\n"
+                    text += f"article number {j} in cluster i"
+                    text += str(article['id']) + "\n"
+                    text += str(article['publish_date']) + "\n"
+                    text += str(article['link']) + "\n"
+                    text += str(article['category']) + "\n"
+                    text += str(article['title']) + "\n"
+                    text += str(article['data']) + "\n\n"
             text += "\n"
         return text
 
@@ -202,10 +190,9 @@ class ArticleProcessor:
         with open(filename, "w", encoding="utf-8") as file:
             file.write(text)
 
-    def write_summaries_to_file(self, summaries: List[Dict[str, Any]], filename: str) -> None:
-        with open(filename, 'w', encoding="utf-8") as file:
-            for i, summary in enumerate(summaries):
-                file.write(f"-----Cluster {i}-----\n")
-                if summary:
-                    file.write(summary['data'])
-                file.write("\n")
+    def write_summary_to_file(self, summary: List[Dict[str, Any]], filename: str, summery_index: int) -> None:
+        with open(filename, 'a', encoding="utf-8") as file:
+            file.write(f"-----Cluster {summery_index}-----\n")
+            if summary:
+                file.write(summary['data'])
+            file.write("\n")
