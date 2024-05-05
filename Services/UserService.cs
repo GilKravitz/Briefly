@@ -30,14 +30,6 @@ namespace BrieflyServer.Services
             {
                 throw new Exception("User not found");
             }
-            var categoriesList = categories.Split(',').ToList();
-            foreach (var category in categoriesList)
-            {
-                if (!Enum.IsDefined(typeof(ArticleCategory), category))
-                {
-                    throw new Exception($"Invalid category: {category}");
-                }
-            }
             user.PreferredTopics = categories;
             _context.SaveChanges();
         }

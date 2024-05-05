@@ -19,7 +19,7 @@ public class EnumValidationAttribute : ValidationAttribute
             return false;
         }
 
-        var categories = value.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+        var categories = value.ToString().Split(' ', StringSplitOptions.RemoveEmptyEntries);
         foreach (var category in categories)
         {
             if (!Enum.TryParse(typeof(ArticleCategory), category.Trim(), out _))

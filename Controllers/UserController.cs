@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BrieflyServer.Models;
 
 namespace BrieflyServer.Controllers
 {
@@ -26,13 +27,13 @@ namespace BrieflyServer.Controllers
         }
 
         [HttpPut("PreferredTopics")]
-        public IActionResult UpdatePreferredCategories([FromBody] string preferredTopics)
+        public IActionResult UpdatePreferredCategories([FromBody] UpdatePreferredTopicsRequest request)
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                userService.UpdatePreferredCategories(email, preferredTopics);
-                return Ok("Preffered categories updated successfully");
+                userService.UpdatePreferredCategories(email, request.PreferredTopics);
+                return Ok("Preferred categories updated successfully");
             }
             catch (Exception ex)
             {
