@@ -6,7 +6,7 @@ using BrieflyServer.Models;
 
 namespace BrieflyServer.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController(UserService userService) : ControllerBase

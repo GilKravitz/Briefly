@@ -1,6 +1,7 @@
 ﻿using BrieflyServer.Data;
 using BrieflyServer.Models;
 using BrieflyServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +82,7 @@ public class AuthenticationController(
         }
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {

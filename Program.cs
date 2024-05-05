@@ -19,31 +19,23 @@ public class Program
 
         builder.Services.AddDbContext<BrieflyContext>(options =>
             options.UseNpgsql(connectionString));
-
-
         builder.Services.AddScoped<ArticleService>();
         builder.Services.AddScoped<UserService>();
         builder.Services.AddScoped<EmailService>();
         builder.Services.AddScoped<BookmarkedService>();
         //builder.Services.AddScoped<LoggingService>();
-        // Register authentication services
-        //builder.Services.AddSingleton<IAuthService, FacebookAuth>();
-
 
         //add controllers
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-
-
         builder.Services.AddIdentity<User, IdentityRole<int>>()
             .AddEntityFrameworkStores<BrieflyContext>()
             .AddDefaultTokenProviders();
 
         var app = builder.Build();
-        // Use authentication and authorization
-        //app.UseAuthentication();
-        //app.UseAuthorization();
 
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseHttpsRedirection();
         app.MapControllers();
         app.Run();

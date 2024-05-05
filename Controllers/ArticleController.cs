@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BrieflyServer.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ArticleController(ArticleService articleService) : ControllerBase
