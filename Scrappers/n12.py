@@ -56,16 +56,10 @@ class N12_Scrapper(BaseScrapper):
             )
             # Collect all the data of the article
             for tag in all_content:
-                if not tag.find_parent(
-                    "section", class_="mako_comments"
-                ) and "content" not in tag.get("class", []):
+                if not tag.find_parent("section", class_="mako_comments") and "content" not in tag.get("class", []) and not (tag.name == "div" and "not_for_print" in tag.get("class", [])) and not tag.find_all("a", recursive=True):
                     if tag.name == "h1":
-                        title = tag.get_text(strip=True).encode("utf-8").decode("utf-8")
-                    article_data += (
-                        tag.get_text(strip=True).encode("utf-8").decode("utf-8")
-                    )
-                    article_data += " "
-
+                        title = tag.get_text(strip=True)
+                    article_data += tag.get_text(strip=True) + " "
             article = Article(
                 link,
                 article_data,

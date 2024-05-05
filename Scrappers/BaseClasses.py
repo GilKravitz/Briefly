@@ -115,5 +115,9 @@ class BaseScrapper(ABC):
                         logger.log_info(
                             f"{article.title} from {article.source} Successfully committed article to database"
                         )
+                        # print(article.category)
+                        # if article.category == "Sport":
+                        #     print(article.data)
+                        #     print(article.link)
                     else:
                         logger.log_error(f"Failed to commit article to database")

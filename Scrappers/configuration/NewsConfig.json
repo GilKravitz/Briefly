@@ -1,5 +1,5 @@
 {
-    "NEWS_SITES":["N12" , "N13" , "YNET"],
+    "NEWS_SITES":["N12","N13","YNET"],
     "N12":{
         "BASE_URL":"https://www.mako.co.il",
         "NEWS_TYPE":["news-military" , "news-sport" , "news-money" , "food"],
@@ -18,5 +18,5 @@
         "ONLY_RELEVANT_LINKS":["news" , "sport" , "economy" , "food"],
         "PROBLEMATIC_LINKS":[]
     },
-    "NUMBER_OF_ARTICLES":5
+    "NUMBER_OF_ARTICLES":8
 }

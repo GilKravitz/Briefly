@@ -1,0 +1,285 @@
+2024-05-05 14:30:53 - INFO - הרמטכ"ל ייפגש עם תא"ל עופר וינטר - כדי להחליט לגבי עתידו בצה"ל from N12 Successfully committed article to database
+2024-05-05 14:30:53 - INFO - נתניהו, בקולו: ישראל לא תאפשר את סיום הלחימה, זו כניעה from N12 Successfully committed article to database
+2024-05-05 14:30:54 - INFO - פגיעה ישירה בכרם שלום, יש נפגעים from N12 Successfully committed article to database
+2024-05-05 14:30:57 - INFO - כלום לא קורה: תעלומת עתידו של אליניב ברדה from N12 Successfully committed article to database
+2024-05-05 14:30:58 - INFO - דיווח: מכבי ת"א סימנה את פורוורד ולנסיה from N12 Successfully committed article to database
+2024-05-05 14:30:59 - INFO - אני לא יכולה בלעדיך: סיכום השבת בליגת העל from N12 Successfully committed article to database
+2024-05-05 14:31:01 - INFO - יצוא הנפט לישראל דרך טורקיה נמשך למרות החרם. אלו הסיבות from N12 Successfully committed article to database
+2024-05-05 14:31:02 - INFO - כמו חדש: הדרך המנצחת להחזיר חטיף צ'יפס לחיים from N12 Successfully committed article to database
+2024-05-05 14:31:03 - INFO - יבואנים: הפסקת המסחר עם טורקיה תגרום לעלייה של עוד כ-20% במחירי המזון from N12 Successfully committed article to database
+2024-05-05 14:31:05 - INFO - 3 מתכונים לארוחות צהריים לתחילת שבוע from N12 Successfully committed article to database
+2024-05-05 14:31:06 - INFO - "מותק, המנות התכווצו": מנות הביס המושלמות של "מאסטר שף" from N12 Successfully committed article to database
+2024-05-05 14:31:07 - INFO - כמו חדש: הדרך המנצחת להחזיר חטיף צ'יפס לחיים from N12 Successfully committed article to database
+2024-05-05 14:31:07 - INFO - N12 fetch all articles and commit them to the database.
+2024-05-05 14:31:41 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:31:41 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:31:41 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:31:41 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:31:42 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:31:42 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:31:42 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:31:42 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:31:43 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:31:44 - INFO - האישה ביקשה להתגרש, הבעל ניסה להצית אותה ברכבה: "ניפץ את החלון בגרזן ושפך בנזין - ראיתי את המצית וצרחתי" from N12 Successfully committed article to database
+2024-05-05 14:31:44 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:44 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:45 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:45 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:45 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:45 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:46 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:46 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:46 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:31:47 - INFO - כריסטיאנו רונאלדו: "אני לא עוקב אחרי השיאים, הם עוקבים אחריי" from N12 Successfully committed article to database
+2024-05-05 14:31:48 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:48 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:48 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:49 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:49 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:49 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:49 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:50 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:31:51 - INFO - הקטין הגיש תביעה נגד גוגל: "מכור ליוטיוב" from N12 Successfully committed article to database
+2024-05-05 14:31:51 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:31:51 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:31:52 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:31:52 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:31:52 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:31:52 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:31:54 - INFO - "זו הייתה חוויה מאתגרת. אולפן זה לא המקום הטבעי שלי" from N12 Successfully committed article to database
+2024-05-05 14:31:54 - INFO - N12 fetch all articles and commit them to the database.
+2024-05-05 14:32:04 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:32:04 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:32:04 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:32:05 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:32:05 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:32:05 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:32:05 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:32:06 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:32:06 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:32:06 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:32:06 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:32:07 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:32:08 - INFO - ארבעה גדודים ואלפי מחבלים: מבט אל תוך חטיבת רפיח from N12 Successfully committed article to database
+2024-05-05 14:32:08 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:32:12 - INFO - "רוצים לנצח, מאבק האליפות לא מעניין" from N12 Successfully committed article to database
+2024-05-05 14:32:13 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:13 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:13 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:13 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:32:16 - INFO - ת"א: הדירה המשפחתית יוצאת הדופן של המעצבת המצליחה from N12 Successfully committed article to database
+2024-05-05 14:32:17 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:32:17 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:32:17 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:32:18 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:32:18 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:32:18 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:32:18 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-1c78f77853a3f81026.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:32:19 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-1c78f77853a3f81026.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:32:20 - INFO - "קודם כל הוא חתיך": הקראש של אסתר from N12 Successfully committed article to database
+2024-05-05 14:32:20 - INFO - N12 fetch all articles and commit them to the database.
+2024-05-05 14:33:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:33:09 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:33:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby
+2024-05-05 14:33:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:33:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:33:10 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby
+2024-05-05 14:33:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:33:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:33:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby
+2024-05-05 14:33:11 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:33:12 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:33:12 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby
+2024-05-05 14:33:12 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0944a65ada74f81026.htm?partner=lobby
+2024-05-05 14:33:12 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0944a65ada74f81026.htm?partner=lobby
+2024-05-05 14:33:13 - WARNING - Duplicate article was found : https://www.mako.co.il/news-military/2024_q2/Article-0944a65ada74f81026.htm?partner=lobby
+2024-05-05 14:33:14 - INFO - הסערה סביב ראש אמ"ן המיועד: המודיעין שהגיע אליו לפני המתקפה - והפעולות שביצע בליל 6 באוקטובר from N12 Successfully committed article to database
+2024-05-05 14:33:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:14 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:15 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:16 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:16 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:16 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:16 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:17 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:17 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby
+2024-05-05 14:33:17 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-a72111e92584f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby
+2024-05-05 14:33:17 - WARNING - Duplicate article was found : https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-a72111e92584f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby
+2024-05-05 14:33:18 - INFO - מותג פוטון בישראל: ראשון עם טנדר חשמלי בייבוא סדיר from N12 Successfully committed article to database
+2024-05-05 14:33:19 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:19 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:20 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:20 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:20 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:20 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:21 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:21 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/2024_q2/Article-1f3452562974f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:21 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:21 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:22 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/tech12/Article-83276a904874f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby
+2024-05-05 14:33:22 - WARNING - Duplicate article was found : https://www.mako.co.il/news-money/real_estate/Article-531d3ec22d53f81026.htm?sCh=adbcb2eb226bb110&pId=173113111&partner=lobby
+2024-05-05 14:33:23 - INFO - הרצליה: הבית המוזנח והישן עבר מחושך לאור from N12 Successfully committed article to database
+2024-05-05 14:33:24 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:33:24 - WARNING - Duplicate article was found : https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177
+2024-05-05 14:33:24 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:33:24 - WARNING - Duplicate article was found : https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:33:25 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:33:25 - WARNING - Duplicate article was found : https://www.mako.co.il/food-recipes/recipes_column-masterchef/Article-3310fd8fba44f81026.htm?sCh=c7250a2610f26110&pId=173113802
+2024-05-05 14:33:25 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-1c78f77853a3f81026.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:33:25 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-1c78f77853a3f81026.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:33:26 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-9a454a497483f81027.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:33:26 - WARNING - Duplicate article was found : https://www.mako.co.il/food-masterchef/season11-articles/Article-9a454a497483f81027.htm?sCh=c7250a2610f26110&pId=1595820704
+2024-05-05 14:33:27 - INFO - לחכות לטבעת? ההצהרה המפתיעה של עמית בזילר from N12 Successfully committed article to database
+2024-05-05 14:33:27 - INFO - N12 fetch all articles and commit them to the database.
+2024-05-05 14:50:54 - INFO - דיווח: חמאס מוותר על התנאי להפסקת אש קבועה בשלב הראשון from N13 Successfully committed article to database
+2024-05-05 14:50:54 - INFO - יוסי כהן: "אם אכנס לפוליטיקה זה יהיה כדי להנהיג את המדינה" from N13 Successfully committed article to database
+2024-05-05 14:50:55 - INFO - היום ה-212 למלחמה | בכיר בחמאס: "רוצים להגיע להסכם, לא בכל מחיר" from N12 Successfully committed article to database
+2024-05-05 14:50:55 - INFO - Image has been found
+2024-05-05 14:50:55 - INFO - פה אחד: הממשלה אישרה את סגירת ערוץ אל-ג'זירה בישראל from N13 Successfully committed article to database
+2024-05-05 14:50:55 - INFO - גפני גינה את ההודעה שפרסם גנץ בשבת, והתעלם מאלה של נתניהו: "חוסר אחריות" from YNET Successfully committed article to database
+2024-05-05 14:50:56 - INFO - Image has been found
+2024-05-05 14:50:56 - INFO - מה קורה אם חמאס אומר "כן": השלבים הבאים בדרך לעסקה from N12 Successfully committed article to database
+2024-05-05 14:50:56 - INFO - גנץ: מציע ל"גורמים מדיניים" לא להיכנס להיסטריה משיקול פוליטי from N13 Successfully committed article to database
+2024-05-05 14:50:56 - INFO - אביו של החטוף הירש: "העסקה כוללת את כל החטופים בשלבים, כך אנחנו מבינים מבכירים בארה"ב" from YNET Successfully committed article to database
+2024-05-05 14:50:56 - WARNING - didnt find image
+2024-05-05 14:50:56 - INFO - ארבעה גדודים ואלפי מחבלים: מבט אל תוך חטיבת רפיח from N12 Successfully committed article to database
+2024-05-05 14:50:57 - INFO - סער: "אם חמאס יסכים - תהיה עסקה; ישראל כבר אמרה 'כן'" from N13 Successfully committed article to database
+2024-05-05 14:50:57 - INFO - נפגעים בתקרית חריגה בעוטף: 10 רקטות שוגרו לכרם שלום מאזור רפיח from YNET Successfully committed article to database
+2024-05-05 14:50:57 - INFO - פגיעה ישירה בכרם שלום, יש נפגעים from N12 Successfully committed article to database
+2024-05-05 14:50:57 - INFO - לקראת פעולה ברפיח? קצינים בכירים צפויים להגיע לוושינגטון from N13 Successfully committed article to database
+2024-05-05 14:50:58 - INFO - Image has been found
+2024-05-05 14:50:58 - INFO - נתניהו, בקולו: ישראל לא תאפשר את סיום הלחימה, זו כניעה from N12 Successfully committed article to database
+2024-05-05 14:50:58 - INFO - נתניהו: "ישראל לא תסכים לדרישות החמאס שמשמעותן כניעה" from N13 Successfully committed article to database
+2024-05-05 14:50:58 - INFO - היועמ"שית האשימה ב"המשך הרפורמה", מזכיר הממשלה תקף: "זו הפיכה מינהלית" from YNET Successfully committed article to database
+2024-05-05 14:50:58 - INFO - Image has been found
+2024-05-05 14:50:58 - INFO - האישה ביקשה להתגרש, הבעל ניסה להצית אותה ברכבה: "ניפץ את החלון בגרזן ושפך בנזין - ראיתי את המצית וצרחתי" from N12 Successfully committed article to database
+2024-05-05 14:50:59 - INFO - מטח של כ-20 רקטות מלבנון, נזק לבנייני מגורים ורכבים בקריית שמונה | תיעוד from YNET Successfully committed article to database
+2024-05-05 14:50:59 - INFO - חמאס: נתניהו מערים קשיים; גורמים בי-ם: האינדיקציות לא טובות from N13 Successfully committed article to database
+2024-05-05 14:50:59 - INFO - Image has been found
+2024-05-05 14:50:59 - INFO - הרמטכ"ל ייפגש עם תא"ל עופר וינטר - כדי להחליט לגבי עתידו בצה"ל from N12 Successfully committed article to database
+2024-05-05 14:50:59 - INFO - זעם בימין על שחרור תא"ל וינטר מצה"ל, בן גביר שוקל להציע לו קידום במשטרה from YNET Successfully committed article to database
+2024-05-05 14:51:00 - INFO - הסערה סביב ראש אמ"ן המיועד: המודיעין שהגיע אליו לפני המתקפה - והפעולות שביצע בליל 6 באוקטובר from N12 Successfully committed article to database
+2024-05-05 14:51:00 - INFO - Image has been found
+2024-05-05 14:51:01 - INFO - גלנט עדכן את נתניהו במינויים: "מי שהצטיין - יקודם"; סמוטריץ' ובן גביר זועמים: "לעצור את השערורייה" from YNET Successfully committed article to database
+2024-05-05 14:51:01 - INFO - Image has been found
+2024-05-05 14:51:01 - INFO - פירוק הממשלה? התוכנית של סמוטריץ' ל"שינוי המציאות" ביהודה ושומרון from YNET Successfully committed article to database
+2024-05-05 14:51:04 - INFO - 20 שנה לזכייה ההיסטורית: דורון שפר חוזר לגביע הגדול בכדורסל from N13 Successfully committed article to database
+2024-05-05 14:51:04 - INFO - "לרפא את הנפש": הספורטאית שנפצעה ב"נובה" חוזרת למסלול from N13 Successfully committed article to database
+2024-05-05 14:51:05 - INFO - רשמית: רן בן שמעון מונה למאמן נבחרת ישראל בכדורגל from N13 Successfully committed article to database
+2024-05-05 14:51:05 - INFO - Image has been found
+2024-05-05 14:51:05 - INFO - אנטמן מול הג'וקר, גרסת ה-NBA: הקרב הגדול בין שני כוכבי העל from YNET Successfully committed article to database
+2024-05-05 14:51:06 - INFO - דיווח: מכבי ת"א סימנה את פורוורד ולנסיה from N12 Successfully committed article to database
+2024-05-05 14:51:06 - INFO - הישג ענק: רז הרשקו זכתה באליפות אירופה בג'ודו from N13 Successfully committed article to database
+2024-05-05 14:51:06 - INFO - או. ג'יי. סימפסון, כוכב הפוטבול שהואשם ברצח גרושתו, מת בגיל 76 from N13 Successfully committed article to database
+2024-05-05 14:51:07 - INFO - Image has been found
+2024-05-05 14:51:07 - INFO - אני לא יכולה בלעדיך: סיכום השבת בליגת העל from N12 Successfully committed article to database
+2024-05-05 14:51:07 - INFO - עוד מאמן שילם את המחיר: היריב הגדול ביותר של לברון - הנרקיסיזם from YNET Successfully committed article to database
+2024-05-05 14:51:07 - INFO - Image has been found
+2024-05-05 14:51:07 - INFO - החשוד בדריסת המפגינים - מאמן הכדורגל חיים סירוטקין; מעצרו הוארך עד מחר from N13 Successfully committed article to database
+2024-05-05 14:51:07 - INFO - כלום לא קורה: תעלומת עתידו של אליניב ברדה from N12 Successfully committed article to database
+2024-05-05 14:51:07 - INFO - דיווח: "מכבי ת"א סימנה את ג'סטין אנדרסון מוולנסיה" from YNET Successfully committed article to database
+2024-05-05 14:51:08 - INFO - Image has been found
+2024-05-05 14:51:08 - INFO - שלום אביטן, מלך שערי הפועל ב"ש בכל הזמנים, הלך לעולמו בגיל 73 from N13 Successfully committed article to database
+2024-05-05 14:51:08 - INFO - "רוצים לנצח, מאבק האליפות לא מעניין" from N12 Successfully committed article to database
+2024-05-05 14:51:08 - INFO - עוד מאמן שילם את המחיר: היריב הגדול ביותר של לברון - הנרקיסיזם from YNET Successfully committed article to database
+2024-05-05 14:51:09 - INFO - Image has been found
+2024-05-05 14:51:09 - INFO - עם מיצג למען החטופים: מרוץ הלילה של ת"א יוצא לדרך from N13 Successfully committed article to database
+2024-05-05 14:51:09 - INFO - טועמה לא המאמן הזמני של הפועל ת"א - הוא הקוסם שלה | טור from YNET Successfully committed article to database
+2024-05-05 14:51:09 - INFO - מותג פוטון בישראל: ראשון עם טנדר חשמלי בייבוא סדיר from N12 Successfully committed article to database
+2024-05-05 14:51:10 - INFO - בשיאן של ההפגנות בארצות הברית: שני שחקני נבחרת ישראל זכו באליפות המכללות בכדורעף עם UCLA from N12 Successfully committed article to database
+2024-05-05 14:51:10 - INFO - Image has been found
+2024-05-05 14:51:10 - INFO - פלה על גלגלים: 30 שנה למותו הטראגי של איירטון סנה from YNET Successfully committed article to database
+2024-05-05 14:51:10 - INFO - מדמון חש בכאבים ובספק למשחק מול מכבי פ"ת from N12 Successfully committed article to database
+2024-05-05 14:51:11 - INFO - Image has been found
+2024-05-05 14:51:11 - INFO - ברקת שבה מארה"ב, ברדה יבקש שדרוג בשכרו לעונה הבאה from YNET Successfully committed article to database
+2024-05-05 14:51:11 - INFO - כריסטיאנו רונאלדו: "אני לא עוקב אחרי השיאים, הם עוקבים אחריי" from N12 Successfully committed article to database
+2024-05-05 14:51:12 - INFO - Image has been found
+2024-05-05 14:51:12 - INFO - פלה על גלגלים: 30 שנה למותו הטראגי של איירטון סנה from YNET Successfully committed article to database
+2024-05-05 14:51:14 - INFO - מחאת הטסלה: הנהגים יוצאים למאבק אחרי התייקרות הביטוח from N13 Successfully committed article to database
+2024-05-05 14:51:14 - INFO - גל ההתייקרויות נמשך: גם שטראוס מעלה מחירים from N13 Successfully committed article to database
+2024-05-05 14:51:15 - INFO - בפעם החמישית ברציפות: מחיר הדלק יזנק ל-7.90 ש"ח לליטר from N13 Successfully committed article to database
+2024-05-05 14:51:16 - INFO - כמו חדש: הדרך המנצחת להחזיר חטיף צ'יפס לחיים from N12 Successfully committed article to database
+2024-05-05 14:51:16 - INFO - "המפתח לא באופק": יזם הנדל"ן נכנס לחובות - ומאות נותרו בלי בית from N13 Successfully committed article to database
+2024-05-05 14:51:16 - INFO - שימוע לפני אישום לבעלי ויקטורי: "ניסה לגרום לעליית מחירים" from N13 Successfully committed article to database
+2024-05-05 14:51:17 - INFO - ת"א: הדירה המשפחתית יוצאת הדופן של המעצבת המצליחה from N12 Successfully committed article to database
+2024-05-05 14:51:17 - INFO - חלב, מאמא עוף וסנפרוסט: תנובה מעלה מחירים של עשרות מוצרים from N13 Successfully committed article to database
+2024-05-05 14:51:18 - INFO - הרצליה: הבית המוזנח והישן עבר מחושך לאור from N12 Successfully committed article to database
+2024-05-05 14:51:18 - INFO - טורקיה עוצרת את הסחר עם ישראל; כ"ץ: "ארדואן דיקטטור" from N13 Successfully committed article to database
+2024-05-05 14:51:18 - INFO - Image has been found
+2024-05-05 14:51:18 - INFO - "ארדואן שובר את הכלים": טורקיה חסמה את הנמלים ליצוא ויבוא תוצרת לישראל from YNET Successfully committed article to database
+2024-05-05 14:51:19 - INFO - אחרי חצי שנה של ירידות: מחירי השכירות חזרו לעלות from N12 Successfully committed article to database
+2024-05-05 14:51:19 - INFO - הלילה בחצות: מחיר הדלק יזנק ל-7.90 ש"ח לליטר from N13 Successfully committed article to database
+2024-05-05 14:51:19 - INFO - Image has been found
+2024-05-05 14:51:19 - INFO - ישראלים מתלוננים: המשלוחים מנקסט מאחרים from YNET Successfully committed article to database
+2024-05-05 14:51:19 - INFO - יבואנים: הפסקת המסחר עם טורקיה תגרום לעלייה של עוד כ-20% במחירי המזון from N12 Successfully committed article to database
+2024-05-05 14:51:19 - WARNING - didnt find image
+2024-05-05 14:51:20 - INFO - החל מהיום: עסקים יצטרכו לקבל אישור לביצוע עסקאות מסכום של 25 אלף שקל from YNET Successfully committed article to database
+2024-05-05 14:51:20 - INFO - וואטסאפ רוצה לקדם את הסטטוסים באפליקציה - וכולנו עומדים לסבול מזה from N12 Successfully committed article to database
+2024-05-05 14:51:20 - INFO - Image has been found
+2024-05-05 14:51:20 - INFO - היבואנים מרגיעים: יש אלטרנטיבות למוצרים מטורקיה, אבל המחירים יעלו from YNET Successfully committed article to database
+2024-05-05 14:51:21 - INFO - מוויקס ועד מאנדיי: לעובדי ההייטק יש אופציות בשווי 2 מיליארד דולר לממש from N12 Successfully committed article to database
+2024-05-05 14:51:21 - INFO - Image has been found
+2024-05-05 14:51:21 - INFO - למ"ס: השכר הממוצע בהייטק זינק לשיא - ועמד על כ-34 אלף שקל בפברואר from YNET Successfully committed article to database
+2024-05-05 14:51:21 - INFO - הסיפור הלא ייאמן על 40 דירות יוקרה במגדל בתל אביב שעומדות ריקות from N12 Successfully committed article to database
+2024-05-05 14:51:22 - INFO - Image has been found
+2024-05-05 14:51:22 - INFO - ספייס בירקון: מועדון הכושר שופץ - המסלול המוזל התייקר ב-50% from YNET Successfully committed article to database
+2024-05-05 14:51:22 - INFO - Image has been found
+2024-05-05 14:51:22 - INFO - ג'יי.פי. מורגן לא מתרגש מהחרם הטורקי על ישראל: "ההשפעה - בעיקר בטווח הקצר" from YNET Successfully committed article to database
+2024-05-05 14:51:23 - INFO - Image has been found
+2024-05-05 14:51:23 - INFO - מה כולל החרם הטורקי ואיך הוא ישפיע על הצרכן הישראלי? from YNET Successfully committed article to database
+2024-05-05 14:51:24 - INFO - פיצה 25: הפיצרייה הניו יורקית החדשה מבית גרקו from N13 Successfully committed article to database
+2024-05-05 14:51:24 - INFO - מירושלים עד השרון: 7 מסעדות מושלמות לילדים והורים מותשים from N13 Successfully committed article to database
+2024-05-05 14:51:25 - INFO - חדשות האוכל: זה מה שברגר קינג מכניסים לתוך הוופר החדש from N13 Successfully committed article to database
+2024-05-05 14:51:26 - INFO - עושים סדר בארון המשקאות: 10 דרינקים מושלמים להעביר איתם את פסח from N13 Successfully committed article to database
+2024-05-05 14:51:27 - INFO - מצה עם מה? הטעם החדש של גולדה שלוקח את המצות לאקסטרים from N13 Successfully committed article to database
+2024-05-05 14:51:27 - INFO - ארוחת הבוקר המלכותית חוזרת לחיינו from N12 Successfully committed article to database
+2024-05-05 14:51:27 - INFO - שלא תקנו חלילה סתם: 10 עוגות וקינוחים מעולים להביא למארחים בפסח from N13 Successfully committed article to database
+2024-05-05 14:51:27 - INFO - "זו הייתה חוויה מאתגרת. אולפן זה לא המקום הטבעי שלי" from N12 Successfully committed article to database
+2024-05-05 14:51:28 - INFO - גורמה לאם הטרייה: השף תומר טל מג'ורג' וג'ון פותח מסעדה מיוחדת ליולדות from N13 Successfully committed article to database
+2024-05-05 14:51:28 - INFO - כשבאים לשילה באים אליי. לא סתם כתוב למעלה "שרון כהן" from N12 Successfully committed article to database
+2024-05-05 14:51:29 - INFO - בירקין בר: אייקון האופנה מקבלת בר על שמה ברעננה עם נוף ודרינקים מעולים from N13 Successfully committed article to database
+2024-05-05 14:51:29 - INFO - N13 fetch all articles and commit them to the database.
+2024-05-05 14:51:29 - INFO - 3 מתכונים לארוחות צהריים לתחילת שבוע from N12 Successfully committed article to database
+2024-05-05 14:51:30 - INFO - כמו חדש: הדרך המנצחת להחזיר חטיף צ'יפס לחיים from N12 Successfully committed article to database
+2024-05-05 14:51:30 - INFO - לחכות לטבעת? ההצהרה המפתיעה של עמית בזילר from N12 Successfully committed article to database
+2024-05-05 14:51:31 - INFO - "קודם כל הוא חתיך": הקראש של אסתר from N12 Successfully committed article to database
+2024-05-05 14:51:31 - INFO - Image has been found
+2024-05-05 14:51:32 - INFO - קייטרינג לפסח 2024: איפה קונים אוכל מוכן לחג? from YNET Successfully committed article to database
+2024-05-05 14:51:32 - INFO - "מותק, המנות התכווצו": מנות הביס המושלמות של "מאסטר שף" from N12 Successfully committed article to database
+2024-05-05 14:51:32 - INFO - N12 fetch all articles and commit them to the database.
+2024-05-05 14:51:33 - INFO - Image has been found
+2024-05-05 14:51:33 - INFO - רותי ברודו צעקה בכנסת: "נשבר. לא נישאר בארץ יותר" from YNET Successfully committed article to database
+2024-05-05 14:51:34 - INFO - Image has been found
+2024-05-05 14:51:34 - INFO - פסח 2024: מסעדות פתוחות בליל הסדר from YNET Successfully committed article to database
+2024-05-05 14:51:34 - INFO - Image has been found
+2024-05-05 14:51:35 - INFO - "כל הפטריות מתו": בעלת החווה בצפון נאלצה לסגור from YNET Successfully committed article to database
+2024-05-05 14:51:35 - INFO - Image has been found
+2024-05-05 14:51:35 - INFO - מדריך: איך מסדרים את קערת ליל הסדר? from YNET Successfully committed article to database
+2024-05-05 14:51:37 - INFO - Image has been found
+2024-05-05 14:51:37 - INFO - "עד כה הצלנו 250 טונות מזון": להזמין מנות שלא נאכלו - בחצי מחיר from YNET Successfully committed article to database
+2024-05-05 14:51:39 - INFO - Image has been found
+2024-05-05 14:51:39 - INFO - פסח 2024: איפה קונים עוגות כשרות ומארזים לחג? from YNET Successfully committed article to database
+2024-05-05 14:51:39 - INFO - Image has been found
+2024-05-05 14:51:40 - INFO - פסח 2024: מסעדות כשרות בחול המועד from YNET Successfully committed article to database
+2024-05-05 14:51:40 - INFO - YNET fetch all articles and commit them to the database.
