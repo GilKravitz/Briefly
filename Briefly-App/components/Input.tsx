@@ -19,8 +19,6 @@ const Input = forwardRef<Ref, iProp>((props, ref) => {
       placeholderTextColor={placeholder}
       ref={ref}
       style={[styles.input, { backgroundColor }, style]}
-      onChangeText={props.onChangeText}
-      value={props.value}
       {...otherProps}
     />
   );
@@ -41,3 +39,4 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo(Input);
+// export default Input;

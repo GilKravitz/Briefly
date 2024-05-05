@@ -7,6 +7,7 @@ export default {
     inputBackground: "#E4E4E4",
     placeholder: "#B3B3B3",
     buttonBackground: "#2D2D2D",
+    error: "#BD2025",
   },
   dark: {
     primary: "#F8F8F8",
@@ -16,5 +17,6 @@ export default {
     inputBackground: "#E4E4E4",
     placeholder: "#B3B3B3",
     buttonBackground: "#F8F8F8",
+    error: "#BD2025",
   },
 };

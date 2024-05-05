@@ -1,8 +1,16 @@
-import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  Keyboard,
+  TouchableOpacity,
+} from "react-native";
 import { View } from "@/components/Themed";
 import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { t } from "@/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
@@ -17,6 +25,18 @@ export default function SignIn() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
+
+  const FormMessage = React.memo(() => {
+    if (loginError) {
+      return <Text colorName="error">{t.signIn.loginError}</Text>;
+    }
+    return <Text colorName="textMuted">{t.signIn.signInMutedMsg}</Text>;
+  });
+
+  const handleLogin = async () => {
+    router.push("/(tabs)/");
+  };
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
@@ -25,7 +45,7 @@ export default function SignIn() {
           <BackButton onPress={() => router.back()} />
           <Heading style={styles.title}>{t.signIn.welcome}</Heading>
           <SocialButtons style={styles.socialButtons} />
-          <Text colorName="textMuted">{t.signIn.signInMutedMsg}</Text>
+          <FormMessage />
           <View style={styles.form}>
             <Input
               ref={emailRef}
@@ -39,13 +59,15 @@ export default function SignIn() {
             <Input
               ref={passwordRef}
               placeholder="Password"
-              onSubmitEditing={() => Keyboard.dismiss}
+              onSubmitEditing={() => Keyboard.dismiss()}
               secureTextEntry={true}
               value={password}
               onChangeText={setPassword}
             />
           </View>
-          <Button onPress={() => router.replace("/(app)/SelectTopics")}>{t.signUp.getStarted}</Button>
+
+          <Button onPress={handleLogin}>{t.signUp.getStarted}</Button>
+
           <Link style={styles.forgotPassLink} push href="/(auth)/ForgotPassword">
             <Heading3 size={16}>{t.signIn.forgotPassword}</Heading3>
           </Link>

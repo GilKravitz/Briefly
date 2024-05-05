@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 
 import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
-import { Link, router } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import * as Updates from "expo-updates";
 import i18n, { t } from "@/i18n";
 
@@ -29,6 +29,7 @@ const Header = (props: SvgProps) => {
 
 const index = () => {
   // i18n.locale = "he";
+  return <Redirect href={"/(tabs)"} />;
   return (
     <Container paddingTop={0}>
       <Header style={styles.header} />

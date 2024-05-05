@@ -29,6 +29,19 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
 
   const [checked, setChecked] = useState(false);
+  const [signUpError, setSignUpError] = useState(false);
+
+  const handleSignUp = () => {
+    router.replace("/(app)/SelectTopics");
+  };
+
+  const FormMessage = React.memo(() => {
+    if (signUpError) {
+      return <Text colorName="error">{t.signUp.signupError}</Text>;
+    }
+    return <Text colorName="textMuted">{t.signIn.signInMutedMsg}</Text>;
+  });
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>
@@ -36,7 +49,8 @@ export default function SignUp() {
           <BackButton onPress={() => router.back()} />
           <Heading style={styles.title}>{t.signUp.title}</Heading>
           <SocialButtons style={styles.socialButtons} />
-          <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text>
+          {/* <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text> */}
+          <FormMessage />
           <View style={styles.form}>
             <Input
               ref={nameRef}
@@ -73,7 +87,7 @@ export default function SignUp() {
               <Checkbox value={checked} onValueChange={setChecked} />
             </View>
           </View>
-          <Button onPress={() => router.replace("/(app)/SelectTopics")}>{t.signUp.getStarted}</Button>
+          <Button onPress={handleSignUp}>{t.signUp.getStarted}</Button>
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>

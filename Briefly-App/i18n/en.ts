@@ -14,6 +14,7 @@ const en: I18nKeys = {
     forgotPassword: "Forgot Password?",
     createAccount: "Dont have an account?",
     signupLink: "SIGN UP",
+    loginError: "Invalid Email or Password",
   },
   signUp: {
     title: "Create Your Account",
@@ -22,6 +23,7 @@ const en: I18nKeys = {
     iHaveRead: "I have read the",
     privacyPolicy: "Privacy Policy",
     getStarted: "GET STARTED",
+    signupError: "Invalid Email or name or Password",
   },
   forgotPassword: {
     title: "Reset Password",

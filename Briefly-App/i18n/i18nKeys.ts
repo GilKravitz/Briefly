@@ -13,6 +13,7 @@ export type I18nKeys = {
     forgotPassword: string;
     createAccount: string;
     signupLink: string;
+    loginError: string;
   };
   signUp: {
     title: string;
@@ -21,6 +22,7 @@ export type I18nKeys = {
     iHaveRead: string;
     privacyPolicy: string;
     getStarted: string;
+    signupError: string;
   };
   forgotPassword: {
     title: string;

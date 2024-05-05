@@ -13,22 +13,17 @@ const springConfig = {
   stiffness: 500,
   damping: 5,
 };
-export default function AnimatedPressable(props: AnimatedPressableProps) {
+const AnimatedPressable = (props: AnimatedPressableProps) => {
   const { onPress, children } = props;
   const scale = useSharedValue(1);
 
-  const onPressIn = useCallback((event: GestureResponderEvent) => {
+  const onPressIn = (event: GestureResponderEvent) => {
     scale.value = withSpring(0.95, springConfig);
-  }, []);
+  };
 
-  const onPressOut = useCallback((event: GestureResponderEvent) => {
-    if (onPress) {
-      scale.value = withSpring(1, springConfig, () => runOnJS(onPress)?.call(null, event));
-    } else {
-      scale.value = withSpring(1, springConfig);
-    }
-  }, []);
-
+  const onPressOut = (event: GestureResponderEvent) => {
+    scale.value = withSpring(1, springConfig, () => runOnJS(onPress)?.call(null, event));
+  };
   return (
     <Pressable style={[styles.container, props.containerStyle]} onPressIn={onPressIn} onPressOut={onPressOut}>
       <Animated.View
@@ -43,7 +38,7 @@ export default function AnimatedPressable(props: AnimatedPressableProps) {
       </Animated.View>
     </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -51,3 +46,5 @@ const styles = StyleSheet.create({
   },
   inner: {},
 });
+
+export default React.memo(AnimatedPressable);

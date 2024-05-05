@@ -14,6 +14,7 @@ const he: I18nKeys = {
     forgotPassword: "שכחת סיסמה?",
     createAccount: "אין לך חשבון?",
     signupLink: "הרשמה",
+    loginError: "דואר אלקטרוני או סיסמה לא נכונים",
   },
   signUp: {
     title: "הירשם",
@@ -22,6 +23,7 @@ const he: I18nKeys = {
     iHaveRead: "קראתי ואני מסכים ל",
     privacyPolicy: "מדיניות פרטיות",
     getStarted: "התחל",
+    signupError: "דואר אלקטרוני או שם או סיסמה לא נכונים",
   },
   forgotPassword: {
     title: "שכחת סיסמה",
