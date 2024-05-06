@@ -3,7 +3,7 @@ import backoff
 from ratelimit import limits, RateLimitException
 from typing import List, Dict, Any
 import google.generativeai as genai
-from ai_text_proccesing import ai_text_processor
+from ai_text_proccesing.ai_text_processor import AiTextProcessor
 from cluster.cluster import Cluster
 
 class ArticleProcessor:
@@ -63,23 +63,12 @@ class ArticleProcessor:
             cluster_index (int): The index of the cluster being summarized.
         '''
         cluster_string = cluster.combined_data
-
         if cluster.article_count > 1:
             logging.debug(f'Article ids: {cluster.articles_ids} were merged into one cluster')
         
         try:
-            # Ensure that the cluster contains an amount of words that is acceptable by the API
-            tokens_in_message = self.model.count_tokens(self.PROMPT + cluster_string).total_tokens
-            if(tokens_in_message > self.MAX_TOKENS_PER_CLUSTER):
-                words = cluster_string.split()[:self.MAX_NUMBER_OF_WORDS]
-                cluster_string = ' '.join(words)
-            
-            self.convorsation.send_message(self.PROMPT + cluster_string)
-
-            logging.debug(f'Summarizing cluster number {cluster_index} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
-
-            summary_text = self.convorsation.last.text
-            cluster.summary_text = summary_text
+            cluster_string = self.__prepare_cluster_string(cluster_string)
+            self.__send_and_summarize(cluster, cluster_index, cluster_string)
 
         except Exception as e:
             logging.error(f'Failed to summarize cluster due to: {str(e)}')
@@ -96,14 +85,15 @@ class ArticleProcessor:
         Returns:
             List[Cluster]: A list of clusters with summarized articles.
         '''
-        if len(articles) < 2:  
-            ###TODO handel for one summerizer
-            # edge case: not able to cluster articles while there is less then 2 articles
+        if len(articles) > 1:  
+            self.logger.info('Clustering articles based on similarity matrix.')
+            clusters = AiTextProcessor.make_clusters(similarity_matrix, articles)
+        elif len(articles) == 1:
+            clusters = [Cluster(articles[0])]
+        else:
+            self.logger.error('no articles')
             return None
         
-        self.logger.info('Clustering articles based on similarity matrix.')
-        clusters = ai_text_processor.AiTextProcessor.make_clusters(similarity_matrix, articles)
-
         #TODO:debuging clusters to text file remove
         self.write_clusters_to_file(clusters, 'clusters.txt')
 
@@ -111,10 +101,47 @@ class ArticleProcessor:
         for cluster_index, cluster in enumerate(clusters):
             self.__summarize_cluster_gimini(cluster, cluster_index)
 
-        #TODO debug the summary 
+        #TODO debug the summary text file remove
         self.write_summaries_to_file(clusters, 'summeries.txt')
 
         return clusters
+    
+    def __prepare_cluster_string(self, cluster_string: str) -> str:
+        '''Prepares the cluster string for summarization by ensuring it does not exceed 
+        the maximum allowed tokens. It truncates the string if necessary.
+        
+        Args:
+            cluster_string (str): The combined text of the cluster.
+            
+        Returns:
+            str: The adjusted cluster string that fits within token limits.
+        '''
+        tokens_in_message = self.model.count_tokens(self.PROMPT + cluster_string).total_tokens
+        if tokens_in_message > self.MAX_TOKENS_PER_CLUSTER:
+            words = cluster_string.split()[:self.MAX_NUMBER_OF_WORDS]
+            cluster_string = ' '.join(words)
+        return cluster_string
+
+    def __send_and_summarize(self, cluster: Cluster, cluster_index: int, cluster_string: str):
+        '''Sends the prepared cluster string to the API for summarization and logs the process.
+        It updates the cluster object with the summary obtained.
+        
+        Args:
+            cluster (Cluster): The cluster being summarized.
+            cluster_index (int): The index of the cluster.
+            cluster_string (str): The prepared string of the cluster.
+        '''
+        self.convorsation.send_message(self.PROMPT + cluster_string)
+        logging.debug(f'Summarizing cluster number {cluster_index} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
+        summary_text = self.convorsation.last.text
+        self.convorsation.send_message('write me a title in hebrew to this summary')
+        title = self.convorsation.last.text
+        self.convorsation.send_message('give me a 3 hashtags in hebrew for this summary')
+        hashtags = self.convorsation.last.text
+
+        cluster.summary_text = summary_text
+        cluster.summary_title = title
+        cluster.summary_hashtags = hashtags
 
     def write_clusters_to_file(self, clusters: List[Cluster], filename: str) -> None:
         '''Writes the textual representation of each cluster to a file.

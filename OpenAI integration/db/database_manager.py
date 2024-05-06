@@ -3,6 +3,7 @@ import psycopg2
 import psycopg2.extras
 import logging
 from cluster.cluster import Cluster
+from image_uploader.image_uploader import ImageUploader
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from typing import List, Optional, Dict, Any
@@ -100,6 +101,38 @@ class DatabaseManager:
         for cluster in clusters:
             self.__insert_summarized_article(cluster)
 
+    def insert_images_to_aws(self):
+        articles = self.get_null_img_articles_id()
+        for id,img_url in articles:
+            self.logger.info(f'Processing article with id: {id}')
+            s3_url = ImageUploader.upload_image_to_s3(img_url)
+            self.update_s3image_url(id,s3_url)
+
+    def get_null_img_articles_id(self):
+        query = "SELECT id,image FROM merged_articles WHERE s3_image IS NULL AND image IS NOT NULL"
+        res =  self.execute(query)
+        self.logger.info(f'Getting articles with null s3_image: {len(res)}')
+        return res
+    
+    def update_s3image_url(self, article_id, url):
+        query = f"UPDATE merged_articles SET s3_image = '{url}' WHERE id = {article_id}"
+        self.execute(query)
+        self.__db_connection.commit()
+        self.logger.info(f'Updated article {article_id} with s3_image url: {url}')
+
+    def execute(self, query):
+        cursor = self.__db_connection.cursor()
+        try:
+            cursor.execute(query)
+            self.logger.info(f'Executed query: {query}')
+        except Exception as e:
+            self.logger.error(f'Error executing query: {query}', e)
+
+        if cursor.description:
+            return cursor.fetchall()
+        else:
+            return None
+        
     def close_connection(self) -> None:
         '''Closes the database connection.
 

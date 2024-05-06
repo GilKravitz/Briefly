@@ -12,7 +12,9 @@ class Cluster:
         self.publish_date = articles[0]['publish_date'] if articles else None
         self.links = " ".join(article['link'] for article in articles)
         self.articles_ids = [article['id'] for article in articles]
-        self.summary_text = ""
+        self._summary_text = ""
+        self._summary_hashtags = ""
+        self._summary_title = ""
 
     @property
     def combined_data(self):
@@ -25,12 +27,6 @@ class Cluster:
 
     @property
     def article_count(self):
-        '''
-        Returns the number of articles in the cluster.
-
-        Returns:
-            int: The count of articles.
-        '''
         return len(self.articles)
     
     @property
@@ -40,6 +36,22 @@ class Cluster:
     @summary_text.setter
     def summary_text(self, value):
         self._summary_text = value
+
+    @property
+    def summary_title(self):
+        return self._summary_title
+    
+    @summary_title.setter
+    def summary_title(self, value):
+        self._summary_title = value
+
+    @property
+    def summary_hashtags(self):
+        return self._summary_hashtags
+    
+    @summary_hashtags.setter
+    def summary_hashtags(self, value):
+        self._summary_hashtags = value
     
     def cluster_to_text(self):
         '''Returns a textual representation of the cluster, listing each article's details.
