@@ -7,7 +7,7 @@ import TagSelect from "@/components/pressable/TagSelect";
 import Button from "@/components/pressable/Button";
 import { router } from "expo-router";
 
-const tags = ["Tech", "Money", "Politics", "Sports"];
+const tags = ["Tech", "Money", "Politics", "Sports", "Food"];
 const index = () => {
   return (
     <Container>
@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
     width: "100%",
     gap: 15,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   nextButton: {
     marginTop: 50,

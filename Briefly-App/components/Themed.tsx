@@ -25,8 +25,8 @@ export function useThemeColor(
   colorInverted?: boolean
 ) {
   let theme = useColorScheme() ?? "light";
-  //
   theme = "light";
+
   if (colorInverted) {
     theme = theme === "light" ? "dark" : "light";
   }
@@ -40,12 +40,14 @@ export function useThemeColor(
 }
 
 export function Text(props: TextProps) {
-  const { style, lightColor, darkColor, colorInverted, ...otherProps } = props;
-  const theme = colorInverted ? { light: darkColor, dark: lightColor } : { light: lightColor, dark: darkColor };
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const theme = { light: lightColor, dark: darkColor };
   const colorName = props.colorName ?? "text";
-  const color = useThemeColor(theme, colorName, colorInverted);
+
+  const color = useThemeColor(theme, colorName);
   const dir = useDirection();
   const textAlign = dir === "rtl" ? "right" : "left";
+
   return <DefaultText style={[{ color, textAlign }, style]} {...otherProps} />;
 }
 

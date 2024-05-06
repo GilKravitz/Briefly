@@ -13,7 +13,7 @@ const Button = (props: iProps) => {
   return (
     <AnimatedPressable onPress={onPress}>
       <View colorName="buttonBackground" style={[styles.button, style]}>
-        <Heading2 size={20} colorInverted>
+        <Heading2 colorName="background" size={20} colorInverted>
           {props.children}
         </Heading2>
       </View>

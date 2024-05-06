@@ -1,4 +1,4 @@
-psycopg2-binary==2.9.1
-python-dotenv==0.19.1
-boto3==1.34.98
-requests==2.26.0
+psycopg
+python-dotenv
+boto3
+requests

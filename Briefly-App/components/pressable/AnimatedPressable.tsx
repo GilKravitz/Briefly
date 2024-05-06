@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { StyleSheet, Pressable, PressableProps, StyleProp, ViewStyle, GestureResponderEvent } from "react-native";
-import Animated, { useSharedValue, withSpring, runOnJS } from "react-native-reanimated";
+import Animated, { useSharedValue, withSpring, runOnJS, useAnimatedStyle } from "react-native-reanimated";
 
 interface AnimatedPressableProps extends PressableProps {
   onPress: (event: GestureResponderEvent) => void;
@@ -24,18 +24,15 @@ const AnimatedPressable = (props: AnimatedPressableProps) => {
   const onPressOut = (event: GestureResponderEvent) => {
     scale.value = withSpring(1, springConfig, () => runOnJS(onPress)?.call(null, event));
   };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
   return (
     <Pressable style={[styles.container, props.containerStyle]} onPressIn={onPressIn} onPressOut={onPressOut}>
-      <Animated.View
-        style={[
-          {
-            transform: [{ scale: scale }],
-          },
-          props.style as StyleProp<ViewStyle>,
-        ]}
-      >
-        {children}
-      </Animated.View>
+      <Animated.View style={[props.style as StyleProp<ViewStyle>, animatedStyle]}>{children}</Animated.View>
     </Pressable>
   );
 };

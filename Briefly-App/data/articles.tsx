@@ -1,4 +1,4 @@
-import { Article, Topic } from "@/api/types";
+import { Article, Topic } from "@/types";
 
 const topics: { [key: string]: Topic } = {
   Tech: { name: "Tech", id: 1 },
@@ -6,150 +6,453 @@ const topics: { [key: string]: Topic } = {
   Sports: { name: "Sports", id: 3 },
   Money: { name: "Money", id: 4 },
 };
-const articles: Article[] = [
+export const articles: Article[] = [
   {
-    id: 1,
-    topics: [topics["Tech"]],
-    title: "Election Reforms: A New Dawn",
-    content:
-      "As nations around the globe tighten their belts, political landscapes are undergoing significant transformations. From election reforms to diplomatic strategies, the implications of these changes ripple through societies. Experts argue that the adoption of digital platforms in legislative processes could enhance transparency and citizen engagement. However, the digital divide remains a formidable barrier. Meanwhile, environmental policies are gaining traction, reflecting a global shift towards sustainability. The question remains: Are we witnessing the dawn of a new political era or merely the cyclical nature of governance?",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "143",
+    article:
+      '**מטח רקטות מלבנון על קריית שמונה: פצוע קל ונזק לרכוש**\n\nמטח של כ-20 רקטות נורה מלבנון לעבר קריית שמונה. כמחצית מהרקטות יורטו על ידי מערכות ההגנה, אך חלקן התפוצצו בעיר וגרמו לנזק לבנייני מגורים ולרכבים. אדם אחד נפצע קל.\n\n**התקיפה הישראלית בדרום לבנון:**\n\n* לפי אל-אחבאר, ארבעה אזרחים נהרגו בתקיפת צה"ל במיס אל-ג\'בל.\n* דובר צה"ל מסר כי התקיפה כוונה נגד מטרות של חיזבאללה.\n\n**בעקבות הירי:**\n\n* זרם החשמל נפל בקריית שמונה, מנרה ומטולה.\n* מועצה אזורית גליל עליון סגרה את התנועה ביישובים המפונים ובמספר כבישים באזור.\n\n**תגובת חיזבאללה:**\n\n* ארגון חיזבאללה לקח אחריות על הירי, וטען שהוא הגיע "בתגובה לתקיפה במיס אל-ג\'בל ומותם ופציעתם של אזרחים".\n\n**השלכות:**\n\n* המתיחות בין ישראל ללבנון עלתה לאחר הירי והתקיפה.\n* תושבי קריית שמונה חווים מתח רב בשל המצב הביטחוני.\n\n**המלצות:**\n\n* על ישראל וחיזבאללה לפעול במתינות למניעת הסלמה.\n* על הקהילה הבינלאומית לגנות את הירי ולעודד את הצדדים להגיע לפתרון דיפלומטי.',
+    category: "Politics",
+    title: "מטח של כ-20 רקטות מלבנון, נזק לבנייני מגורים ורכבים בקריית שמונה | תיעוד",
+    publish_date: "2024-05-05 11:19:05",
+    links: ["https://www.ynet.co.il/news/article/b1mlojhmr#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/coEZxQnh.jpg",
   },
   {
-    id: 2,
-    topics: [topics["Money"]],
-    title: "Investing in Green Energy",
-    content:
-      "The financial sector is witnessing unprecedented changes, with cryptocurrency leading the charge towards a digital economy. Meanwhile, the stock market shows signs of recovery, buoyed by investor confidence and governmental stimulus packages. As the world grapples with the post-pandemic economic landscape, green energy emerges as a lucrative investment avenue, promising long-term benefits and sustainability. The real estate market, however, faces a digital transformation challenge, balancing traditional practices with the convenience and reach of online platforms. These dynamics offer a glimpse into the future of finance, marked by innovation and adaptation.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "142",
+    article:
+      '**אביו של החטוף הירש: "העסקה כוללת את כל החטופים בשלבים"**\n\nג\'ון פולין, אביו של החטוף הירש גולדברג פולין, אמר בריאיון ל-ynet כי העסקה עם חמאס כוללת את שחרור כל החטופים בשלבים.\n\n**עמדת פולין:**\n\n* משפחות החטופים לא צריכות לקבוע את המחיר של העסקה.\n* העדיפות העליונה היא להחזיר את כל החטופים.\n* הוא מבין את עמדת המשפחות השכולות הדורשות להמשיך את המלחמה, אך סבור שצריך לתת עדיפות להחזרת החטופים.\n\n**עמדות אחרות:**\n\n* ישנם מפגינים הדורשים עסקה מיידית לשחרור החטופים.\n* ישנם מפגינים הדורשים להיכנס לרפיח ולהמשיך בלחץ הצבאי על חמאס.\n\n**השלכות:**\n\n* העסקה צפויה להתעכב עד לתשובת חמאס.\n* המתיחות בין הממשלה למשפחות החטופים עלולה להסלים.\n\n**המלצות:**\n\n* על הממשלה וחמאס למצוא פתרון שיאפשר את שחרור כל החטופים.\n* על משפחות החטופים והמשפחות השכולות לנהל שיח מכבד ולהימנע מהתנגשויות.',
+    category: "Politics",
+    title: 'אביו של החטוף הירש: "העסקה כוללת את כל החטופים בשלבים, כך אנחנו מבינים מבכירים בארה"ב"',
+    publish_date: "2024-05-05 10:35:05",
+    links: ["https://www.ynet.co.il/news/article/symvcp4z0#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/bbQn8RAk.jpg",
   },
   {
-    id: 3,
-    topics: [topics["Sports"]],
-    title: "Fitness Trends Shaping the Future",
-    content:
-      "As the world gears up for the 2024 Olympics, expectations soar, highlighting the event's significance in fostering global unity and showcasing athletic excellence. Concurrently, eSports continue to rise, challenging traditional notions of sports and entertainment. The spotlight also shines on women athletes who are breaking barriers and setting new records, symbolizing progress and empowerment. Behind the scenes, the financial intricacies of hosting mega-sports events are brought to light, revealing a complex web of investments, sponsorships, and economic impacts. Meanwhile, evolving fitness trends reflect society's growing emphasis on health and well-being.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "141",
+    article:
+      '**זעם בימין על שחרור תא"ל וינטר מצה"ל**\n\nהשר לביטחון לאומי, איתמר בן גביר, שוקל להציע לתא"ל עופר וינטר להצטרף למשטרה בדרגת ניצב. זאת לאחר שווינטר לא נכלל בסבב המינויים האחרון בצה"ל וישוחרר מהצבא.\n\n**ביקורת בימין:**\n\n* שר האוצר בצלאל סמוטריץ\': "המקום של וינטר בפיקוד הבכיר, שיכניס לצה"ל התקפיות וחדות".\n* שר האנרגיה אלי כהן: "לא הופקו הלקחים אחרי 7 באוקטובר".\n* יו"ר מפלגת נעם אבי מעוז: "קורא לראש הממשלה לפטר את שר הביטחון ולמנות את תא"ל עופר וינטר במקומו".\n\n**השלכות:**\n\n* הצעת בן גביר לוינטר עשויה להצית את המתח בין הממשלה לצה"ל.\n* שחרורו של וינטר מצה"ל צפוי לפגוע במורל בקרב קצינים בכירים.\n\n**המלצות:**\n\n* על הממשלה והרמטכ"ל למצוא פתרון שיספק גם את הצבא וגם את הדרג הפוליטי.\n* על צה"ל לשקול את ההשלכות של שחרור קצינים בכירים על המורל ועל מוכנות הצבא.',
+    category: "Politics",
+    title: 'זעם בימין על שחרור תא"ל וינטר מצה"ל, בן גביר שוקל להציע לו קידום במשטרה',
+    publish_date: "2024-05-05 08:22:04",
+    links: ["https://www.ynet.co.il/news/article/rkppzh4g0"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/VF1WjUfR.jpg",
   },
   {
-    id: 4,
-    topics: [topics["Tech"]],
-    title: "Cybersecurity in the 5G Era",
-    content:
-      "The tech industry is at the forefront of innovation, with artificial intelligence (AI) leading the charge. As AI technologies evolve, they promise to transform everyday life, yet skeptics question their ethical implications. Cybersecurity becomes increasingly critical in the 5G era, with new challenges and opportunities for protection. The future of work is being reshaped by remote and hybrid models, spurred by the pandemic's lasting effects. In the realm of renewable energy, technological advancements offer hope for sustainable solutions. Meanwhile, virtual reality (VR) continues to push the boundaries of digital experiences, promising unprecedented levels of immersion and interaction.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "140",
+    article:
+      '**"רוצים לנצח, מאבק האליפות לא מעניין"**\n\nמאמן הפועל באר שבע, אליניב ברדה, הצהיר לקראת המשחק מול מכבי תל אביב שקבוצתו רוצה לנצח בכל משחק, גם אם הדבר פוגע במאבק האליפות.\n\n**הרכב הפועל באר שבע:**\n\n* מיגל ויטור ויוג\'ין אנסה יפתחו במרכז ההגנה.\n* הלדר לופס יפתח בקישור האחורי.\n* רמזי ספורי, אסטריט סלמאני וניקיטה רוקאביציה יפתחו בחוד.\n\n**ציטוטים:**\n\n* אליניב ברדה: "אנחנו רוצים לנצח, מאבק האליפות לא מעניין".\n* מיגל ויטור: "אנחנו רוצים להמשיך במומנטום החיובי".\n\n**השלכות:**\n\n* הפועל באר שבע צפויה לתקוף את מכבי תל אביב ולנסות לנצח את המשחק.\n* המשחק צפוי להיות צמוד ומותח.\n\n**המלצות:**\n\n* אוהדי הפועל באר שבע צריכים לתמוך בקבוצתם ולעודד אותה לנצח.\n* אוהדי מכבי תל אביב צריכים להגיע למשחק כדי ליצור אווירה ביתית.',
+    category: "Sport",
+    title: '"רוצים לנצח, מאבק האליפות לא מעניין"',
+    publish_date: "2024-05-05 13:30:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-a72111e92584f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/qGIfApiC.jpg",
   },
   {
-    id: 5,
-    topics: [topics["Politics"]],
-    title: "Global Summits and Local Impacts",
-    content:
-      "As nations around the globe tighten their belts, political landscapes are undergoing significant transformations. From election reforms to diplomatic strategies, the implications of these changes ripple through societies. Experts argue that the adoption of digital platforms in legislative processes could enhance transparency and citizen engagement. However, the digital divide remains a formidable barrier. Meanwhile, environmental policies are gaining traction, reflecting a global shift towards sustainability. The question remains: Are we witnessing the dawn of a new political era or merely the cyclical nature of governance? This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "139",
+    article:
+      '**הרמטכ"ל ייפגש עם תא"ל וינטר להחליט על עתידו בצה"ל**\n\nהרמטכ"ל הרצי הלוי ייפגש בקרוב עם תא"ל עופר וינטר כדי לדון בעתידו בצה"ל. וינטר, שלא מחזיק בתפקיד רשמי כשנה וחצי, לא נכלל בסבב המינויים האחרון, מה שיצר אצלו תסכול.\n\n**רקע להחלטה:**\n\n* וינטר נפגש עם קצינים בתחילת המלחמה והתבטא נגד כניסה קרקעית לרצועת עזה.\n* לטענתו, הוא התכוון שאסור להיכנס "עיוור" לרצועה ושלאחר תכנון מבצעי ניתן יהיה לפעול.\n\n**טענות וינטר:**\n\n* הוא "סומן" על ידי הרמטכ"ל ולא הובאו בחשבון יכולותיו בזמן המלחמה.\n* הגיע הזמן לשים מחלוקות ישנות מאחור ולתת למפקדים כמוהו תפקיד מוביל בצבא.\n\n**השלכות:**\n\n* עשרות הורים שכולים ללוחמים בחטיבת גולני מתכננים להגיש עתירה לבג"ץ נגד מינוי של וינטר לתפקיד.\n* ההחלטה על עתידו של וינטר צפויה להשפיע על המורל בצה"ל.\n\n**ציטוט:**\n\n* "הוא לא ראוי, ובטח ובטח באשר אליו כמפקד בצה"ל שהביא את כולנו לאסון הזה של שבת בבוקר". (אביה של רוני אשל ז"ל)\n\n**המלצות:**\n\n* על הרמטכ"ל לשקול את טענותיו של וינטר ולשקול את עתידו בצה"ל באופן אובייקטיבי.\n* צה"ל צריך לקחת בחשבון את השפעת ההחלטה על ההורים השכולים ועל המורל בקרב החיילים.',
+    category: "Politics",
+    title: 'הרמטכ"ל ייפגש עם תא"ל עופר וינטר - כדי להחליט לגבי עתידו בצה"ל',
+    publish_date: "2024-05-05 14:28:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/rao57FsL.jpg",
   },
   {
-    id: 6,
-    topics: [topics["Money"]],
-    title: "Cryptocurrency: The Future of Finance",
-    content:
-      "The financial sector is witnessing unprecedented changes, with cryptocurrency leading the charge towards a digital economy. Meanwhile, the stock market shows signs of recovery, buoyed by investor confidence and governmental stimulus packages. As the world grapples with the post-pandemic economic landscape, green energy emerges as a lucrative investment avenue, promising long-term benefits and sustainability. The real estate market, however, faces a digital transformation challenge, balancing traditional practices with the convenience and reach of online platforms. These dynamics offer a glimpse into the future of finance, marked by innovation and adaptation. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "138",
+    article:
+      '**מה קורה אם חמאס אומר "כן": השלבים הבאים בדרך לעסקה**\n\nחמאס עדיין לא השיב על הצעת העסקה, אך אם ישיב בחיוב, יידרשו מפגשים נוספים בקהיר כדי לרדת לפרטים.\n\n**השלב ההומניטרי:**\n\n* יימשך 40 יום עם אפשרות להארכה.\n* הפסקת אש זמנית הדדית.\n* נסיגת כוחות ישראליים לאזור קרוב לגבול ברצועת עזה.\n* חמאס ישחרר 33 חטופים ישראלים, בהדרגה.\n* ישראל תשחרר מספר מוסכם של אסירים פלסטינים בתמורה.\n\n**השלבים הבאים:**\n\n* קבלת התשובה הסופית של חמאס.\n* משלחת ישראלית מקצועית תצא לקהיר לדיון בפרטי ההצעה.\n* משלחת בכירים ישראלים בראשות ראשי המוסד והשב"כ תצא לקהיר לחתום על העסקה.\n* פרסום כלל ההחלטות לאחר הגעה לעסקה.\n* אישור העסקה על ידי השרים.\n\n**ציטוט:**\n\n* "הצהרות שליליות של ישראל לא ישפיעו על הדיאלוג המתמשך". (מקורות מצריים)\n\n**השלכות:**\n\n* אם חמאס יסכים לעסקה, היא צפויה להוביל להקלה הומניטרית ברצועת עזה.\n* העסקה צפויה לשחרר את כל החטופים הישראלים.\n* העסקה תקל על משבר הפליטים ברצועת עזה.\n\n**המלצות:**\n\n* על ישראל וחמאס להמשיך במו"מ בזהירות כדי להגיע לעסקה הוגנת לשני הצדדים.\n* הקהילה הבינלאומית צריכה לתמוך במו"מ ולסייע ביישום העסקה.',
+    category: "Politics",
+    title: 'מה קורה אם חמאס אומר "כן": השלבים הבאים בדרך לעסקה',
+    publish_date: "2024-05-05 07:46:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-1ac431c2bf64f81026.htm"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/ki9hZGfk.jpg",
   },
   {
-    id: 7,
-    topics: [topics["Sports"]],
-    title: "Olympics 2024: What to Expect",
-    content:
-      "As the world gears up for the 2024 Olympics, expectations soar, highlighting the event's significance in fostering global unity and showcasing athletic excellence. Concurrently, eSports continue to rise, challenging traditional notions of sports and entertainment. The spotlight also shines on women athletes who are breaking barriers and setting new records, symbolizing progress and empowerment. Behind the scenes, the financial intricacies of hosting mega-sports events are brought to light, revealing a complex web of investments, sponsorships, and economic impacts. Meanwhile, evolving fitness trends reflect society's growing emphasis on health and well-being. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "137",
+    article:
+      '**מכבי ת"א סימנה את אנדרסון מוולנסיה, הפסידה לחולון**\n\nמכבי ת"א סימנה את פורוורד ולנסיה ג\'סטין אנדרסון לקראת העונה הבאה, כך דיווח עיתונאי איטלקי. אנדרסון מחזיק בחוזה לשנתיים נוספות בוולנסיה, אולם הוא צפוי לעזוב בקיץ.\n\n**הפסד לחולון:**\n\n* מכבי ת"א הפסידה אתמול (שבת) 82:76 להפועל חולון בליגת העל.\n* הצהובים חסרו את כוכביהם לנוח לקראת משחק מספר 5 בסדרת רבע גמר היורוליג מול פנאתינייקוס.\n* ג\'ון דיברתולומאו נפצע בכתף וחומרת הפציעה עדיין לא ידועה.\n\n**ציטוטים:**\n\n* עודד קטש: "קיבלנו החלטה לתת למספר לא קטן של שחקנים לנוח".\n* עמית שרף (חולון): "צריך לדעת לקחת את זה. הם שיחקו בהרכבים שקצת קשים לנו".\n\n**השלכות:**\n\n* ההפסד לחולון לא צפוי לפגוע במכבי ת"א לקראת המשחק החשוב ביורוליג.\n* חולון קיבלה דחיפה מוראלית לקראת סדרת רבע גמר הפלייאוף מול הפועל ירושלים.\n\n**המלצות:**\n\n* על מכבי ת"א לנהל בזהירות את הסגל שלה ולהימנע מפציעות נוספות לקראת המשחקים המכריעים ביורוליג.\n* חולון צריכה להתכונן היטב לפלייאוף ולנצל את המומנטום מהניצחון על מכבי ת"א.',
+    category: "Sport",
+    title: 'דיווח: "מכבי ת"א סימנה את ג\'סטין אנדרסון מוולנסיה"',
+    publish_date: "2024-05-05 08:36:04",
+    links: ["https://www.ynet.co.il/sport/israelibasketball/article/ryjrwung0#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/NaPr-U13.jpg",
   },
   {
-    id: 8,
-    topics: [topics["Tech"]],
-    title: "AI Revolution: Beyond the Hype",
-    content:
-      "The tech industry is at the forefront of innovation, with artificial intelligence (AI) leading the charge. As AI technologies evolve, they promise to transform everyday life, yet skeptics question their ethical implications. Cybersecurity becomes increasingly critical in the 5G era, with new challenges and opportunities for protection. The future of work is being reshaped by remote and hybrid models, spurred by the pandemic's lasting effects. In the realm of renewable energy, technological advancements offer hope for sustainable solutions. Meanwhile, virtual reality (VR) continues to push the boundaries of digital experiences, promising unprecedented levels of immersion and interaction. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "136",
+    article:
+      '**נתניהו: ישראל לא תאפשר את סיום הלחימה, זו כניעה**\n\nראש הממשלה בנימין נתניהו הציב היום (ראשון) קווים אדומים בעסקה עם חמאס, אותם הוא לא יסכים לחצות.\n\n**תנאי נתניהו:**\n\n* לא לעצור את המלחמה ולהוציא את כלל כוחות צה"ל מהרצועה.\n* לא להשאיר את חמאס על כנו.\n* לא לשקם את התשתיות הצבאיות של חמאס.\n\n**השלכות:**\n\n* אם נתניהו יעמוד בסירובו, המלחמה עשויה להימשך.\n* עסקת חטופים עשויה להתעכב או להימנע.\n* חמאס עשוי לחזור ולבצע פיגועים נגד אזרחי ישראל.\n\n**המלצות:**\n\n* על ישראל וחמאס למצוא דרך לפשר בין עמדותיהם כדי להגיע להסכם.\n* הקהילה הבינלאומית צריכה ללחוץ על שני הצדדים להגיע להסכם.\n* ישראל צריכה להכין את צה"ל לאפשרות של המשך הלחימה.\n\n**ציטוט מרכזי:**\n\n* "מדינת ישראל איננה יכולה לקבל זאת. איננו מוכנים לקבל מצב בו גדודי החמאס יצאו מהמחילות שלהם, ישתלטו על עזה מחדש, ישקמו את התשתיות הצבאיות שלהם, ויחזרו לאיים על אזרחי ישראל ביישובי העוטף, בערי הדרום, בכל חלקי המדינה. במקרה זה, שבעה באוקטובר הבא זה רק עניין של זמן. החמאס יוכל לממש את הבטחתו לבצע שוב ושוב ושוב את מעשי הטבח, את מעשי האונס והחטיפות".',
+    category: "Politics",
+    title: "נתניהו, בקולו: ישראל לא תאפשר את סיום הלחימה, זו כניעה",
+    publish_date: "2024-05-05 13:52:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/2b_xugWP.jpg",
   },
   {
-    id: 9,
-    topics: [topics["Politics"]],
-    title: "Legislative Changes in Digital Era",
-    content:
-      "As nations around the globe tighten their belts, political landscapes are undergoing significant transformations. From election reforms to diplomatic strategies, the implications of these changes ripple through societies. Experts argue that the adoption of digital platforms in legislative processes could enhance transparency and citizen engagement. However, the digital divide remains a formidable barrier. Meanwhile, environmental policies are gaining traction, reflecting a global shift towards sustainability. The question remains: Are we witnessing the dawn of a new political era or merely the cyclical nature of governance? This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "135",
+    article:
+      "**מכבי תל אביב סימנה את פורוורד ולנסיה**\n\nמכבי תל אביב סימנה את ג'סטין אנדרסון, פורוורד ולנסיה מליגת העל הספרדית, לקראת העונה הבאה, כך דווח באיטליה.\n\nאנדרסון בן ה-29 שיחק בעבר בסן אנטוניו ספרס ובברוקלין נטס ב-NBA. בעונה הנוכחית הוא מעמיד ממוצעים של 8.9 נקודות ו-4.3 ריבאונדים למשחק.\n\n**הצורך של מכבי תל אביב בפורוורד:**\n\n* מכבי תל אביב מחפשת פורוורד איכותי שיחליף את ג'יימס ננאלי, שעזב לאנדולו אפס.\n* אנדרסון הוא פורוורד ורסטי שיכול לשחק גם בעמדת הגארד.\n* הוא מוסיף יכולות אתלטיות, ניסיון ויציבות לקו הקדמי של מכבי תל אביב.\n\n**היתרונות של אנדרסון:**\n\n* אתלטיות ופיזיות גבוהות.\n* יכולת קליעה טובה מבחוץ.\n* מגן מצוין.\n* ניסיון ב-NBA ובאירופה.\n\n**השלכות:**\n\n* אם מכבי תל אביב תצליח לצרף את אנדרסון, היא תגביר משמעותית את הסגל שלה לעונה הבאה.\n* אנדרסון יכול לספק למכבי תל אביב את הגמישות והעומק שהיא צריכה כדי להתחרות בצמרת היורוליג.\n\n**המלצות:**\n\n* מכבי תל אביב צריכה לפעול במהירות כדי לצרף את אנדרסון, שנחשב לשחקן מבוקש בשוק העברות.\n* הצהובים צריכים להציע לאנדרסון חוזה אטרקטיבי שיעמוד בציפיותיו הפיננסיות והמקצועיות.",
+    category: "Sport",
+    title: 'דיווח: מכבי ת"א סימנה את פורוורד ולנסיה',
+    publish_date: "2024-05-05 11:48:00",
+    links: [
+      "https://www.mako.co.il/news-sport/basketball-2024_q2/Article-c56f79a23d74f81026.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/yHI_BtzP.jpg",
   },
   {
-    id: 10,
-    topics: [topics["Money"]],
-    title: "Stock Market Trends 2024",
-    content:
-      "The financial sector is witnessing unprecedented changes, with cryptocurrency leading the charge towards a digital economy. Meanwhile, the stock market shows signs of recovery, buoyed by investor confidence and governmental stimulus packages. As the world grapples with the post-pandemic economic landscape, green energy emerges as a lucrative investment avenue, promising long-term benefits and sustainability. The real estate market, however, faces a digital transformation challenge, balancing traditional practices with the convenience and reach of online platforms. These dynamics offer a glimpse into the future of finance, marked by innovation and adaptation. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "134",
+    article:
+      '**עזה: רפיח במוקד המתיחות בין ישראל לחמאס**\n\nישראל מאיימת בכניסה לרפיח כדי להשמיד את גדודי חמאס שנותרו בה, גם אם תהיה הפסקת אש זמנית. חמאס מצד שני טוען שהדבר לא ישבור את רוחו ויפגע במו"מ לעסקת חטופים.\n\n**חטיבת רפיח:**\n\n* חטיבת רפיח היא אחת החטיבות הגדולות של חמאס ברצועת עזה.\n* מפקד החטיבה בג\'יהאד האיסלאמי, אימן זערב, חוסל על ידי צה"ל.\n* אלפי אנשי חמאס נמלטו לרפיח מאז תחילת המלחמה.\n* באזור רפיח מתגוררים כיום כ-1.3 מיליון עזתים, פי 6 ממספר התושבים לפני המלחמה.\n\n**ציר פילדלפי:**\n\n* ציר פילדלפי הוא גבול בין עזה למצרים.\n* ישראל רואה בכיבוש הציר מחדש דרך לאטום את הפרצה שדרכה הוברח נשק לחמאס.\n* הציר מזוהה עם מנהרות ההברחה, שהיו מקור עיקרי לכלכלת עזה.\n\n**השלכות:**\n\n* כניסה ישראלית לרפיח עלולה להסלים את המלחמה ולהפגיע במו"מ לעסקת חטופים.\n* רפיח הפכה לסיר לחץ עקב צפיפות האוכלוסין העצומה.\n* כיבוש ציר פילדלפי עלול לפגוע בכלכלת עזה.\n\n**המלצות:**\n\n* על ישראל וחמאס לנסות למצוא פתרון דיפלומטי שימנע כניסה ישראלית לרפיח.\n* הקהילה הבינלאומית צריכה לסייע בפינוי האוכלוסייה האזרחית מרפיח.\n* יש לטפל במנהרות ההברחה כדי למנוע הברחת נשק לחמאס בעתיד.',
+    category: "Politics",
+    title: "ארבעה גדודים ואלפי מחבלים: מבט אל תוך חטיבת רפיח",
+    publish_date: "2024-05-05 10:42:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-0944a65ada74f81026.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/hjGV8RhG.jpg",
   },
   {
-    id: 11,
-    topics: [topics["Sports"]],
-    title: "The Evolution of eSports",
-    content:
-      "As the world gears up for the 2024 Olympics, expectations soar, highlighting the event's significance in fostering global unity and showcasing athletic excellence. Concurrently, eSports continue to rise, challenging traditional notions of sports and entertainment. The spotlight also shines on women athletes who are breaking barriers and setting new records, symbolizing progress and empowerment. Behind the scenes, the financial intricacies of hosting mega-sports events are brought to light, revealing a complex web of investments, sponsorships, and economic impacts. Meanwhile, evolving fitness trends reflect society's growing emphasis on health and well-being. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "133",
+    article:
+      '**אישה ניצלה מניסיון רצח בידי בעלה: "ניסה להצית אותי ברכב"**\n\nאישה בצפון ניצלה לפני כחודשיים מניסיון רצח בידי בעלה, כך עולה מתיעוד מצלמת אבטחה. הבעל עקב אחריה, ניפץ את חלון רכבה, שפך לתוכו דלק וניסה להצית אותו בעודה יושבת בפנים.\n\n**פרטי המקרה:**\n\n* האישה הגישה תלונה במשטרה על איומים קודמים מצד בעלה.\n* היא הוציאה צו הגנה האוסר עליו להתקרב אליה.\n* למרות הצו, הבעל המשיך לעקוב אחריה ולנסות ליצור קשר.\n* לפני כשבועיים הוא ניסה להצית את רכבה בעודה בתוכה.\n* האישה הצליחה להימלט ולדווח על האירוע למשטרה.\n* הבעל נעצר ועבר אירוע לבבי במעצר.\n\n**השלכות:**\n\n* האישה סובלת מפחד וחרדה מאז המקרה.\n* היא חוששת לחייה אם בעלה ישוחרר ממעצר.\n* במשטרה אמרו לה לפנות למקלט לנשים מוכות למקרה שישתחרר.\n\n**ביקורת על המשטרה:**\n\n* עו"ד מאירה אזרד טוענת שלמשטרה אין שיתוף פעולה עם המגזר הערבי ושהיא לא מטפלת כראוי בתלונות על אלימות במשפחה.\n* האישה טוענת שהמשטרה לא טיפלה כראוי בתלונותיה הקודמות, ושאם היו עושים זאת, ניתן היה למנוע את ניסיון הרצח.\n\n**תגובת המשטרה:**\n\n* המשטרה טוענת שהיא מתייחסת במלוא הרצינות לתלונות על אלימות במשפחה.\n* במקרה זה, החשוד נעצר במהירות והוא נמצא במעצר.\n* המשטרה תמשיך לחקור את המקרה.',
+    category: "Politics",
+    title: 'האישה ביקשה להתגרש, הבעל ניסה להצית אותה ברכבה: "ניפץ את החלון בגרזן ושפך בנזין - ראיתי את המצית וצרחתי"',
+    publish_date: "2024-05-05 12:13:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-46c2aa7c7774f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/Vg-Tfiug.jpg",
   },
   {
-    id: 12,
-    topics: [topics["Tech"]],
-    title: "The Future of Work: Remote and Hybrid Models",
-    content:
-      "The tech industry is at the forefront of innovation, with artificial intelligence (AI) leading the charge. As AI technologies evolve, they promise to transform everyday life, yet skeptics question their ethical implications. Cybersecurity becomes increasingly critical in the 5G era, with new challenges and opportunities for protection. The future of work is being reshaped by remote and hybrid models, spurred by the pandemic's lasting effects. In the realm of renewable energy, technological advancements offer hope for sustainable solutions. Meanwhile, virtual reality (VR) continues to push the boundaries of digital experiences, promising unprecedented levels of immersion and interaction. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "132",
+    article:
+      "**סיכום השבת בליגת העל: חוסר עומק ואיכות במאבק האליפות**\n\nהפערים ביכולת של מכבי חיפה עם ובלי החלוץ דיא סבע מעידים על חוסר העומק והאיכות של שתי המתמודדות על האליפות, מכבי חיפה ומכבי תל אביב.\n\n**מכבי חיפה:**\n\n* עם סבע: כבשה 3 שערים נגד הפועל ירושלים וניצחה 0:3.\n* בלי סבע: הפסידה 1:0 להפועל חדרה.\n\n**מכבי תל אביב:**\n\n* עם ג'ורג' מילסון: ניצחה 0:1 את מכבי נתניה.\n* בלי מילסון: הפסידה 0:1 להפועל באר שבע.\n\n**הפועל פ\"ת:**\n\n* הפתיעה עם ניצחון 2:1 על בית\"ר ירושלים.\n* צפויה לחזור ולהוות יריבה חזקה בליגה.\n\n**מדינת ישראל:**\n\n* הביעה כפיות טובה כלפי חיילים שנלחמו למענה.\n* הפקירה אותם לבדם במאבק משפטי נגד ארגונים טרוריסטיים.\n\n**השלכות:**\n\n* המאבק על האליפות צפוי להיות צמוד ובלתי צפוי.\n* חוסר העומק והאיכות של הקבוצות הבכירות עלול לפגוע בסיכוייהן להצלחה באירופה.\n* מדינת ישראל חייבת לתמוך במי שנלחמו למענה ולסייע להם במאבקיהם המשפטיים.",
+    category: "Sport",
+    title: "אני לא יכולה בלעדיך: סיכום השבת בליגת העל",
+    publish_date: "2024-05-05 12:55:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-5015579e9284f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/K3yrHd3D.jpg",
   },
   {
-    id: 13,
-    topics: [topics["Politics"]],
-    title: "Diplomacy in the Modern World",
-    content:
-      "As nations around the globe tighten their belts, political landscapes are undergoing significant transformations. From election reforms to diplomatic strategies, the implications of these changes ripple through societies. Experts argue that the adoption of digital platforms in legislative processes could enhance transparency and citizen engagement. However, the digital divide remains a formidable barrier. Meanwhile, environmental policies are gaining traction, reflecting a global shift towards sustainability. The question remains: Are we witnessing the dawn of a new political era or merely the cyclical nature of governance? This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "131",
+    article:
+      '**הממשלה אישרה: ערוץ אל-ג\'זירה נסגר בישראל**\n\nהממשלה אישרה היום פה אחד את סגירת ערוץ אל-ג\'זירה בישראל. ההצבעה על הנושא נדחתה לבקשת ראשי מערכת הביטחון, כדי לא לפגוע במו"מ לעסקת חטופים, אך שרי המחנה הממלכתי לא השתתפו בדיון ומתחו ביקורת על העיתוי.\n\n**נימוקי התומכים בסגירה:**\n\n* שר התקשורת שלמה קרעי: "עוצרים את מכונת ההסתה המשומנת של אל-ג\'זירה, שפוגעת בביטחון המדינה".\n* שר הכלכלה ניר ברקת: "אל-ג\'זירה היא מנוע האנטישמיות הגדול בעולם שמפעילה קטר נגד ישראל".\n\n**ביקורת על ההחלטה:**\n\n* ח"כ גלעד קריב (העבודה): "צעד קוסמטי וחסר חשיבות שלא יטשטש את העובדה שנתניהו היה ספסר הכספים הראשי של הכסף הקטרי שזרם לחמאס".\n\n**רקע:**\n\n* החוק לסגירת אל-ג\'זירה אושר בכנסת בחודש שעבר.\n* הוא מאפשר לראש הממשלה לאשר לשר התקשורת לנקוט צעדים נגד ערוצים זרים בישראל אם הם פוגעים בביטחון המדינה.\n* בבית הלבן ובמחלקת המדינה האמריקנית הביעו דאגה מאישור החוק.\n\n**השלכות:**\n\n* אל-ג\'זירה לא תוכל לשדר יותר בישראל.\n* ההחלטה עשויה לפגוע במו"מ לעסקת חטופים שבה קטר משמשת כמתווכת.',
+    category: "Politics",
+    title: "פה אחד: הממשלה אישרה את סגירת ערוץ אל-ג'זירה בישראל",
+    publish_date: "2024-05-05 14:19:00",
+    links: ["https://13tv.co.il/item/news/politics/politics/al-jazeera-904043106/?pid=517&cid=902986281"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/FVO5VKhX.webp",
   },
   {
-    id: 14,
-    topics: [topics["Money"]],
-    title: "Global Economic Shifts Post-Pandemic",
-    content:
-      "The financial sector is witnessing unprecedented changes, with cryptocurrency leading the charge towards a digital economy. Meanwhile, the stock market shows signs of recovery, buoyed by investor confidence and governmental stimulus packages. As the world grapples with the post-pandemic economic landscape, green energy emerges as a lucrative investment avenue, promising long-term benefits and sustainability. The real estate market, however, faces a digital transformation challenge, balancing traditional practices with the convenience and reach of online platforms. These dynamics offer a glimpse into the future of finance, marked by innovation and adaptation. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "130",
+    article:
+      '**סערה סביב ראש אמ"ן המיועד: מה קרה בלילה שלפני המתקפה?**\n\nמינויו של האלוף שלומי בינדר לראש אמ"ן מעורר סערה ציבורית נוכח כישלונות התראה לפני מתקפת חיזבאללה ב-6 באוקטובר.\n\n**פעולות בינדר בליל המתקפה:**\n\n* בינדר ניהל את השעות הראשונות של המתקפה מהבור, אך בלילה שלפני לא שלח כוחות לדרום.\n\n**טענות נגד בינדר:**\n\n* לא ברור מה היה חלקה של חטיבת המבצעים שבפיקודו בהיערכות למתקפה.\n* האם בינדר ואנשיו לקחו בחשבון אפשרות לאירוע חריג?\n\n**רקע על בינדר:**\n\n* קצין מוערך שפיקד על סיירת מטכ"ל וחטיבת גולני.\n* נפצע קשה בתרגיל לפני 25 שנה, אך חזר ליחידה.\n* זכה פעמיים בצל"ש הרמטכ"ל.\n\n**ביקורת על המינוי:**\n\n* הפרשן הצבאי עמוס הראל: "הרמטכ"ל לא צפה את הביקורת על המינוי".\n* תא"ל במיל\' רונן מנליס: "חשוב לבדוק מה קרה בחטיבת המבצעים לפני המתקפה".\n\n**השלכות:**\n\n* הסערה הציבורית עלולה לפגוע במינויו של בינדר לראש אמ"ן.\n* בדיקה נדרשת כדי לבחון את אחריותו של בינדר וחטיבת המבצעים בכישלון ההיערכות למתקפה.',
+    category: "Politics",
+    title: 'הסערה סביב ראש אמ"ן המיועד: המודיעין שהגיע אליו לפני המתקפה - והפעולות שביצע בליל 6 באוקטובר',
+    publish_date: "2024-05-05 08:56:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-a4f2ca54f764f81026.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/Qq1xdJqx.jpg",
   },
   {
-    id: 15,
-    topics: [topics["Sports"]],
-    title: "Women in Sports: Breaking Barriers",
-    content:
-      "As the world gears up for the 2024 Olympics, expectations soar, highlighting the event's significance in fostering global unity and showcasing athletic excellence. Concurrently, eSports continue to rise, challenging traditional notions of sports and entertainment. The spotlight also shines on women athletes who are breaking barriers and setting new records, symbolizing progress and empowerment. Behind the scenes, the financial intricacies of hosting mega-sports events are brought to light, revealing a complex web of investments, sponsorships, and economic impacts. Meanwhile, evolving fitness trends reflect society's growing emphasis on health and well-being. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "129",
+    article:
+      '**סיכום:**\n\nלקראת המשחק הקרוב של הפועל חדרה מול מכבי פ"ת, המאמן חיים סילבס מתמודד עם מספר פציעות בסגל.\n\n**עידן דמון:**\n\n* חש בכאבים ולא ברור אם יוכל לשחק במשחק.\n\n**אופיר זלקה:**\n\n* שב מהמילואים ויעמוד לרשות הקבוצה.\n\n**ירין גלזר:**\n\n* נפצע וטופל בבית החולים. מצבו אינו ברור.\n\nסילבס צפוי לבצע שינויים בהרכב בשל הפציעות, וזלקה צפוי לפתוח בהרכב. עידן דמון ייבחן באימון המסכם ורק אז תתקבל החלטה בנוגע לשיתופו.\n\nמצבו של גלזר מדאיג יותר, והוא עלול להיעדר לתקופה ארוכה יותר. סילבס יצטרך למצוא פתרונות יצירתיים כדי להתמודד עם המחסור בשחקנים לקראת המשחק הקריטי.\n\n**השלכות:**\n\n* פציעות השחקנים עלולות לפגוע בסיכוייה של חדרה במשחק.\n* סילבס יצטרך למצוא הרכב מאוזן שיוכל להתמודד עם מכבי פ"ת.\n* מצבו של גלזר עלול להשפיע על חדרה לאורך זמן.',
+    category: "Sport",
+    title: 'מדמון חש בכאבים ובספק למשחק מול מכבי פ"ת',
+    publish_date: "2024-05-05 13:57:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-9a60f774c384f81026.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/J4cvRk48.jpg",
   },
   {
-    id: 16,
-    topics: [topics["Tech"]],
-    title: "Innovations in Renewable Energy Technology",
-    content:
-      "The tech industry is at the forefront of innovation, with artificial intelligence (AI) leading the charge. As AI technologies evolve, they promise to transform everyday life, yet skeptics question their ethical implications. Cybersecurity becomes increasingly critical in the 5G era, with new challenges and opportunities for protection. The future of work is being reshaped by remote and hybrid models, spurred by the pandemic's lasting effects. In the realm of renewable energy, technological advancements offer hope for sustainable solutions. Meanwhile, virtual reality (VR) continues to push the boundaries of digital experiences, promising unprecedented levels of immersion and interaction. This evolving scenario offers a fascinating glimpse into the future, inviting scholars and practitioners alike to explore, debate, and navigate the complexities of the modern world.",
-    createdAt: new Date("2023-06-06"),
-    originUrls: ["https://example.com"],
+    id: "128",
+    article:
+      "**אנטמן נגד הג'וקר: עימות על עליונות ב-NBA**\n\nמשחק הפתיחה של חצי גמר המערב בין מינסוטה ודנבר הפגיש את אנתוני אדוארדס, שחקן העתיד המבטיח, מול ניקולה יוקיץ', השחקן המוביל של דנבר.\n\nאדוארדס, בגיל 21, הדהים בפתיחה עם 9 נקודות מרשימות, אך ההגנה של דנבר בהנהגת יוקיץ' הצליחה לעצור את מינסוטה. לאחר הפסקה קצרה, יוקיץ' התקשה במשחקו ומינסוטה הגיבה בריצה של 0:7.\n\nיוקיץ', למרות היותו מוביל סטטיסטי, נראה תשוש מעייפות ולא אופייני. אדוארדס ניצל זאת וסיפק חסימה מרהיבה בהגנה. מינסוטה המשיכה במומנטום שלה ועלתה ליתרון, כשנאז ריד מוסיף 14 נקודות במחצית השנייה.\n\nהמשחק היה אכזרי עבור דנבר, שחסרה אפשרויות ספסל חזקות כדי לתת ליוקיץ' מנוחה. יוקיץ' נאלץ לשחק כמעט ללא הפסקה והדבר השפיע על משחקו. לעומת זאת, מינסוטה עמדה באתגר וניצחה במשחק הראשון.\n\nהפרשנים של TNT ציינו את ההשוואות של אדוארדס לשחקנים אגדיים, אך נמנעו מלומר את שמו של מייקל ג'ורדן במפורש. עם זאת, הם הסכימו שאדוארדס, בגילו, הוא שחקן הרבה יותר מושלם מג'ורדן היה. הוא שולט בגופו בצורה יוצאת דופן, בעל טכניקה מושלמת, אתלט ונותן לשחקנים סביבו להתבטא.\n\nהמשחק השני בסדרה יקבע אם מינסוטה תמשיך במומנטום שלה, או שדנבר תתעשת ותרשום קאמבק מרשים.",
+    category: "Sport",
+    title: "אנטמן מול הג'וקר, גרסת ה-NBA: הקרב הגדול בין שני כוכבי העל",
+    publish_date: "2024-05-05 09:00:00",
+    links: ["https://www.ynet.co.il/sport/worldbasketball/article/sjss3jefc#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/ftG8pnd7.jpg",
+  },
+  {
+    id: "127",
+    article: "",
+    category: "Sport",
+    title: 'כריסטיאנו רונאלדו: "אני לא עוקב אחרי השיאים, הם עוקבים אחריי"',
+    publish_date: "2024-05-05 14:22:00",
+    links: [
+      "https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/LsX4ypK4.jpg",
+  },
+  {
+    id: "126",
+    article:
+      "**ישראלים זוכים באליפות המכללות בכדורעף על רקע הפגנות אנטי-ישראליות**\n\nשחקני נבחרת ישראל בכדורעף, עידו דוד וגיא גניס, זכו בפעם השנייה ברציפות באליפות המכללות של ארצות הברית עם אוניברסיטת קליפורניה (UCLA).\n\n**הזכייה והאתגרים:**\n\n* דוד הצטיין במשחק הגמר עם 9 נקודות בהנחתה, 3 אייסים, 8 הצלות ו-4 חסימות.\n* גניס תרם 4 נקודות בהנחתה, 4 הצלות ו-4 חסימות.\n* דוד סיפר כי הפגנות פרו-פלסטיניות ואנטי-ישראליות מתקיימות בקמפוס האוניברסיטה.\n* במהלך משחק חצי הגמר נערכה הפגנה פרו-פלסטינית, שגרמה לדוד לחשש ולזהירות.\n\n**ההשלכות:**\n\n* דוד מודאג מהאפשרות להצהיר על היותו מישראל בתקופה זו.\n* גניס וגניס תרמו משמעותית לזכייה.\n* נבחרת ישראל אירחה בשנה שעברה את הבית המוקדם של אליפות אירופה בתל אביב, אך לא הצליחה להעפיל לשלב הבא.\n\n**המסקנות:**\n\n* שני הישראלים ממשיכים להצטיין במכללות האמריקאיות.\n* הם מתמודדים עם אתגרים הקשורים למתח הפוליטי בין ישראל לפלסטינים.\n* נבחרת ישראל צריכה לשפר את יכולתה כדי להעפיל לאליפות אירופה.",
+    category: "Sport",
+    title: "בשיאן של ההפגנות בארצות הברית: שני שחקני נבחרת ישראל זכו באליפות המכללות בכדורעף עם UCLA",
+    publish_date: "2024-05-05 12:01:00",
+    links: [
+      "https://www.mako.co.il/news-sport/sports_others-2024_q2/Article-d615fe110e74f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/EIiA_F8p.jpg",
+  },
+  {
+    id: "125",
+    article:
+      '**טועמה הקוסם: המשימה הבלתי אפשרית של הצלת הפועל ת"א**\n\nלאחר סילוקו של יוסי אבוקסיס, סלים טועמה מונה כמאמן זמני של הפועל ת"א.\n\n**האתגרים של טועמה:**\n\n* שוער מחליף\n* רביעיית הגנה חלשה\n* מרכז קישור חסר יצירתיות\n* התקפה שלא כבשה שער שדה ב-10 מחזורים\n* פוסט-טראומה בקרב השחקנים\n\n**פתרונות של טועמה:**\n\n* שינוי מערך מ-3 בלמים ל-4:4:2\n* מתן חופש שחקני\n* הליכה נגד הקיבעון של אבוקסיס\n\n**המזל של הפועל:**\n\n* שער ניצחון בדקה ה-99 מול נתניה\n* החמצה של עמרי אלטמן מול מכבי פ"ת\n* מזל בהגנה במחצית השנייה מול נתניה\n\n**הסיכויים של הפועל:**\n\n* לטועמה אין דוקטרינה מקצועית\n* המשימה של הישארות בליגה נראית בלתי אפשרית\n\n**התקווה:**\n\n* טועמה נחשב לקוסם בזכות יכולתו לשנות את המומנטום\n* הוא מצליח להוציא מהשחקנים יותר ממה שהם נותנים בדרך כלל\n* הפועל זקוקה למזל כדי לשרוד, וטועמה מקווה שהיא תמשיך לקבל אותו.',
+    category: "Sport",
+    title: 'טועמה לא המאמן הזמני של הפועל ת"א - הוא הקוסם שלה | טור',
+    publish_date: "2024-05-05 10:07:00",
+    links: ["https://www.ynet.co.il/sport/article/bkcgjmnm0#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/J-mlu1Rf.jpg",
+  },
+  {
+    id: "124",
+    article:
+      "**וואטסאפ מקדמת את הסטטוסים: \"לדחוף\" לנו אותם יותר**\n\nוואטסאפ עומדת לבצע שינויים שיחשפו אותנו יותר לסטטוסים באפליקציה, למרות שהפיצ'ר לא פופולרי בישראל.\n\n**שינוי בעיצוב הסטטוסים:**\n\n* שורת הסטטוסים תבלוט יותר בחלק העליון של לשונית העדכונים.\n* יוצגו תצוגות מקדימות של הסטטוסים, כך שלא יהיה צורך לפתוח כל עדכון בנפרד.\n\n**עזרה למשתמשים חסומים:**\n\n* משתמשים שנחסמו לא יוכלו להתחיל צ'אטים חדשים.\n* הם עדיין יוכלו לקבל ולהשיב להודעות בצ'אטים וקבוצות קיימים.\n* וואטסאפ משתמשת בכלים אוטומטיים כדי לזהות התנהגות בעייתית, כמו שליחת ספאם או הודעות אוטומטיות.\n* חסימה חלקית זו נועדה לתת למשתמשים \"בעייתיים\" הזדמנות לתקן את התנהגותם מבלי לאבד גישה לנתונים שלהם.\n\n**השלכות:**\n\n* משתמשים ייחשפו יותר לסטטוסים, גם אם הם לא משתמשים בפיצ'ר זה.\n* משתמשים חסומים יוכלו לתקשר עם אנשי קשר קיימים, אך לא יוכלו להתחיל שיחות חדשות.\n* וואטסאפ מנסה לאזן בין אכיפת תנאי השירות לבין מתן הזדמנות לתיקון למשתמשים מפרים.",
+    category: "Economics",
+    title: "וואטסאפ רוצה לקדם את הסטטוסים באפליקציה - וכולנו עומדים לסבול מזה",
+    publish_date: "2024-05-05 12:51:00",
+    links: [
+      "https://www.mako.co.il/news-money/tech12/Article-7ff9579e9284f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/YcGnwXmo.jpg",
+  },
+  {
+    id: "123",
+    article:
+      "**ספייס ירקון: מחיר המנוי המוזל זינק ב-50%**\n\nלקוחות מועדון הכושר ספייס ירקון בתל אביב קיבלו הודעה על התייקרות של 50% במנוי המוזל, מ-99 שקל ל-149 שקל בחודש.\n\n**ההסבר של הרשת:**\n\n* המועדון שופץ ושודרג לקטגוריית פרימיום.\n* המנויים הועברו למסלול המאפשר כניסה לכל מועדוני הפיקס ברשת, ששוויו ממילא 149 שקל לחודש.\n* הרשת מציעה מועדונים אחרים בסביבה ב-99 שקל.\n\n**תגובות הלקוחות:**\n\n* מתרעמים על ההתייקרות הפתאומית.\n* מציינים כי המועדון היה בתהליך שיפוץ ממושך.\n* מביעים מורת רוח מכך שהם צריכים לממן את השדרוג.\n* מעדיפים את מועדון הבית שלהם למרות שיש מועדונים אחרים בקרבת מקום.\n\n**מצב ענף מועדוני הכושר:**\n\n* הענף עבר טלטלות בשנים האחרונות עקב הקורונה והמלחמה.\n* יש מחסור מתמשך בעובדים.\n* רשת ספייס לא העלתה מחירים מאז תחילת הקורונה.\n* הרשת מפעילה מועדונים בפורמטים שונים ובטווח מחירים שונה.\n\n**מסקנות:**\n\n* לקוחות ספייס ירקון יצטרכו לשלם יותר עבור המנוי.\n* הרשת ממשיכה להציע מועדונים מוזלים במקומות אחרים.\n* ענף מועדוני הכושר עדיין מתמודד עם אתגרים.",
+    category: "Economics",
+    title: "ספייס בירקון: מועדון הכושר שופץ - המסלול המוזל התייקר ב-50%",
+    publish_date: "2024-05-05 10:35:00",
+    links: ["https://www.ynet.co.il/economy/article/skugzanma#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/jtSNilfn.jpg",
+  },
+  {
+    id: "122",
+    article:
+      '**נתניהו: ישראל לא תקבל את דרישות חמאס שמשמעותן כניעה**\n\nגורמים ישראליים המעורבים במגעים לעסקת חטופים אמרו כי האינדיקציות מחמאס שליליות, ולא נראה שתשובתם תאפשר התקדמות מהירה לעסקה.\n\n**נתניהו:**\n\n* "פרסומים מגמתיים גורמים נזק למגעים."\n* "חמאס מכשיל את שחרור החטופים."\n* "ישראל מוכנה להפוגה כדי לשחרר אותם, אך חמאס דורש לסיים את הלחימה ולהוציא את כוחותינו מעזה."\n* "כניעה לדרישות חמאס תהיה תבוסה איומה למדינת ישראל."\n* "לא נקבל מצב שחמאס ישתלט מחדש על עזה ויחזור לאיים על אזרחינו."\n\n**מקורות אחרים:**\n\n* בכירים ישראלים ואמריקנים ציינו כי יידרשו עוד מספר ימים להסכם בין ישראל לחמאס.\n* מקורות בחמאס האשימו את ישראל בהתעקשותה שלא להתחייב להפסקת אש.\n* מטה משפחות החטופים פנה לנתניהו וקרא לו להתעלם מלחצים פוליטיים ולהחזיר את כל החטופים.\n\n**השלכות:**\n\n* אם המגעים יימשכו, ייתכן שהמו"מ יהיה קשה ויימשך זמן רב.\n* כישלון המגעים עשוי להוביל להמשך הלחימה ולעיכוב בהשגת הסכם שלום.',
+    category: "Politics",
+    title: 'נתניהו: "ישראל לא תסכים לדרישות החמאס שמשמעותן כניעה"',
+    publish_date: "2024-05-05 10:16:00",
+    links: ["https://13tv.co.il/item/news/politics/state-policy/hostage-deal-904042769/?pid=517&cid=902986314"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/Vyp8kY0H.webp",
+  },
+  {
+    id: "121",
+    article:
+      '**מותג פוטון מגיע לישראל: טנדר חשמלי לראשונה בייבוא סדיר**\n\nמותג המסחריות הסיני FOTON עומד להתחיל לשווק את רכביו בישראל, ויהיה הראשון שמשווק טנדר חשמלי בייבוא סדיר.\n\n**הטנדר החשמלי Tunland**\n\n* אורך: 534 ס"מ\n* רוחב: 194 ס"מ\n* גובה: 187 ס"מ\n* גודל ארגז: אורך 152 ס"מ, רוחב 158 ס"מ, גובה 44 ס"מ\n* כושר העמסה: 600 ק"ג\n* הספק: 130 קילוואט (177 כ"ס)\n* מומנט: 33.6 קג"מ\n* סוללה: LFP של CATL\n* טווח נסיעה: עד 400 ק"מ (בתקן WLTP)\n* טעינה מהירה: עד 70 קילוואט (מ-20% ל-80% בפחות משעה)\n* מטען פנימי אופציונלי: 11 קילוואט (טעינה מלאה בפחות מ-8 שעות)\n\n**הוואן החשמלי eView**\n\n* גובה תקרה פנימי: עד 228 ס"מ\n* נפח: עד 7 קוב\n* כושר העמסה: 1.2 טון\n\nפוטון תשווק בישראל באמצעות "דלהום מוטורס", שגם תספק את שירותי האחריות והטיפול לרכבים. אולם התצוגה הראשון ימוקם בכפר סבא.',
+    category: "Sport",
+    title: "מותג פוטון בישראל: ראשון עם טנדר חשמלי בייבוא סדיר",
+    publish_date: "2024-05-05 12:26:00",
+    links: [
+      "https://www.mako.co.il/news-sport/sports_others-2024_q2/Article-9daf3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/vQvpkHbH.jpg",
+  },
+  {
+    id: "120",
+    article:
+      "**עובדי ההייטק מימשו אופציות בשווי 2 מיליארד דולר**\n\nבשנת 2023 מימשו עובדים בחברות טכנולוגיה ישראליות אופציות ברווח כולל של 824 מיליון דולר, ירידה משמעותית משווי המימושים בשנת השיא 2021 (2.65 מיליארד דולר).\n\n**חברות בולטות בהיקף ההטבה לעובדים:**\n\n* סנטינל וואן: 173 מיליון דולר\n* מאנדיי: 113 מיליון דולר\n* נייס: 138 מיליון דולר\n* גלובל-אי: 48.3 מיליון דולר\n\n**עליות בשווי המניות הובילו לזינוק בשווי האופציות של העובדים.**\n\nב-48 חברות ישראליות נסחרות בוול סטריט מחזיקים העובדים כיום באופציות בשווי כולל של 1.95 מיליארד דולר.\n\n**אופציות לעומת מניות חסומות:**\n\nאופציות מקנות לעובדים זכות לרכוש מניות בעתיד במחיר מסוים, בעוד שמניות חסומות מוענקות לעובדים וניתנות למימוש רק לאחר תקופת זמן מסוימת.\n\n**היתרונות במימוש אופציות:**\n\n* הטבות מס משמעותיות\n* אפשרות להשקיע בחברה ולהיות חלק מהצלחתה\n* תמריץ לעובדים להישאר בחברה\n\n**סיכום:**\n\nעל אף הירידה במימושים בשנה החולפת, עובדי חברות ההייטק הישראליות עדיין נהנים מהטבות משמעותיות מאופציות. עליות בשווי המניות הובילו לעלייה בשווי ההטבה הכוללת שבה הם מחזיקים.",
+    category: "Economics",
+    title: "מוויקס ועד מאנדיי: לעובדי ההייטק יש אופציות בשווי 2 מיליארד דולר לממש",
+    publish_date: "2024-05-05 14:10:00",
+    links: [
+      "https://www.mako.co.il/news-money/tech12/Article-97418802d684f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/JFLqKRfk.jpg",
+  },
+  {
+    id: "119",
+    article:
+      '**עיכובים במשלוחים מאתר האופנה נקסט**\n\nלקוחות בישראל מתלוננים על עיכובים ממושכים במשלוחים מאתר האופנה נקסט.\n\nהמשלוחים מתעכבים כבר מתחילת אפריל, כאשר לקוחות מקבלים הודעה שהחבילות יצאו לדרך לישראל - ומאז אין עדכון.\n\nגורמים בענף הלוגיסטיקה מציינים כי יש פקק בבריטניה שיוצר עיכובים של כשבוע ביציאת משלוחים מהמדינה.\n\nבאתר נקסט ישנה הודעה קבועה מאז פרוץ המלחמה שהמשלוחים עלולים להתעכב בשל המצב באזור, אך עד כה לא התעכבו ולא נראה שלעיכוב הנוכחי יש קשר למלחמה.\n\nבשירות הלקוחות של נקסט לא הוצע פיצוי למעוכבים.\n\nמדואר ישראל נמסר כי משלוחים מנקסט נמסרים לנמענים בתוך ימים בודדים מהנחיתה בנתב"ג, וכי לגבי חבילות שמעוכבות בחו"ל יש לפנות לאתר נקסט על מנת לברר את סיבת העיכוב.',
+    category: "Economics",
+    title: "ישראלים מתלוננים: המשלוחים מנקסט מאחרים",
+    publish_date: "2024-05-05 10:57:00",
+    links: ["https://www.ynet.co.il/economy/article/sksvp0nma#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/Wk3V_CLW.jpg",
+  },
+  {
+    id: "118",
+    article:
+      "**בצל החרם על יבוא מטורקיה: מחירי המוצרים יעלו**\n\nלאחר שהוטל חרם על יבוא ויצוא בין ישראל לטורקיה, יבואנים ישראלים מזהירים כי צפויים לעלות מחירי המוצרים.\n\n**אלטרנטיבות למוצרים מטורקיה**\n\nהיבואנים מציינים כי יש אלטרנטיבות למוצרים מטורקיה, אך יבוא הסחורות ממדינות אלו יהיה יקר יותר.\n\nלדוגמה, שמן זית המיובא מספרד יקר בכ-20% משמן זית מטורקיה.\n\n**תחום מוצרי החשמל**\n\nבענף מוצרי החשמל מציינים כי החרם אינו משמעותי, שכן יש אלטרנטיבות ממדינות אחרות באירופה.\n\n**תגובת משרד הכלכלה**\n\nבמשרד הכלכלה מרגיעים כי ישראל תסתדר ותמצא חלופות, וכי טורקיה היא זו שתפגע מהחרם, שכן היא תפסיד יצוא בגובה 6.8 מיליארד דולר.\n\n**ישראל מגבשת תגובה כלכלית לחרם**\n\nבין הצעדים המרכזיים שסיכמו הגורמים לקדם:\n\n* צמצום הקשר הכלכלי בין טורקיה לרשות הפלסטינית ולעזה.\n* פנייה לפורומים כלכליים בינלאומיים לבחינת עיצומים נגד טורקיה.\n* בניית בנק חלופות לאלטרנטיבות מוצרים מטורקיה.\n* סיוע למגזרי יצוא ישראליים שנפגעו.",
+    category: "Economics",
+    title: "היבואנים מרגיעים: יש אלטרנטיבות למוצרים מטורקיה, אבל המחירים יעלו",
+    publish_date: "2024-05-05 05:53:02",
+    links: ["https://www.ynet.co.il/economy/article/ry8qu5efc#autoplay"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/oK-sCfdz.jpg",
+  },
+  {
+    id: "117",
+    article:
+      "**הפסקת המסחר עם טורקיה: עלייה של 20% במחירי המזון**\n\nבעקבות הודעתן של חברות שילוח בינלאומיות כי יפסיקו לפעול בין נמלי ישראל וטורקיה, יבואנים ישראלים נאלצים לחפש חלופות לייצור הטורקי.\n\nמוצרים רבים מהמותג הפרטי הנמכרים ברשתות הקמעונאות בישראל מיוצרים בטורקיה, ובהם פסטות, שמן זית וממרחים.\n\nיבואנים בוחנים אתרי ייצור ויבוא חלופיים במדינות כמו פולין והונגריה, אך מזהירים שהעלות תהיה גבוהה יותר.\n\nלפי הערכות, יבוא הסחורות ממדינות אלו יהיה יקר ב-20% לפחות מהסחורה שיובאה עד כה מטורקיה.\n\nעליית המחירים תתגלגל בסופו של דבר גם לצרכנים.",
+    category: "Economics",
+    title: "יבואנים: הפסקת המסחר עם טורקיה תגרום לעלייה של עוד כ-20% במחירי המזון",
+    publish_date: "2024-05-05 13:05:00",
+    links: [
+      "https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/mkZghRum.jpg",
+  },
+  {
+    id: "116",
+    article:
+      "**SOSטיפ למטבח: החזירו את הצ'יפס שלכם לחיים!**\n\nצ'יפס משקית שהושארה פתוחה הוא חתיכת נשנוש מצער, אבל יש דרך להחזיר לו את הקראנצ'יות שלו:\n\n**באמצעות אייר פרייר:**\n\n1. חממו את האייר פרייר היטב ל-150 מעלות.\n2. הניחו את הצ'יפס הרכרוך בסלסלת האייר פרייר בשכבה אחת.\n3. טלטלו את הסלסלה כל דקה ובדקו אם הצ'יפס כבר קריספי.\n4. המשיכו לחמם ולטלטל עד שהצ'יפס מגיע לקראנצ'יות הרצויה.\n\n**זהירות עם צ'יטוס:** בגלל אבקת הגבינה, הם נשרפים בקלות, אז חממו אותם בזהירות.\n\nטיפ זה מתאים לכל סוגי החטיפים המלוחים, כולל דוריטוס וצ'יטוס.",
+    category: "Economics",
+    title: "כמו חדש: הדרך המנצחת להחזיר חטיף צ'יפס לחיים",
+    publish_date: "2024-05-05 10:36:00",
+    links: [
+      "https://www.mako.co.il/news-money/consumer/Article-dd78334e0874f81027.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby https://www.mako.co.il/food-cooking_magazine/SOS/Article-dd78334e0874f81027.htm?sCh=c7250a2610f26110&pId=885471177",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/50deapG_.jpg",
+  },
+  {
+    id: "115",
+    article:
+      "**השכר הממוצע במשק זינק לשיא: מעל 14,000 שקל**\n\nהשכר הממוצע במשק המשיך לעלות בחודשים פברואר ומרץ השנה, כחצי שנה אחרי פרוץ המלחמה. לפי נתוני הלשכה המרכזית לסטטיסטיקה, לעומת חודש פברואר אשתקד נרשמה עלייה של השכר הממוצע בקצב גבוה של 9.2%.\n\n**הייטק:** השכר הממוצע בענף ההייטק זינק בפברואר לשיא של 33,964 שקל, לעומת 30,126 שקל בינואר ו-30,011 בפברואר 2023.\n\n**ענפים מובילים:** הכי כדאי היה לעבוד בפברואר בענף המידע והתקשורת, שבו השכר הסתכם ב-32,406 שקל. בענף שירותים פיננסיים הגיע השכר, בהפרש גדול, ל-23,788 שקל בממוצע, ובענפי החשמל והמים היה השכר הממוצע בפברואר 21,726 שקל.\n\n**ענפים בתחתית הרשימה:** סוגרים את הרשימה העובדים בענף שירותי אירוח ואוכל עם שכר ממוצע של 6,283 שקל. לפניהם העובדים בשירותים שונים - 6,585 שקל ועובדי ענף האמנות, הבידור והפנאי (ללא האומנים) שהשתכרו בפברואר בממוצע 7,625 שקל.\n\n**עובדים ישראלים:** שכרם של העובדים הישראלים במרץ עלה אף מעל 14 אלף שקל, ל-14,018 שקל - שכר ששווה כ-3,700 דולר. המדובר בעלייה של 3.5% לעומת מרץ 2023.\n\nהעלייה בשכר משקפת התאוששות של המשק חרף המלחמה הנמשכת בשל היקף המילואים המצומצם שעודנו מגויס והעלייה בצריכה ובפעילות הכלכלית בכל התחומים, למעט בענפי הבנייה והתיירות.",
+    category: "Economics",
+    title: 'למ"ס: השכר הממוצע בהייטק זינק לשיא - ועמד על כ-34 אלף שקל בפברואר',
+    publish_date: "2024-05-05 10:00:01",
+    links: ["https://www.ynet.co.il/economy/article/ry0fkrema"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/nirFzyjh.jpg",
+  },
+  {
+    id: "114",
+    article:
+      "**3 מתכונים לארוחות צהריים מזינות וטעימות**\n\nחזרה לשגרה עם 3 מתכונים לארוחות צהריים משפחתיות - טעימות, מזינות ולא מסובכות:\n\n**1. אורז עם שעועית ברוטב עגבניות**\n\nמתכון נוסטלגי, טעים ומזין. מוסיפים קרם קוקוס לפירה כדי להפוך אותו לפרותי (מי שלא שומר כשרות יכול להשתמש בחמאה או שמנת).\n\n**2. פירה ותפוחי אדמה אפויים עם ירקות**\n\nמתכון קלאסי וכיפי. מוסיפים מלפפון חמוץ לתיבול.\n\n**3. ספגטי ברוטב עגבניות עם קציצות עוף**\n\nמתכון קל ומהיר להכנה. מוסיפים גבינת פרמזן מגוררת לתיבול.\n\nהמתכונים מתאימים גם לילדים וגם למבוגרים, ויספקו לכם ארוחות צהריים מזינות וטעימות לכל השבוע.",
+    category: "Food",
+    title: "3 מתכונים לארוחות צהריים לתחילת שבוע",
+    publish_date: "2024-05-05 07:00:00",
+    links: [
+      "https://www.mako.co.il/food-meals/lunch_recipes/Article-8232f773bf34f81027.htm?sCh=c7250a2610f26110&pId=173113802",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/1pD3UNBv.jpg",
+  },
+  {
+    id: "112",
+    article:
+      '**הפועל באר שבע: עתידו של אליניב ברדה לוט בערפל**\n\nאלונה ברקת, בעלת הפועל באר שבע, שבה מחופשה פרטית בארה"ב ותנסה לקדם את ההכנות לעונה הבאה. על הפרק עומדות הארכת חוזיהם של הקפטן מיגל ויטור והמאמן אליניב ברדה.\n\nבעוד שעם ויטור העניינים צפויים להסתדר בקלות, עם ברדה הסיפור שונה לחלוטין. שני הצדדים מעוניינים להמשיך בהתקשרות, אך ברדה מצפה לשדרוג בשכרו הגבוה מזה שבאופציה הקיימת, ודורש נכונות מצד ברקת להגדיל את תקציב שכר השחקנים על מנת להיות תחרותיים במאבק לאליפות.\n\nבינתיים, לא התקיימה שיחה בנושא הארכת חוזהו של ברדה, אף שנותרו עוד 10 ימים בלבד עד פקיעת האופציה להארכת חוזהו. ברדה התייחס לכך במסיבת עיתונאים ואמר: "הפועל ב"ש היא הבית שלי, קחו את זה איך שאתם רוצים. בינתיים לא דיברנו על ההמשך".\n\nגורמים בסביבת המועדון ציינו כי ברדה ירצה לדעת שתהיה קבוצה אטרקטיבית, שניתן יהיה להתחרות עמה על אליפות ולשדרג אותה באמצעות השקעה בשחקנים טובים. הוא אף צפוי לבקש שדרוג כלכלי מסוים. "אליניב לא יחתום באופן אוטומטי", אמרו הגורמים. "הוא רוצה להישאר, אבל לא בכל מחיר".\n\nברדה זכה במספר אופציות בבלגיה, אך הוא מעוניין להישאר בבאר שבע. בעונה שעברה הוביל אותה למקום השני ולזכייה בגביע המדינה. העונה הוא אף עשוי להוסיף לארון התארים של באר שבע גביע נוסף.',
+    category: "Sport",
+    title: 'ברקת שבה מארה"ב, ברדה יבקש שדרוג בשכרו לעונה הבאה',
+    publish_date: "2024-05-05 07:37:05",
+    links: [
+      "https://www.ynet.co.il/sport/israelisoccer/article/hyfqnn4gc#autoplay https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/9UBdTvjZ.jpg",
+  },
+  {
+    id: "109",
+    article:
+      '**תקציר חדשות על ירי פצמ"רים ורקטות לעבר ישראל**\n\nבצהריים נורה מטח חריג של פצצות מרגמה לעבר כרם שלום, סמוך לדרום רצועת עזה. הירי בוצע מאזור רפיח ופגע בשלושה ישראלים, שפונו לבית החולים סורוקה בבאר שבע.\n\nצה"ל השיב בירי טנקים ובתקיפות מהאוויר לעבר האזור ממנו נורו הפצצות. מעבר כרם שלום נסגר למעבר משאיות סיוע לרצועת עזה.\n\nבמקביל, אזעקות נשמעו בשורת יישובים בצפון אחרי שמלבנון שוגרו לפחות עשרים רקטות. בקריית שמונה נרשמו כמה נפילות, גבר כבן 65 נפצע קל מרסיסים ונזק נגרם לרכוש.\n\nשוטרים וחבלנים הגיעו לזירות הנפילה בקריית שמונה כדי לטפל בשרידי הרקטות. צוותי מגן דוד אדום העניקו טיפול רפואי לגבר כבן 65 במצב קל שנפצע מרסיסים. בנוסף, ניידת מד"א נפגעה מרסיסים.',
+    category: "Politics",
+    title: "פגיעה ישירה בכרם שלום, יש נפגעים",
+    publish_date: "2024-05-05 13:59:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-770011e92584f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/4BouDp2j.jpg",
+  },
+  {
+    id: "108",
+    article:
+      '**תקציר חדשות על סגירת ערוץ אל-ג\'זירה בישראל**\n\nהממשלה אישרה היום פה אחד את סגירת ערוץ אל-ג\'זירה בישראל.\n\nההצבעה על הנושא נדחתה לבקשת ראשי מערכת הביטחון, כדי לא לפגוע במו"מ לעסקה עם חמאס, שבה קטר משמשת כמתווכת.\n\nשרי "המחנה הממלכתי" לא הגיעו לדיון, ומטעם המפלגה נמסר שהחלטת הממשלה עלולה לחבל במו"מ ונובעת משיקולים פוליטיים.\n\nשר התקשורת שלמה קרעי אמר: "עברו יותר מדי זמן ומהמורות משפטיות מיותרות כדי שנוכל סוף סוף לעצור את מכונת ההסתה המשומנת של אל-ג\'זירה".\n\nשר הכלכלה ניר ברקת אמר: "אל-ג\'זירה היא מנוע האנטישמיות הגדול בעולם שמפעילה קטר נגד מדינת ישראל והעם היהודי".\n\nחבר הכנסת גלעד קריב (העבודה) מתח ביקורת על ההחלטה ואמר שמדובר בצעד קוסמטי וחסר חשיבות, שלא יטשטש את העובדה שנתניהו היה שותף בכיר לחמאס.\n\nדיון בנושא בקבינט פורסם ב"זמן שישי", וממנו עולה כי ראש המוסד דדי ברנע תמך עקרונית בסגירת הערוץ, אך ביקש מהשרים להמתין עם ההצבעה כדי לא לפגוע במו"מ עם חמאס.\n\nראש הממשלה בנימין נתניהו סירב לדרישתו של ברנע, וההצבעה נדחתה לישיבת הממשלה היום.\n\nהחוק לסגירת אל-ג\'זירה אושר בחודש שעבר בכנסת, כהוראת שעה בצל המלחמה הנמשכת ברצועת עזה.',
+    category: "Politics",
+    title: "פה אחד: הממשלה אישרה את סגירת ערוץ אל-ג'זירה בישראל",
+    publish_date: "2024-05-05 14:19:00",
+    links: ["https://13tv.co.il/item/news/politics/politics/al-jazeera-904043106/?pid=517&cid=902986281"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/vfJDMLQT.webp",
+  },
+  {
+    id: "107",
+    article:
+      '**תקציר חדשות על עתידו של תא"ל עופר וינטר בצה"ל**\n\nהרמטכ"ל הרצי הלוי צפוי להיפגש בקרוב עם תא"ל עופר וינטר כדי לדון בעתידו בצה"ל.\n\nוינטר, שלא מחזיק בתפקיד רשמי כשנה וחצי, לא נכלל בסבב המינויים האחרון, מה שגרם לו לתסכול.\n\nההחלטה שלא לכלול אותו בסבב המינויים נובעת, לכאורה, מהתבטאויותיו בזמן מבצע "עלות השחר".\n\nוינטר נפגש עם קצינים בצה"ל בתחילת המבצע, ואמר שמוטב לצה"ל לא להיכנס קרקעית לרצועה עזה.\n\nוינטר טוען שהתכוון לומר שלא כדאי לצבא להיכנס "עיוור" לרצועה, ושאחרי שהתוכניות המבצעיות ישתנו - ניתן יהיה לפעול בעזה.\n\nמצידו, טוען וינטר שהוא "סומן" על ידי הרמטכ"ל, ושרק בגלל זה הוא לא קיבל תפקיד במבצע.\n\nכעת הוא מאמין שהגיע הזמן לשים את המחלוקות מאחור, ולתת לקצינים כמוהו תפקיד מרכזי בצה"ל.\n\nקבוצה של הורים שכולים ללוחמים בגדוד גולני, שוינטר פיקד עליו בעבר, מתכננים להגיש עתירה לבג"ץ נגד המינוי.\n\nאייל אשל, אביה של התצפיתנית רוני אשל ז"ל, אמר: "הוא לא ראוי, ובטח ובטח באשר אליו כמפקד בצה"ל שהביא את כולנו לאסון הזה של שבת בבוקר".',
+    category: "Politics",
+    title: 'הרמטכ"ל ייפגש עם תא"ל עופר וינטר - כדי להחליט לגבי עתידו בצה"ל',
+    publish_date: "2024-05-05 14:28:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-0f049dcc8384f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/by_li2uw.jpg",
+  },
+  {
+    id: "106",
+    article:
+      '**תקציר חדשות על עתידו של אליניב ברדה בהפועל באר שבע**\n\nבעוד עשרה ימים תפוג האופציה של הפועל באר שבע להארכת חוזהו של המאמן אליניב ברדה, אך עד כה לא התקיימו שיחות בין הצדדים בנושא.\n\nלמרות שהאוהדים והמועדון רוצים שברדה ימשיך, ההתנהלות סביב הארכת חוזהו מעלה שאלות.\n\nברדה עצמו התייחס לנושא במסיבת עיתונאים ואמר: "הפועל ב"ש היא הבית שלי, קחו את זה איך שאתם רוצים. בינתיים לא דיברנו על ההמשך".\n\nגורמים בסביבת המועדון אומרים שברדה מעוניין להישאר, אך הוא רוצה לדעת שתהיה קבוצה אטרקטיבית בעונה הבאה ושיושקע בשחקנים טובים.\n\nברדה גם צפוי לבקש שדרוג כלכלי מסוים.\n\nבמועדון אומרים שדברים רבים נסגרים ברגע האחרון, וכנראה שזה קורה גם עם ברדה.\n\nלברדה היו בעבר הצעות מבלגיה, אך הוא לא מרכז מאמץ בחיפוש אחר תפקיד אחר, שכן הוא רוצה להישאר בהפועל באר שבע.\n\nאם ברדה ימשיך בקבוצה, הוא עשוי להוסיף גביע נוסף לארון התארים של באר שבע העונה.',
+    category: "Sport",
+    title: "כלום לא קורה: תעלומת עתידו של אליניב ברדה",
+    publish_date: "2024-05-05 13:59:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-bf7f3a34cc64f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/foilquA-.jpg",
+  },
+  {
+    id: "105",
+    article:
+      '**תקציר חדשות על עמדת נתניהו בנוגע לעסקה עם חמאס**\n\nראש הממשלה, בנימין נתניהו, הבהיר היום כי ישראל לא תאפשר את סיום הלחימה ברצועת עזה עד להשגת הסכם הכולל את שחרור כל החטופים הישראלים.\n\nבישיבת הממשלה אמר נתניהו כי חמאס "מכשיל את שחרור חטופינו" בעמדותיו הקיצוניות.\n\nנתניהו ציין כי שחרור החטופים נמצא בראש מעייני הממשלה, אך הדגיש כי ישראל לא מוכנה לשלם מחירים מוגזמים עבור עסקה עם חמאס.\n\nלדבריו, ישראל לא תקבל מצב שבו חמאס ישתלט מחדש על עזה וישקם את התשתיות הצבאיות שלו.\n\nנתניהו הזהיר כי אם ישראל תסכים לסיים את המלחמה ולהוציא את כוחות צה"ל מהרצועה, "החמאס יוכל לממש את הבטחתו לבצע שוב ושוב ושוב את מעשי הטבח, את מעשי האונס והחטיפות".\n\nעמדתו של נתניהו מהווה קו אדום ברור עבור כל עסקה עם חמאס, והיא משקפת את מחויבותו להבטיח את ביטחון אזרחי ישראל.',
+    category: "Politics",
+    title: "נתניהו, בקולו: ישראל לא תאפשר את סיום הלחימה, זו כניעה",
+    publish_date: "2024-05-05 13:52:00",
+    links: ["https://www.mako.co.il/news-military/2024_q2/Article-fa9ecceb0684f81027.htm?partner=lobby"],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/Tki9FRpK.jpg",
+  },
+  {
+    id: "104",
+    article:
+      "**תקציר חדשות על הרכב מכבי נתניה למשחק מול מכבי תל אביב**\n\nמאמן מכבי נתניה, רן דראפיץ', צפוי לעלות בהרכב חזק למשחק הקרוב מול מכבי תל אביב, למרות שקבוצתו כבר הבטיחה את המקום השני בטבלה.\n\nבמרכז ההגנה יפתחו ג'ונתן בורנשטיין ודורון ליידנר, בעוד שבקישור יפתחו יובל אשכנזי, בוריס אינו ורוי קורין.\n\nבחלק הקדמי צפויים לפתוח מוחמד עוואד, סתיו פרידמן ורז שלמה.\n\nדראפיץ' אמר לקראת המשחק: \"אנחנו רוצים לנצח בכל משחק, לא משנה נגד מי. מאבק האליפות לא מעניין אותנו\".\n\nמכבי נתניה מגיעה למשחק לאחר שני ניצחונות רצופים, והיא מקווה להמשיך במומנטום החיובי גם מול מכבי תל אביב.\n\nלעומת זאת, מכבי תל אביב מגיעה למשחק לאחר תיקו מאכזב מול בני סכנין, והיא זקוקה לניצחון על מנת להבטיח את המקום הראשון בטבלה.",
+    category: "Sport",
+    title: '"רוצים לנצח, מאבק האליפות לא מעניין"',
+    publish_date: "2024-05-05 13:30:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-a72111e92584f81027.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/2R9UxV9S.jpg",
+  },
+  {
+    id: "103",
+    article:
+      "**תקציר חדשות על פציעות שחקני חדרה**\n\nחלוץ הפועל חדרה, מוחמד דמון, בספק למשחק הקרוב מול מכבי פתח תקווה בשל כאבים.\n\nדמון סובל מכאבים בשריר הירך האחורי, ולא ברור אם יהיה כשיר לשחק ביום שני הקרוב.\n\nלעומתו, הקשר מנשה זלקה שב מהשעיה בת ארבעה משחקים ויעמוד לרשות המאמן חיים סילבס.\n\nשחקן נוסף של חדרה, מוטי גלזר, נפצע באימון ונלקח לבית החולים לטיפול. טיב הפציעה עדיין לא ברור.\n\nמצבו של גלזר ייבדק בימים הקרובים, ורק אז יתברר אם הוא יוכל לשחק מול מכבי פתח תקווה.\n\nהפועל חדרה נאבקת בתחתית הטבלה, והיא זקוקה לכל נקודה על מנת להבטיח את הישארותה בליגת העל.",
+    category: "Sport",
+    title: 'מדמון חש בכאבים ובספק למשחק מול מכבי פ"ת',
+    publish_date: "2024-05-05 13:57:00",
+    links: [
+      "https://www.mako.co.il/news-sport/israel_soccer-2024_q2/Article-9a60f774c384f81026.htm?sCh=d0289dfc85dab610&pId=173122002&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/a2Od9RqS.jpg",
+  },
+  {
+    id: "102",
+    article:
+      "**תקציר חדשות על הפסקת המסחר עם טורקיה והשפעתה על מחירי המזון בישראל**\n\nבעקבות הפסקת המסחר בין ישראל לטורקיה, יבואנים ישראליים נאלצים למצוא חלופות לייצור הטורקי של מוצרי מזון רבים.\n\nמוצרים אלו כוללים פסטות, שמן זית וממרחים, שמרביתם מיוצרים כיום בטורקיה ונמכרים בישראל תחת מותגים פרטיים של רשתות הקמעונאות.\n\nיבואנים בוחנים אתרי ייצור חלופיים בפולין, הונגריה ומדינות אחרות במזרח אירופה, אך מזהירים כי יבוא הסחורות הללו יהיה יקר יותר.\n\nההערכה היא כי מחירי המזון בישראל יעלו בכ-20% נוספים כתוצאה מהפסקת המסחר עם טורקיה.\n\nהיבואנים הישראליים מביעים דאגה מההשפעה של הפסקת המסחר על הצרכנים הישראליים, ומקווים כי המצב ייפתר בהקדם האפשרי.",
+    category: "Economics",
+    title: "יבואנים: הפסקת המסחר עם טורקיה תגרום לעלייה של עוד כ-20% במחירי המזון",
+    publish_date: "2024-05-05 13:05:00",
+    links: [
+      "https://www.mako.co.il/news-money/2024_q2/Article-c68203b8b084f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/V3xjdsly.jpg",
+  },
+  {
+    id: "101",
+    article:
+      '**תקציר חדשות על כריסטיאנו רונאלדו**\n\nכריסטיאנו רונאלדו, כוכב הכדורגל הפורטוגלי, מתקרב לציון דרך משמעותי בקריירה שלו: 900 שערים.\n\nבראיון שנערך לאחרונה, אמר רונאלדו: "אני לא עוקב אחרי השיאים, הם עוקבים אחריי". הוא הביע ביטחון בכך שיגיע ליעד הזה בקרוב, ואמר: "אם לא העונה, בעונה הבאה".\n\nנכון לעכשיו, רונאלדו כבש 819 שערים בקריירה שלו, והוא מדורג שלישי ברשימת הכובשים הגדולים בכל הזמנים. הוא כבש 618 שערים במועדונים, כולל 145 לריאל מדריד, 101 ליובנטוס ו-144 למנצ\'סטר יונייטד. בנוסף, הוא כבש 118 שערים עבור נבחרת פורטוגל.\n\nרונאלדו ידוע גם בכישורי השלושערים שלו. הוא כבש 61 שלושערים בקריירה שלו, כאשר 57 מתוכם הובקעו במועדונים ו-4 בנבחרת פורטוגל.\n\nהכוכב הפורטוגלי ידוע בשאפתנות ובדבקות במטרה שלו, והוא נחשב לאחד הכדורגלנים הגדולים בכל הזמנים. השיאים והסטטיסטיקות שלו מעידים על הכישרון יוצא הדופן שלו ועל היכולת הכובשת המרשימה שלו.',
+    category: "Sport",
+    title: 'כריסטיאנו רונאלדו: "אני לא עוקב אחרי השיאים, הם עוקבים אחריי"',
+    publish_date: "2024-05-05 14:22:00",
+    links: [
+      "https://www.mako.co.il/news-sport/world_soccer-2024_q2/Article-5521e762f684f81027.htm?sCh=d0289dfc85dab610&pId=173122001&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/U-Z4jIWJ.jpg",
+  },
+  {
+    id: "100",
+    article:
+      "**תקציר עדכונים על הטבות אופציות לעובדי הייטק ישראליים**\n\n**היקף מימוש האופציות בשנת 2023**\n\nעובדים ב-48 חברות ישראליות הנסחרות בוול סטריט מימשו אופציות ברווח כולל של 824 מיליון דולר בשנת 2023. מדובר בירידה לעומת 1.17 מיליארד דולר בשנת 2022 ו-2.65 מיליארד דולר בשנת השיא 2021.\n\n**שווי ההטבות המגולמות באופציות**\n\nלמרות ירידה בהיקף המימושים, העליות במחירי המניות בשנה האחרונה הגדילו את שווי ההטבות המגולמות באופציות שעובדים מחזיקים כיום. ב-10 חברות שבהן האופציות \"בתוך הכסף\" (כדאיות למימוש), ההטבה לעובדים עומדת על 1.95 מיליארד דולר.\n\n**חברות בולטות בהיקף ההטבות**\n\n* סנטינל וואן: 173 מיליון דולר\n* מאנדיי: 113 מיליון דולר\n* נייס: 138 מיליון דולר\n* גלובל-אי: 48.3 מיליון דולר\n* ג'יי פרוג: 38.9 מיליון דולר\n* סלברייט: 33.2 מיליון דולר\n* צ'ק פוינט: 20 מיליון דולר\n\n**הבדלים בין אופציות למניות חסומות**\n\nחברות רבות מספקות לעובדים גם מניות חסומות, שהן מניות המוענקות לעובדים ומבשילות למימוש לאחר תקופה מסוימת. בניגוד לאופציות, מניות חסומות אינן נותנות לעובדים את הזכות לרכוש מניות, אלא הן מניות שהוענקו ישירות.\n\n**משמעויות ותובנות**\n\n* ההטבה ממכירת אופציות ממשיכה להיות מקור הכנסה משמעותי לעובדי הייטק ישראליים.\n* השינויים במחירי המניות משפיעים באופן ישיר על שווי ההטבות המגולמות באופציות.\n* חברות רבות משתמשות באופציות ומניות חסומות כדי למשוך ולהשאיר עובדים מוכשרים.\n* חשוב לעובדים להבין את המיסוי והסיכונים הכרוכים באופציות.\n* עובדים שמימשו אופציות ב-2023 נהנו מהעליות במחירי המניות, אך מי שעומד לממש אופציות בעתיד צריך להישאר מודעים לשינויים בשוק.",
+    category: "Economics",
+    title: "מוויקס ועד מאנדיי: לעובדי ההייטק יש אופציות בשווי 2 מיליארד דולר לממש",
+    publish_date: "2024-05-05 14:10:00",
+    links: [
+      "https://www.mako.co.il/news-money/tech12/Article-97418802d684f81026.htm?sCh=adbcb2eb226bb110&pId=173113801&partner=lobby",
+    ],
+    s3_image: "https://drwx9nycxbcad.cloudfront.net/kWH5AJxh.jpg",
   },
 ];
 

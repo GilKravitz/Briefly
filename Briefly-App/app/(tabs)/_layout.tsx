@@ -11,6 +11,11 @@ const TabsLayout = () => {
         tabBarActiveTintColor: activeColor,
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: "white",
+          borderTopColor: "#f0f0f0",
+          borderTopWidth: 1,
+        },
       }}
     >
       <Tabs.Screen
