@@ -4,72 +4,62 @@ import { Heading2, Text } from "../StyledText";
 import TagSvgIcon from "@/components/TagSvgIcons";
 import { Article } from "@/types";
 import { Image } from "expo-image";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import React from "react";
+import Colors from "@/constants/Colors";
+import { dateFormat } from "@/utils/dateFormat";
+import ArticleCategory from "./ArticleCategory";
 
 type ListItemProps = {
+  index: number;
   article: Article;
   onPress: () => void;
 };
 
-const dateFormat = (dateStr: string) => {
-  let date = new Date(dateStr);
-  const diff = Date.now() - date.getTime();
-  const seconds = diff / 1000;
-  if (seconds < 60) {
-    return "Just now";
-  }
-  const minutes = seconds / 60;
-  if (minutes < 60) {
-    return `${Math.floor(minutes)} min`;
-  }
-  const hours = minutes / 60;
-  if (hours < 24) {
-    return `${Math.floor(hours)} h`;
-  }
-  const days = hours / 24;
-  if (days < 7) {
-    return `${Math.floor(days)} days`;
-  }
-  return date.toLocaleDateString();
-};
-
-export default function ListItem(props: ListItemProps) {
+const ListItem = React.memo((props: ListItemProps) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
-      <View style={listItemStyles.container}>
-        <View style={listItemStyles.contetContainer}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 5 }}>
+    <Animated.View entering={FadeInDown.delay(200 * props.index)}>
+      <TouchableOpacity onPress={props.onPress}>
+        <View style={styles.container}>
+          <View style={styles.contentContainer}>
+            <ArticleCategory category={props.article.category} />
             <Heading2 style={{ flex: 0.95, fontSize: 16, fontWeight: "600" }} size={16}>
               {props.article.title}
             </Heading2>
-            <Text colorName="textMuted">{dateFormat(props.article.publish_date)}</Text>
+            <Text style={styles.date} colorName="textMuted">
+              {dateFormat(props.article.publish_date)}
+            </Text>
           </View>
+          <Image source={{ uri: props.article.s3_image }} style={styles.img} />
         </View>
-      </View>
-      <Image source={{ uri: props.article.s3_image }} style={{ width: "100%", height: 200 }} />
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
   );
-}
+});
 
-const listItemStyles = StyleSheet.create({
+export default ListItem;
+
+const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    gap: 16,
-    flex: 1,
-    width: "100%",
-    shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 3,
-  },
-  iconContainer: {
-    width: 60,
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-  },
-  contetContainer: {
     gap: 10,
     flex: 1,
+    width: "100%",
+    borderRadius: 20,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  date: {
+    width: "100%",
+  },
+  contentContainer: {
+    flex: 1,
+    gap: 5,
+  },
+  img: {
+    width: 140,
+    height: 100,
+    borderRadius: 10,
   },
 });

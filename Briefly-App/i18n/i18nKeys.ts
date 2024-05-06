@@ -41,4 +41,19 @@ export type I18nKeys = {
     subheading: string;
     btnText: string;
   };
+  article: {
+    date: {
+      justNow: string;
+      min: string;
+      h: string;
+      days: string;
+    };
+    category: {
+      money: string;
+      sports: string;
+      politics: string;
+      food: string;
+      tech: string;
+    };
+  };
 };

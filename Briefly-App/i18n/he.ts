@@ -42,6 +42,21 @@ const he: I18nKeys = {
     subheading: "בחר/י נושאים שמעניינים אותך",
     btnText: "המשך",
   },
+  article: {
+    date: {
+      justNow: "עכשיו",
+      min: "דק'",
+      h: "ש'",
+      days: "ימים",
+    },
+    category: {
+      money: "כלכלי",
+      sports: "ספורט",
+      politics: "פוליטיקה",
+      food: "אוכל",
+      tech: "טכנולוגיה",
+    },
+  },
 };
 
 // create type for the i18n keys

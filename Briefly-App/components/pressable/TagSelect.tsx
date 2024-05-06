@@ -13,6 +13,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Colors from "@/constants/Colors";
+import { t } from "@/i18n";
+import i18nLabel from "@/utils/articleCatagoryText";
 
 const springConfig = {
   mass: 0.3,
@@ -80,7 +82,7 @@ const TagSelect = (props: iProps) => {
       <AnimatedPressable onPress={handlePress}>
         <ImageBackground source={bgImage(props.label)} style={styles.imageBackground}>
           <Animated.View style={[styles.overlay, animatedStyle]}>
-            <Heading2 colorName="background"> {props.label}</Heading2>
+            <Heading2 colorName="background"> {i18nLabel(props.label)}</Heading2>
             <Animated.View style={animatedIconStyle}>
               <FontAwesome name="check-circle" size={24} color={Colors.light.background} />
             </Animated.View>

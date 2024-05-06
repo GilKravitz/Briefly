@@ -19,19 +19,12 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="article"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="newspaper-o" color={color} />,
         }}
       />
-      {/* <Tabs.Screen
-        name="Search"
-        options={{
-          title: "Search",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="search" color={color} />,
-        }}
-      /> */}
       <Tabs.Screen
         name="Bookmarked"
         options={{

@@ -42,6 +42,21 @@ const en: I18nKeys = {
     subheading: "Select Topics You Are Interested In",
     btnText: "NEXT",
   },
+  article: {
+    date: {
+      justNow: "Now",
+      min: "min",
+      h: "h",
+      days: "days",
+    },
+    category: {
+      money: "Money",
+      sports: "Sports",
+      politics: "Politics",
+      food: "Food",
+      tech: "Tech",
+    },
+  },
 };
 
 export default en;

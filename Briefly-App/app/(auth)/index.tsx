@@ -29,8 +29,8 @@ const Header = (props: SvgProps) => {
 
 const index = () => {
   i18n.locale = "he";
-  // return <Redirect href={"/(app)/SelectTopics"} />;
-  return <Redirect href={"/(tabs)/"} />;
+  return <Redirect href={"/(app)/SelectTopics"} />;
+  // return <Redirect href={"/(tabs)/article/ArticleList"} />;
   return (
     <Container paddingTop={0}>
       <Header style={styles.header} />

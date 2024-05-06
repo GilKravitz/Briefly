@@ -5,30 +5,36 @@ import { Heading } from "@/components/StyledText";
 import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
 import ListItem from "@/components/Feed/ListItem";
-const index = () => {
+import { useArticle } from "@/store/articleContext";
+import { router } from "expo-router";
+import Colors from "@/constants/Colors";
+
+const ArticleList = () => {
+  const { setArticle } = useArticle();
   const [articles, setArticles] = useState<Article[]>([]);
   const fetchArticles = async () => {
     const articles = await getArticles();
     setArticles(articles as Article[]);
-    console.log(articles);
+    // console.log(articles);
   };
   useEffect(() => {
     fetchArticles();
   }, []);
 
+  const handlePress = (article: Article) => {
+    setArticle(article);
+    router.navigate("/article/ArticleView");
+  };
   return (
-    <Container>
+    <Container style={styles.backgroundMuted}>
       <Heading>Home</Heading>
       <FlatList
         data={articles}
-        renderItem={({ item }) => <ListItem article={item} onPress={() => console.log("pressed")} />}
+        renderItem={({ item, index }) => <ListItem index={index} article={item} onPress={() => handlePress(item)} />}
         keyExtractor={(item) => item.id.toString() + item.title}
-        // ItemSeparatorComponent={() => (
-        //   <View style={{ height: 20, borderBottomWidth: 1, marginBottom: 20, borderColor: "#b8b9ba" }} />
-        // )}
-        // extraData={selectedId}
+        // ItemSeparatorComponent={() => <View style={styles.separator} />}
         style={styles.list}
-        contentContainerStyle={{ width: "100%", paddingBottom: 50 }}
+        contentContainerStyle={styles.contentContainer}
         // ListHeaderComponent={<Logo />}
         ListHeaderComponentStyle={{ alignItems: "center", marginBottom: 30 }}
       />
@@ -36,11 +42,24 @@ const index = () => {
   );
 };
 
-export default index;
+export default ArticleList;
 
 const styles = StyleSheet.create({
+  backgroundMuted: {
+    backgroundColor: Colors.listBackground,
+  },
   list: {
     width: "100%",
     marginTop: 50,
+  },
+  separator: {
+    borderBottomWidth: 1,
+    borderColor: Colors.lightGray,
+    marginTop: 20,
+  },
+  contentContainer: {
+    gap: 20,
+    width: "100%",
+    paddingBottom: 50,
   },
 });

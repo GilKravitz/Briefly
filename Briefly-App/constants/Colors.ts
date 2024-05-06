@@ -1,4 +1,7 @@
 export default {
+  lightGray: "#B3B3B3",
+  listBackground: "#EEE",
+  white: "#FFF",
   light: {
     primary: "#2D2D2D",
     background: "#F8F8F8",
@@ -8,6 +11,7 @@ export default {
     placeholder: "#B3B3B3",
     buttonBackground: "#2D2D2D",
     error: "#BD2025",
+    white: "#FFF",
   },
   dark: {
     primary: "#2D2D2D",
@@ -18,5 +22,6 @@ export default {
     placeholder: "#B3B3B3",
     buttonBackground: "#2D2D2D",
     error: "#BD2025",
+    white: "#FFF",
   },
 };

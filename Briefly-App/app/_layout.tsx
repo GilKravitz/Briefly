@@ -11,6 +11,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useColorScheme } from "@/components/useColorScheme";
+import { ArticleProvider } from "@/store/articleContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
@@ -48,7 +49,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   const colorScheme = useColorScheme();
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaProvider>{children}</SafeAreaProvider>
+      <SafeAreaProvider>
+        <ArticleProvider>{children}</ArticleProvider>
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 };

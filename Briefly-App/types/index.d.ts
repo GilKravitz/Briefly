@@ -2,3 +2,4 @@
 
 export * from "./Article";
 export * from "./Topic";
+export * from "./ArticleText";

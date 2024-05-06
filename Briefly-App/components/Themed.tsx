@@ -57,12 +57,6 @@ export function View(props: ViewProps) {
   const colorName = props.colorName ?? "background";
   const backgroundColor = useThemeColor(theme, colorName, colorInverted);
   const dir = useDirection();
-  const flexDirection = () => {
-    if (row) {
-      return dir === "rtl" ? "row-reverse" : "row";
-    }
-    return "column";
-  };
 
-  return <DefaultView style={[{ backgroundColor, flexDirection: flexDirection() }, style]} {...otherProps} />;
+  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }

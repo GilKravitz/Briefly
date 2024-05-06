@@ -20,7 +20,7 @@ const index = () => {
           <TagSelect key={tag} label={tag} onPress={(isSelected) => console.log(tag, isSelected)} selected={false} />
         ))}
       </View>
-      <Button style={styles.nextButton} onPress={() => router.replace("/(tabs)")}>
+      <Button style={styles.nextButton} onPress={() => router.replace("/(tabs)/article/ArticleList")}>
         {t.selectTopics.btnText}
       </Button>
     </Container>
