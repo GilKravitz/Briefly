@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from BaseClasses import Article, BaseScrapper
+from baseScrapper import BaseScrapper
+from article import Article
 from datetime import datetime
 from logger import logger
 

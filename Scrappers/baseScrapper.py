@@ -6,17 +6,6 @@ from db.db import check_duplicate_article, commit_article
 from logger import logger
 
 
-class Article:
-    def __init__(self, link, data, title, publish_date, category, imageLink, source):
-        self.link = link
-        self.data = data
-        self.title = title
-        self.publish_date = publish_date
-        self.category = category
-        self.image = imageLink
-        self.source = source
-
-
 class BaseScrapper(ABC):
     def __init__(
         self,

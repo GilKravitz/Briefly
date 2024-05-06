@@ -16,9 +16,9 @@ from configuration.NewsConfig import (
     YNET_ONLY_RELEVANT_LINKS,
 )
 from configuration.NewsConfig import NEWS_SITES
-from n12 import N12_Scrapper
-from n13 import N13_Scrapper
-from ynet import Ynet_Scrapper
+from sites.n12 import N12_Scrapper
+from sites.n13 import N13_Scrapper
+from sites.ynet import Ynet_Scrapper
 from logger import logger
 
 
