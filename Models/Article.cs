@@ -23,6 +23,10 @@ public class Article
     [Column("links")]
     public string SourceLinks { get; set; }
 
+    [Column("image")]
+    public string? Image { get; set; }
+    [Column("s3_image")]
+    public string? S3_image { get; set; }
     [NotMapped]
     public List<string> SourceLinksList
     {
