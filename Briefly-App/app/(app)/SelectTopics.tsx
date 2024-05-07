@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   nextButton: {
-    marginTop: 50,
-    width: 175,
+    marginTop: 20,
+    // width: 175,
     alignSelf: "center",
   },
   lottie: {

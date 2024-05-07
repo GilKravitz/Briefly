@@ -15,8 +15,10 @@ const ReportArticle = () => {
   };
   return (
     <Container>
-      <BackButton2 />
-      <Heading>{t.article.reportArticle.title}</Heading>
+      <View style={styles.backButtonContainer}>
+        <BackButton2 variant="dark" />
+      </View>
+      <Heading style={styles.heading}>{t.article.reportArticle.title}</Heading>
       <LottieView autoPlay style={styles.lottie} source={require("../../../assets/lottie/report.json")} />
       <View style={styles.form}>
         <Input placeholder={t.article.reportArticle.reportDetail} />
@@ -35,6 +37,14 @@ const ReportArticle = () => {
 export default ReportArticle;
 
 const styles = StyleSheet.create({
+  heading: {
+    marginTop: 40,
+  },
+  backButtonContainer: {
+    position: "absolute",
+    top: 60,
+    left: 20,
+  },
   lottie: {
     width: 200,
     height: 200,

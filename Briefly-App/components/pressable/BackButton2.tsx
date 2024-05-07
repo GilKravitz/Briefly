@@ -6,17 +6,22 @@ import AnimatedPressable from "./AnimatedPressable";
 import Colors from "@/constants/Colors";
 import { router } from "expo-router";
 
-interface iProps extends PressableProps, ThemeProps {}
+type BackButtonProps = {
+  style?: PressableProps["style"];
+  variant?: "default" | "dark";
+};
 
-export default function BackButton(props: iProps) {
+export default function BackButton(props: BackButtonProps) {
   const { style } = props;
   const handlePress = () => {
     router.back();
   };
+  const iconColor = props.variant === "dark" ? Colors.lightPrimary : Colors.darkPrimary;
+  const bgColor = props.variant === "dark" ? Colors.darkPrimary : Colors.lightPrimary;
   return (
     <AnimatedPressable onPress={handlePress}>
-      <View style={styles.container}>
-        <FontAwesome name="chevron-left" size={25} color={Colors.light.primary} />
+      <View style={[styles.container, { backgroundColor: bgColor }]}>
+        <FontAwesome name="chevron-left" size={25} color={iconColor} />
       </View>
     </AnimatedPressable>
   );
@@ -31,6 +36,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     borderColor: "rgba(255,255,255,0.1)",
-    backgroundColor: Colors.light.background,
+    // backgroundColor: Colors.light.background,
   },
 });

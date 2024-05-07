@@ -54,7 +54,14 @@ const ArticleView = () => {
 
   const onReportPress = () => {
     console.log("Report ");
+    setMenuIsOpen(false);
     router.navigate("/(tabs)/Article/ReportArticle");
+  };
+
+  const onExternalLinksPress = () => {
+    console.log("External Links");
+    setMenuIsOpen(false);
+    setOpenLinksModal(true);
   };
   const handleCloseMenus = () => {
     console.log("Close Menus");
@@ -73,9 +80,7 @@ const ArticleView = () => {
               console.log("Bookmark");
             }}
             onReportPress={() => onReportPress()}
-            onExternalLinksPress={() => {
-              setOpenLinksModal(!openLinksModal);
-            }}
+            onExternalLinksPress={onExternalLinksPress}
             // TODO: Implement bookmarked state
             isBookmarked={false}
             menuIsOpen={menuIsOpen}

@@ -1,6 +1,8 @@
 export default {
   lightGray: "#B3B3B3",
   listBackground: "#EEE",
+  darkPrimary: "#2D2D2D",
+  lightPrimary: "#F8F8F8",
   white: "#FFF",
   light: {
     primary: "#2D2D2D",
