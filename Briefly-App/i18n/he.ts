@@ -50,11 +50,15 @@ const he: I18nKeys = {
       days: "ימים",
     },
     category: {
-      money: "כלכלי",
-      sports: "ספורט",
+      economics: "כלכלה",
+      sport: "ספורט",
       politics: "פוליטיקה",
       food: "אוכל",
       tech: "טכנולוגיה",
+    },
+    menu: {
+      bookmark: "שמור",
+      report: "דווח",
     },
   },
 };

@@ -49,11 +49,15 @@ export type I18nKeys = {
       days: string;
     };
     category: {
-      money: string;
-      sports: string;
+      economics: string;
+      sport: string;
       politics: string;
       food: string;
       tech: string;
+    };
+    menu: {
+      bookmark: string;
+      report: string;
     };
   };
 };

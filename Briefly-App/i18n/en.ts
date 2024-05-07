@@ -50,11 +50,15 @@ const en: I18nKeys = {
       days: "days",
     },
     category: {
-      money: "Money",
-      sports: "Sports",
+      economics: "Economics",
+      sport: "Sport",
       politics: "Politics",
       food: "Food",
       tech: "Tech",
+    },
+    menu: {
+      bookmark: "Bookmark",
+      report: "Report",
     },
   },
 };

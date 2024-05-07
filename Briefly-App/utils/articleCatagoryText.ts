@@ -4,12 +4,12 @@ const i18nLabel = (label: string) => {
   switch (label) {
     case "Tech":
       return t.article.category.tech;
-    case "Money":
-      return t.article.category.money;
+    case "Economics":
+      return t.article.category.economics;
     case "Politics":
       return t.article.category.politics;
-    case "Sports":
-      return t.article.category.sports;
+    case "Sport":
+      return t.article.category.sport;
     case "Food":
       return t.article.category.food;
     default:

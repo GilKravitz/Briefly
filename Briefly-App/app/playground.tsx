@@ -6,7 +6,7 @@ import { View } from "@/components/Themed";
 import BackButton from "@/components/pressable/BackButton";
 import Button from "@/components/pressable/Button";
 import TagSvgIcon from "@/components/TagSvgIcons";
-import TagSelect from "@/components/pressable/TagSelect";
+import TagSelect from "@/components/SelectTopics/TopicSelect";
 import Input from "@/components/Input";
 
 const switchTheme = () => {

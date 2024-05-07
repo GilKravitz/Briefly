@@ -21,15 +21,15 @@ const getBgColor = (catagory: string) => {
     case "Tech":
       return "#EEF8FF";
     case "Economics":
-      return "#F2FAF7";
+      return "#EBFFE8";
     case "Politics":
-      return "#FAF2F2";
+      return "#FFE8E8";
     case "Sport":
-      return "#F6F7FE";
+      return "#E8F4FF";
     case "Food":
-      return "#FFF3E0";
+      return "#FFFAE8";
     default:
-      return "#FFFDE7";
+      return "#FFFAE8";
   }
 };
 

@@ -3,7 +3,7 @@ import { Article, Topic } from "@/types";
 const topics: { [key: string]: Topic } = {
   Tech: { name: "Tech", id: 1 },
   Politics: { name: "Politics", id: 2 },
-  Sports: { name: "Sports", id: 3 },
+  Sports: { name: "Sport", id: 3 },
   Money: { name: "Money", id: 4 },
 };
 export const articles: Article[] = [

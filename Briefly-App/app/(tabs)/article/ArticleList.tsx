@@ -1,13 +1,22 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Container from "@/components/Container";
-import { Heading } from "@/components/StyledText";
 import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
-import ListItem from "@/components/Feed/ListItem";
+import ListItem from "@/components/Article/ListItem";
 import { useArticle } from "@/store/articleContext";
 import { router } from "expo-router";
 import Colors from "@/constants/Colors";
+import Svg, { Path, SvgProps } from "react-native-svg";
+
+const Logo = (props: SvgProps) => (
+  <Svg width={92} height={109} fill="none" {...props}>
+    <Path
+      fill="#2D2D2D"
+      d="M0 0v91.974h46.379c32.583 0 46.773-33.768 25.753-49.273C87.372 25.882 72.915 0 47.822 0H0ZM75.725 94.664a2.69 2.69 0 0 1 2.69-2.69h10.76a2.69 2.69 0 0 1 2.69 2.69v10.76a2.69 2.69 0 0 1-2.69 2.69h-10.76a2.69 2.69 0 0 1-2.69-2.69v-10.76Z"
+    />
+  </Svg>
+);
 
 const ArticleList = () => {
   const { setArticle } = useArticle();
@@ -23,11 +32,10 @@ const ArticleList = () => {
 
   const handlePress = (article: Article) => {
     setArticle(article);
-    router.navigate("/article/ArticleView");
+    router.navigate("/Article/ArticleView");
   };
   return (
     <Container style={styles.backgroundMuted}>
-      <Heading>Home</Heading>
       <FlatList
         data={articles}
         renderItem={({ item, index }) => <ListItem index={index} article={item} onPress={() => handlePress(item)} />}
@@ -35,7 +43,7 @@ const ArticleList = () => {
         // ItemSeparatorComponent={() => <View style={styles.separator} />}
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
-        // ListHeaderComponent={<Logo />}
+        ListHeaderComponent={<Logo />}
         ListHeaderComponentStyle={{ alignItems: "center", marginBottom: 30 }}
       />
     </Container>

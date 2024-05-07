@@ -1,10 +1,9 @@
-import { ImageBackground, PressableProps, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import AnimatedPressable from "./AnimatedPressable";
-import { ThemeProps, View, ViewProps } from "../Themed";
+import { ImageBackground, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import AnimatedPressable from "../pressable/AnimatedPressable";
+import { ViewProps } from "../Themed";
 import { Heading2 } from "../StyledText";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-
 import Animated, {
   Extrapolation,
   interpolate,
@@ -13,7 +12,6 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Colors from "@/constants/Colors";
-import { t } from "@/i18n";
 import i18nLabel from "@/utils/articleCatagoryText";
 
 const springConfig = {
@@ -26,6 +24,7 @@ interface iProps extends ViewProps {
   onPress: (isSelected: boolean) => void;
   label: string;
   selected: boolean;
+  entering?: any;
 }
 const TagSelect = (props: iProps) => {
   const [isSelected, setIsSelected] = useState(props.selected);
@@ -40,7 +39,7 @@ const TagSelect = (props: iProps) => {
   };
 
   const handlePress = () => {
-    props.onPress(isSelected);
+    props.onPress(!isSelected);
     setIsSelected((prev) => !prev);
   };
 
@@ -53,11 +52,11 @@ const TagSelect = (props: iProps) => {
     switch (label) {
       case "Tech":
         return require("@/assets/images/categories/tech.png");
-      case "Money":
-        return require("@/assets/images/categories/politics.png");
+      case "Economics":
+        return require("@/assets/images/categories/money.png");
       case "Politics":
         return require("@/assets/images/categories/politics.png");
-      case "Sports":
+      case "Sport":
         return require("@/assets/images/categories/sports.png");
       case "Food":
         return require("@/assets/images/categories/food.png");
@@ -78,7 +77,7 @@ const TagSelect = (props: iProps) => {
     };
   });
   return (
-    <View style={styles.container} onLayout={onLayout}>
+    <Animated.View style={styles.container} onLayout={onLayout} entering={props.entering}>
       <AnimatedPressable onPress={handlePress}>
         <ImageBackground source={bgImage(props.label)} style={styles.imageBackground}>
           <Animated.View style={[styles.overlay, animatedStyle]}>
@@ -89,7 +88,7 @@ const TagSelect = (props: iProps) => {
           </Animated.View>
         </ImageBackground>
       </AnimatedPressable>
-    </View>
+    </Animated.View>
   );
 };
 
