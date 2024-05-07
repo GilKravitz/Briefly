@@ -71,7 +71,7 @@ class N13_Scrapper(BaseScrapper):
             content_article = self.article_soup.find(
                 "article", class_=lambda c: c and c.startswith("Articlestyles__Content")
             )
-            if content_article is None:
+            if content_article is None: # didnt find article tag in html form , so doing the usual way.
                 content_article = self.article_soup.find_all(
                     "div", class_=lambda c: c and c.startswith("ArticleTimeLinestyles")
                 )
