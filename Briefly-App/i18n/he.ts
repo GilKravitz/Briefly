@@ -64,6 +64,12 @@ const he: I18nKeys = {
       heading: "מצאת את הכתבה מעניינת ?",
       subheading: "ניתן לקרוא פה את הכתבה המלאה :",
     },
+    reportArticle: {
+      title: "דווח על כתבה",
+      reportReasonLabel: "אנא ספק את הסיבה לדיווח על הכתבה",
+      reportDetail: "סיבה לדיווח",
+      reportBtn: "שלח",
+    },
   },
 };
 

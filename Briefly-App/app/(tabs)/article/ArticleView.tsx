@@ -15,6 +15,7 @@ import { dateFormat } from "@/utils/dateFormat";
 import Colors from "@/constants/Colors";
 import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
+import { router } from "expo-router";
 // create Animated.Heading component
 
 type ArticleTextProps = {
@@ -50,6 +51,10 @@ const ArticleView = () => {
   const { article } = useArticle();
   const parsedArticle = parseArticleText(article.article);
 
+  const onReportPress = () => {
+    console.log("Report ");
+    router.navigate("/(tabs)/Article/ReportArticle");
+  };
   return (
     <>
       <ScrollView style={{ backgroundColor: Colors.light.background }}>
@@ -61,9 +66,7 @@ const ArticleView = () => {
             onBookmarkPress={() => {
               console.log("Bookmark");
             }}
-            onReportPress={() => {
-              console.log("Report");
-            }}
+            onReportPress={() => onReportPress()}
             onExternalLinksPress={() => {
               setOpenLinksModal(!openLinksModal);
             }}

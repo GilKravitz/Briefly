@@ -3,6 +3,7 @@ import React, { forwardRef } from "react";
 import { StyleProp, StyleSheet, TextInput, ViewStyle } from "react-native";
 import { useThemeColor } from "./Themed";
 import { View } from "./Themed";
+import { useDirection } from "@/hooks/useDirection";
 type TextInputProps = TextInput["props"];
 export interface iProp extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -14,11 +15,13 @@ const Input = forwardRef<Ref, iProp>((props, ref) => {
   const { style, ...otherProps } = props;
   const backgroundColor = useThemeColor({}, "inputBackground");
   const placeholder = useThemeColor({}, "placeholder");
+  const dir = useDirection();
+  const textAlign = dir === "rtl" ? "right" : "left";
   return (
     <TextInput
       placeholderTextColor={placeholder}
       ref={ref}
-      style={[styles.input, { backgroundColor }, style]}
+      style={[styles.input, { backgroundColor, textAlign }, style]}
       {...otherProps}
     />
   );

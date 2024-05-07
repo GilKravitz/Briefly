@@ -64,6 +64,12 @@ const en: I18nKeys = {
       heading: "Found It Interesting?",
       subheading: "Tap Here To Read The Full Article:",
     },
+    reportArticle: {
+      title: "Report Article",
+      reportReasonLabel: "Reason for reporting:",
+      reportDetail: "Please describe the reason for reporting this article",
+      reportBtn: "Submit Report",
+    },
   },
 };
 

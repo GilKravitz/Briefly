@@ -6,6 +6,7 @@ const ArticleStack = () => {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ArticleList" />
       <Stack.Screen name="ArticleView" options={{ presentation: "fullScreenModal" }} />
+      <Stack.Screen name="ReportArticle" options={{ presentation: "fullScreenModal" }} />
     </Stack>
   );
 };

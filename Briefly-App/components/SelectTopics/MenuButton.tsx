@@ -19,6 +19,7 @@ const MenuButton = (props: MenuButtonProps) => {
   const menuStyle = useAnimatedStyle(() => {
     return {
       opacity: menuOpacity.value,
+      display: menuOpacity.value === 0 ? "none" : "flex",
     };
   });
   useEffect(() => {

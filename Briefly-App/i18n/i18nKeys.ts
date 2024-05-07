@@ -63,5 +63,11 @@ export type I18nKeys = {
       heading: string;
       subheading: string;
     };
+    reportArticle: {
+      title: string;
+      reportReasonLabel: string;
+      reportDetail: string;
+      reportBtn: string;
+    };
   };
 };
