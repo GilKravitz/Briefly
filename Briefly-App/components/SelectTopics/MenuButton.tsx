@@ -11,6 +11,8 @@ type MenuButtonProps = {
   onReportPress: () => void;
   onExternalLinksPress: () => void;
   isBookmarked?: boolean;
+  menuIsOpen: boolean;
+  setMenuIsOpen: (menuIsOpen: boolean) => void;
 };
 const MenuButton = (props: MenuButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,8 +24,14 @@ const MenuButton = (props: MenuButtonProps) => {
       display: menuOpacity.value === 0 ? "none" : "flex",
     };
   });
+
+  useEffect(() => {
+    setMenuOpen(props.menuIsOpen);
+  }, [props.menuIsOpen]);
+
   useEffect(() => {
     menuOpacity.value = menuOpen ? withTiming(1) : withTiming(0);
+    props.setMenuIsOpen(menuOpen);
   }, [menuOpen]);
 
   const menuButtonOnPress = () => {

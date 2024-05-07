@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, ImageBackground } from "react-native";
+import { StyleSheet, ScrollView, ImageBackground, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
 import { Article } from "@/types";
 import Container from "@/components/Container";
@@ -48,12 +48,18 @@ const ArticleTextView = (props: ArticleTextProps) => {
 };
 const ArticleView = () => {
   const [openLinksModal, setOpenLinksModal] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const { article } = useArticle();
   const parsedArticle = parseArticleText(article.article);
 
   const onReportPress = () => {
     console.log("Report ");
     router.navigate("/(tabs)/Article/ReportArticle");
+  };
+  const handleCloseMenus = () => {
+    console.log("Close Menus");
+    setOpenLinksModal(false);
+    setMenuIsOpen(false);
   };
   return (
     <>
@@ -70,24 +76,31 @@ const ArticleView = () => {
             onExternalLinksPress={() => {
               setOpenLinksModal(!openLinksModal);
             }}
+            // TODO: Implement bookmarked state
             isBookmarked={false}
+            menuIsOpen={menuIsOpen}
+            setMenuIsOpen={setMenuIsOpen}
           />
         </View>
-        <Image source={{ uri: article.s3_image }} style={styles.ImageBackground} />
-        <Container style={styles.container}>
-          <Animated.View entering={FadeInDown} style={styles.header}>
-            <ArticleCategory category={article.category} />
-            <Text size={14} colorName="textMuted">
-              {dateFormat(article.publish_date)}
-            </Text>
-          </Animated.View>
-          <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
-            <Heading size={24}>{article.title}</Heading>
-          </Animated.View>
-          <Animated.View entering={FadeInDown.delay(500)} style={styles.articleText}>
-            <ArticleTextView parsedArticle={parsedArticle} />
-          </Animated.View>
-        </Container>
+        <TouchableWithoutFeedback style={{ borderWidth: 5, borderColor: "red" }} onPress={handleCloseMenus}>
+          <View>
+            <Image source={{ uri: article.s3_image }} style={styles.ImageBackground} />
+            <Container style={styles.container}>
+              <Animated.View entering={FadeInDown} style={styles.header}>
+                <ArticleCategory category={article.category} />
+                <Text size={14} colorName="textMuted">
+                  {dateFormat(article.publish_date)}
+                </Text>
+              </Animated.View>
+              <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
+                <Heading size={24}>{article.title}</Heading>
+              </Animated.View>
+              <Animated.View entering={FadeInDown.delay(500)} style={styles.articleText}>
+                <ArticleTextView parsedArticle={parsedArticle} />
+              </Animated.View>
+            </Container>
+          </View>
+        </TouchableWithoutFeedback>
       </ScrollView>
 
       <LinksModal open={openLinksModal} links={article.links} />
