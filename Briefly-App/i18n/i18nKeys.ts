@@ -59,5 +59,9 @@ export type I18nKeys = {
       bookmark: string;
       report: string;
     };
+    linksModal: {
+      heading: string;
+      subheading: string;
+    };
   };
 };

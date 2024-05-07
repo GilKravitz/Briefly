@@ -60,6 +60,10 @@ const en: I18nKeys = {
       bookmark: "Bookmark",
       report: "Report",
     },
+    linksModal: {
+      heading: "Found It Interesting?",
+      subheading: "Tap Here To Read The Full Article:",
+    },
   },
 };
 

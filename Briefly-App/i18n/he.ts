@@ -60,6 +60,10 @@ const he: I18nKeys = {
       bookmark: "שמור",
       report: "דווח",
     },
+    linksModal: {
+      heading: "מצאת את הכתבה מעניינת ?",
+      subheading: "ניתן לקרוא פה את הכתבה המלאה :",
+    },
   },
 };
 
