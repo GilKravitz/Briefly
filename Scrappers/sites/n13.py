@@ -50,7 +50,7 @@ class N13_Scrapper(BaseScrapper):
                 publish_date = datetime.strptime(formatted_date, "%d-%m-%y %H:%M")
                 return publish_date
         except Exception as e:
-            logger.log_warning(f"{e} : No date found in article")
+            logger.log_warning(f"{e} : No date found in article , display date span was {display_date_span}")
             return None
 
     def get_article_content(self, link, article_type):
@@ -103,5 +103,5 @@ class N13_Scrapper(BaseScrapper):
             )
             return article
         except requests.RequestException as e:
-            logger.log_warning(f"{e} : Error fetching article from {link}")
+            logger.log_warning(f"{e} : Error fetching article from {link} , content was {all_content}")
             return -1

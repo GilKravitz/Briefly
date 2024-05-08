@@ -25,7 +25,7 @@ class Ynet_Scrapper(BaseScrapper):
             return formatted_date
 
         except Exception as e:
-            logger.log_warning(f"{e} : No date found in article")
+            logger.log_warning(f"{e} : No date found in article , display_date was {display_date}")
             return None
 
     def get_image_link(self):
@@ -33,8 +33,6 @@ class Ynet_Scrapper(BaseScrapper):
             "img", id=lambda c: c and "ArticleImageData" in c
         )
         if image_tag:
-            logger.log_info("Image has been found")
-            # Extract src attribute
             image_link = image_tag.get("src")
             return image_link
         else:
@@ -81,5 +79,5 @@ class Ynet_Scrapper(BaseScrapper):
             )
             return article
         except requests.RequestException as e:
-            logger.log_warning(f"{e} : Error fetching article from {link}")
+            logger.log_warning(f"{e} : Error fetching article from {link} , all content was {all_content}")
             return -1

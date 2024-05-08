@@ -32,7 +32,7 @@ class N12_Scrapper(BaseScrapper):
             publish_date = datetime.strptime(formatted_date, "%d-%m-%y %H:%M")
             return publish_date
         except Exception as e:
-            logger.log_warning(f"{e} : No date found in article")
+            logger.log_warning(f"{e} : No date found in article , display_date_span is {display_date_span}")
             return None
 
     def get_article_content(self, link, article_type):
@@ -57,7 +57,7 @@ class N12_Scrapper(BaseScrapper):
             )
             # Collect all the data of the article
             for tag in all_content:
-                if not tag.find_parent("section", class_="mako_comments") and "content" not in tag.get("class", []) and not (tag.name == "div" and "not_for_print" in tag.get("class", [])) and not tag.find_all("a", recursive=True) and not tag.find_parnt("figcaption"):
+                if not tag.find_parent("section", class_="mako_comments") and "content" not in tag.get("class", []) and not (tag.name == "div" and "not_for_print" in tag.get("class", [])) and not tag.find_all("a", recursive=True) and not tag.find_parent("figcaption"):
                     if tag.name == "h1":
                         title = tag.get_text(strip=True)
                     article_data += tag.get_text(strip=True) + " "
@@ -72,5 +72,5 @@ class N12_Scrapper(BaseScrapper):
             )
             return article
         except requests.RequestException as e:
-            logger.log_warning(f"{e} : Error fetching article from {link}")
+            logger.log_warning(f"{e} : Error fetching article from {link} ,all content was {all_content} ")
             return -1

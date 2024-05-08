@@ -20,6 +20,7 @@ class BaseScrapper(ABC):
         self.news_type = news_type  # case : Politics , Sport...
         self.relevant_links_filter = relevant_links_filter
         self.unrelevant_links_filter = unrelevant_links_filter
+        self.counter = 0 # counter of articles
 
     def filter_unrelevant_links(self, link):
         if self.unrelevant_links_filter:  # Not every scrapper has unrelevant links.
@@ -51,7 +52,7 @@ class BaseScrapper(ABC):
             else:
                 return None
         except Exception as e:
-            logger.log_warning(f"{e} : didnt fetch imageLink from article")
+            logger.log_warning(f"{e} : didnt fetch imageLink from article , img tag : {img_tag}")
 
     @abstractmethod
     def filter_fetched_links(self, href):
@@ -77,7 +78,6 @@ class BaseScrapper(ABC):
                             full_link = link
                         else:
                             full_link = self.base_url + str(link)
-
                         if check_duplicate_article(full_link):
                             continue
                         articles_links.add(full_link)
@@ -86,7 +86,7 @@ class BaseScrapper(ABC):
                 articles_links = list(articles_links)[:NUMBER_OF_ARTICLES]
                 return articles_links
         except Exception as e:
-            logger.log_error(f"{e} : Occured on {self.site_name}")
+            logger.log_error(f"{e} : Occured on {self.site_name} , article links was {articles_links}")
 
     @abstractmethod
     def get_article_content(self, link, article_type):
@@ -101,12 +101,9 @@ class BaseScrapper(ABC):
                     logger.log_warning(f"didnt manage to fetch article from {link}")
                 else:
                     if commit_article(article):
+                        self.counter += 1
                         logger.log_info(
-                            f"{article.title} from {article.source} Successfully committed article to database"
+                            f"-{self.counter}- {article.title} from {article.source} Successfully committed article to database"
                         )
-                        # print(article.category)
-                        # if article.category == "Sport":
-                        #     print(article.data)
-                        #     print(article.link)
                     else:
                         logger.log_error(f"Failed to commit article to database")
