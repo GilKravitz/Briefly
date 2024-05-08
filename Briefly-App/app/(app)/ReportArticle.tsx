@@ -19,7 +19,7 @@ const ReportArticle = () => {
         <BackButton2 variant="dark" />
       </View>
       <Heading style={styles.heading}>{t.article.reportArticle.title}</Heading>
-      <LottieView autoPlay style={styles.lottie} source={require("../../../assets/lottie/report.json")} />
+      <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/report.json")} />
       <View style={styles.form}>
         <Input placeholder={t.article.reportArticle.reportDetail} />
         <Input

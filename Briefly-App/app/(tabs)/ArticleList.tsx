@@ -32,7 +32,7 @@ const ArticleList = () => {
 
   const handlePress = (article: Article) => {
     setArticle(article);
-    router.navigate("/Article/ArticleView");
+    router.push("/(app)/ArticleView");
   };
   return (
     <Container style={styles.backgroundMuted}>

@@ -19,7 +19,7 @@ const ArticleCategory = (props: ArticleCategoryProps) => {
   );
 };
 
-export default ArticleCategory;
+export default React.memo(ArticleCategory);
 
 const styles = StyleSheet.create({
   container: {

@@ -45,16 +45,18 @@ const LinksModal = (props: LinksModalProps) => {
     <Animated.View style={[styles.container, animatedStyle]}>
       <Heading3 colorName="white">{t.article.linksModal.heading}</Heading3>
       <Text colorName="textMuted">{t.article.linksModal.subheading}</Text>
-      {providers.map((provider, index) => (
-        <TouchableOpacity
-          onPress={() => handlePressButtonAsync(provider.link)}
-          key={`${provider}${index}`}
-          style={styles.provider}
-        >
-          <Image style={styles.providerLogo} source={provider.logo} />
-          <Text colorName="textMuted">{provider.name}</Text>
-        </TouchableOpacity>
-      ))}
+      <View style={{ flexDirection: "row", gap: 15 }}>
+        {providers.map((provider, index) => (
+          <TouchableOpacity
+            onPress={() => handlePressButtonAsync(provider.link)}
+            key={`${provider}${index}`}
+            style={styles.provider}
+          >
+            <Image style={styles.providerLogo} source={provider.logo} />
+            <Text colorName="textMuted">{provider.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </Animated.View>
   );
 };

@@ -10,12 +10,13 @@ type MenuButtonProps = {
   onBookmarkPress: () => void;
   onReportPress: () => void;
   onExternalLinksPress: () => void;
-  isBookmarked?: boolean;
+  isBookmarked: boolean;
   menuIsOpen: boolean;
   setMenuIsOpen: (menuIsOpen: boolean) => void;
 };
 const MenuButton = (props: MenuButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(props.isBookmarked);
   const menuOpacity = useSharedValue(0);
 
   const menuStyle = useAnimatedStyle(() => {
@@ -24,6 +25,10 @@ const MenuButton = (props: MenuButtonProps) => {
       display: menuOpacity.value === 0 ? "none" : "flex",
     };
   });
+
+  useEffect(() => {
+    setIsBookmarked(props.isBookmarked);
+  }, [props.isBookmarked]);
 
   useEffect(() => {
     setMenuOpen(props.menuIsOpen);
@@ -49,7 +54,7 @@ const MenuButton = (props: MenuButtonProps) => {
         <TouchableOpacity onPress={props.onBookmarkPress}>
           <View style={styles.menuItem}>
             <Text>{t.article.menu.bookmark}</Text>
-            <FontAwesome name={props.isBookmarked ? "bookmark" : "bookmark-o"} size={20} color={Colors.light.primary} />
+            <FontAwesome name={isBookmarked ? "bookmark" : "bookmark-o"} size={20} color={Colors.light.primary} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={props.onReportPress}>

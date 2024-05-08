@@ -1,5 +1,5 @@
 import { StyleSheet, ScrollView, ImageBackground, TouchableWithoutFeedback } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Article } from "@/types";
 import Container from "@/components/Container";
 import { useArticle } from "@/core/store/articleContext";
@@ -16,7 +16,7 @@ import Colors from "@/core/constants/Colors";
 import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
-// create Animated.Heading component
+import { isArticleBookmarked, toggleBookmark } from "@/core/persistant/bookmarked";
 
 type ArticleTextProps = {
   parsedArticle: ArticleText[];
@@ -31,11 +31,11 @@ const ArticleTextView = (props: ArticleTextProps) => {
               {element.subheading}
             </Heading>
           )}
-          {element.paragraph && <Text size={18}>{element.paragraph}</Text>}
+          {element.paragraph && <Text size={20}>{element.paragraph}</Text>}
           {element.bullets && (
             <View style={styles.bullets}>
               {element.bullets.map((bullet, i) => (
-                <Text size={18} key={`articleBullet${index}_${i}`}>
+                <Text size={20} key={`articleBullet${index}_${i}`}>
                   • {bullet}
                 </Text>
               ))}
@@ -49,13 +49,20 @@ const ArticleTextView = (props: ArticleTextProps) => {
 const ArticleView = () => {
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
   const { article } = useArticle();
   const parsedArticle = parseArticleText(article.article);
+
+  useEffect(() => {
+    isArticleBookmarked(article).then((result) => {
+      setIsBookmarked(result);
+    });
+  }, []);
 
   const onReportPress = () => {
     console.log("Report ");
     setMenuIsOpen(false);
-    router.navigate("/(tabs)/Article/ReportArticle");
+    router.push("/(app)/ReportArticle");
   };
 
   const onExternalLinksPress = () => {
@@ -68,6 +75,13 @@ const ArticleView = () => {
     setOpenLinksModal(false);
     setMenuIsOpen(false);
   };
+
+  const onBookmarkPress = () => {
+    toggleBookmark(article);
+    setIsBookmarked((prev) => !prev);
+    console.log("Bookmark");
+  };
+
   return (
     <>
       <ScrollView style={{ backgroundColor: Colors.light.background }}>
@@ -76,13 +90,10 @@ const ArticleView = () => {
         </View>
         <View style={[styles.menu, styles.headerButton]}>
           <MenuButton
-            onBookmarkPress={() => {
-              console.log("Bookmark");
-            }}
+            onBookmarkPress={onBookmarkPress}
             onReportPress={() => onReportPress()}
             onExternalLinksPress={onExternalLinksPress}
-            // TODO: Implement bookmarked state
-            isBookmarked={false}
+            isBookmarked={isBookmarked}
             menuIsOpen={menuIsOpen}
             setMenuIsOpen={setMenuIsOpen}
           />

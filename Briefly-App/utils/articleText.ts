@@ -26,10 +26,11 @@ export const parseArticleText = (text: string): ArticleText[] => {
       parsedElements.push({ bullets });
     }
 
-    // If there's remaining text that isn't a subheading or bullets, treat as a paragraph
-    const textWithoutBullets = blockWithoutSubheading.replace(/^\s*\*\s+.*$/gm, "").trim();
-    if (textWithoutBullets && !subheadingMatch && (!bullets || bullets.length === 0)) {
-      parsedElements.push({ paragraph: textWithoutBullets });
+    //get all paragraphs without subheading and no bullets in the block
+    const paragraph = blockWithoutSubheading.replace(/^\s*\*\s+(.*)/gm, "").trim();
+    if (paragraph) {
+      // Add paragraph if present
+      parsedElements.push({ paragraph });
     }
   });
 

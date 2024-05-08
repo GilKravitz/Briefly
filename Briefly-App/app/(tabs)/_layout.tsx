@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Tabs } from "expo-router";
+import { Stack, Tabs, router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
 
@@ -19,7 +19,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="Article"
+        name="ArticleList"
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="newspaper-o" color={color} />,

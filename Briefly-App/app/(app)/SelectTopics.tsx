@@ -33,7 +33,7 @@ const index = () => {
           />
         ))}
       </View>
-      <Button style={styles.nextButton} onPress={() => router.replace("/(tabs)/Article/ArticleList")}>
+      <Button style={styles.nextButton} onPress={() => router.replace("/(tabs)/ArticleList")}>
         {t.selectTopics.btnText}
       </Button>
     </Container>

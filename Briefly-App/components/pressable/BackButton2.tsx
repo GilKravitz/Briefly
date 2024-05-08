@@ -16,6 +16,7 @@ export default function BackButton(props: BackButtonProps) {
   const handlePress = () => {
     router.back();
   };
+
   const iconColor = props.variant === "dark" ? Colors.lightPrimary : Colors.darkPrimary;
   const bgColor = props.variant === "dark" ? Colors.darkPrimary : Colors.lightPrimary;
   return (
