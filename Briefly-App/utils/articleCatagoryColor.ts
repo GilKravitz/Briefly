@@ -1,5 +1,4 @@
 const getTextColor = (catagory: string) => {
-  console.log(catagory);
   switch (catagory) {
     case "Tech":
       return "#3DAAF6";

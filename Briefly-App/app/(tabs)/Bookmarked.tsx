@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { Heading } from "@/components/StyledText";
 import { getAllBookmarked } from "@/core/persistant/bookmarked";
@@ -35,11 +35,17 @@ const Bookmarked = () => {
     return unsubscribe;
   }, [navigation]);
 
+  const renderItem = useMemo(
+    () =>
+      ({ item, index }: { item: Article; index: number }) =>
+        <ListItem index={index} article={item} onPress={() => handlePress(item)} />,
+    [articles]
+  );
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
         data={articles}
-        renderItem={({ item, index }) => <ListItem index={index} article={item} onPress={() => handlePress(item)} />}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id.toString() + item.title}
         style={styles.list}
         contentContainerStyle={styles.contentContainer}

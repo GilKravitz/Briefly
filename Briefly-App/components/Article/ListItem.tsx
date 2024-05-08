@@ -1,12 +1,10 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { View } from "../Themed";
 import { Heading2, Text } from "../StyledText";
-import TagSvgIcon from "@/components/TagSvgIcons";
 import { Article } from "@/types";
 import { Image } from "expo-image";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import React from "react";
-import Colors from "@/core/constants/Colors";
 import { dateFormat } from "@/utils/dateFormat";
 import ArticleCategory from "./ArticleCategory";
 
@@ -18,7 +16,7 @@ type ListItemProps = {
 
 const ListItem = React.memo((props: ListItemProps) => {
   return (
-    <Animated.View entering={FadeInDown.delay(200 * props.index)}>
+    <Animated.View entering={FadeInDown.delay(50 * props.index)}>
       <TouchableOpacity onPress={props.onPress}>
         <View style={styles.container}>
           <View style={styles.contentContainer}>

@@ -11,8 +11,11 @@ const getAllBookmarkedKeys = async (): Promise<string[]> => {
 
 export const getAllBookmarked = async (): Promise<Article[]> => {
   const keys = await getAllBookmarkedKeys();
-  const articles = await AsyncStorage.multiGet(keys);
-  return articles.map((article) => article[1] && JSON.parse(article[1]));
+  const data = await AsyncStorage.multiGet(keys);
+  const articles = data.map((article) => article[1] && JSON.parse(article[1]));
+  // sort by date in descending order
+  articles.sort((a, b) => new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime());
+  return articles;
 };
 
 const bookmarkArticle = async (article: Article) => {

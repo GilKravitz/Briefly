@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
@@ -34,13 +34,19 @@ const ArticleList = () => {
     setArticle(article);
     router.push("/(app)/ArticleView");
   };
+
+  const renderItem = useMemo(
+    () =>
+      ({ item, index }: { item: Article; index: number }) =>
+        <ListItem index={index} article={item} onPress={() => handlePress(item)} />,
+    [articles]
+  );
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
         data={articles}
-        renderItem={({ item, index }) => <ListItem index={index} article={item} onPress={() => handlePress(item)} />}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id.toString() + item.title}
-        // ItemSeparatorComponent={() => <View style={styles.separator} />}
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
         ListHeaderComponent={<Logo />}
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
   list: {
     width: "100%",
     marginTop: 50,
+    marginBottom: 50,
   },
   separator: {
     borderBottomWidth: 1,
@@ -68,6 +75,5 @@ const styles = StyleSheet.create({
   contentContainer: {
     gap: 20,
     width: "100%",
-    paddingBottom: 50,
   },
 });
