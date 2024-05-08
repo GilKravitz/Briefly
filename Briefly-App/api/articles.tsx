@@ -1,4 +1,4 @@
-import { articles } from "@/data/articles";
+import { articles } from "@/core/data/articles";
 
 //use @data/data.json to get articles
 export const getArticles = async () => {

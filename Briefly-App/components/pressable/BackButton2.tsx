@@ -3,7 +3,7 @@ import { StyleSheet, PressableProps, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeProps } from "../Themed";
 import AnimatedPressable from "./AnimatedPressable";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import { router } from "expo-router";
 
 type BackButtonProps = {

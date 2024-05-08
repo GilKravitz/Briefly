@@ -1,7 +1,7 @@
 import React from "react";
 import Svg, { Path, SvgProps } from "react-native-svg";
 import { useThemeColor, ThemeProps } from "./Themed";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 
 interface iProps extends SvgProps {
   colorInverted?: boolean;

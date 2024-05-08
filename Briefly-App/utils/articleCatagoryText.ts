@@ -1,4 +1,4 @@
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 
 const i18nLabel = (label: string) => {
   switch (label) {

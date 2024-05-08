@@ -3,7 +3,7 @@ import { StyleSheet, Pressable, PressableProps, StyleProp, ViewStyle, View } fro
 import { Feather } from "@expo/vector-icons";
 import { useThemeColor, ThemeProps } from "../Themed";
 import AnimatedPressable from "./AnimatedPressable";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 // export type ButtonProps = PressableProps & { light?: boolean };
 
 interface iProps extends PressableProps, ThemeProps {

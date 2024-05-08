@@ -1,12 +1,12 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useMemo } from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import { getArticleProvider } from "@/utils/articleLinkProvider";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { Image } from "expo-image";
 import { Heading, Heading2, Heading3, Text } from "@/components/StyledText";
 import * as WebBrowser from "expo-web-browser";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 
 type LinksModalProps = {
   links: string[];

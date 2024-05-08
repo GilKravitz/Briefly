@@ -1,4 +1,4 @@
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 export const dateFormat = (dateStr: string) => {
   let date = new Date(dateStr);
   const diff = Date.now() - date.getTime();

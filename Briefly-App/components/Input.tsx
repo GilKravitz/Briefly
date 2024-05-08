@@ -1,9 +1,9 @@
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import React, { forwardRef } from "react";
 import { StyleProp, StyleSheet, TextInput, ViewStyle } from "react-native";
 import { useThemeColor } from "./Themed";
 import { View } from "./Themed";
-import { useDirection } from "@/hooks/useDirection";
+import { useDirection } from "@/core/hooks/useDirection";
 type TextInputProps = TextInput["props"];
 export interface iProp extends TextInputProps {
   style?: StyleProp<ViewStyle>;

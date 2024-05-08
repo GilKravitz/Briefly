@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { useArticle } from "@/store/articleContext";
+import { useArticle } from "@/core/store/articleContext";
 import Container from "@/components/Container";
 import { Heading } from "@/components/StyledText";
 import LottieView from "lottie-react-native";
 import BackButton2 from "@/components/pressable/BackButton2";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
 const ReportArticle = () => {

@@ -8,7 +8,7 @@ import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
 import { Link, Redirect, router } from "expo-router";
 import * as Updates from "expo-updates";
-import i18n, { t } from "@/i18n";
+import i18n, { t } from "@/core/i18n";
 
 const Header = (props: SvgProps) => {
   const width = Dimensions.get("window").width;

@@ -6,7 +6,7 @@ import { Article } from "@/types";
 import { Image } from "expo-image";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import React from "react";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import { dateFormat } from "@/utils/dateFormat";
 import ArticleCategory from "./ArticleCategory";
 

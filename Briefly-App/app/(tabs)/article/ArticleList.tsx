@@ -4,9 +4,9 @@ import Container from "@/components/Container";
 import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
 import ListItem from "@/components/Article/ListItem";
-import { useArticle } from "@/store/articleContext";
+import { useArticle } from "@/core/store/articleContext";
 import { router } from "expo-router";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import Svg, { Path, SvgProps } from "react-native-svg";
 
 const Logo = (props: SvgProps) => (

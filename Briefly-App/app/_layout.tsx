@@ -11,7 +11,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { ArticleProvider } from "@/store/articleContext";
+import { ArticleProvider } from "@/core/store/articleContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {

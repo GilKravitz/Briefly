@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import AnimatedPressable from "../pressable/AnimatedPressable";
 import { FontAwesome } from "@expo/vector-icons";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 
 type MenuButtonProps = {
   onBookmarkPress: () => void;

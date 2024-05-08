@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Container from "@/components/Container";
 import { Heading, Heading2 } from "@/components/StyledText";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 import TagSelect from "@/components/SelectTopics/TopicSelect";
 import Button from "@/components/pressable/Button";
 import { router } from "expo-router";

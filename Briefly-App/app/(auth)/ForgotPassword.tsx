@@ -3,7 +3,7 @@ import { View } from "@/components/Themed";
 import { Heading, Text } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React from "react";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";

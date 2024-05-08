@@ -5,7 +5,7 @@ import Container from "@/components/Container";
 import React, { useRef, useState } from "react";
 import BackButton from "@/components/pressable/BackButton";
 import { router } from "expo-router";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 import LottieView from "lottie-react-native";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";

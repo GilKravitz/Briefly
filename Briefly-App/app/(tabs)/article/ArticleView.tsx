@@ -2,7 +2,7 @@ import { StyleSheet, ScrollView, ImageBackground, TouchableWithoutFeedback } fro
 import React, { useState } from "react";
 import { Article } from "@/types";
 import Container from "@/components/Container";
-import { useArticle } from "@/store/articleContext";
+import { useArticle } from "@/core/store/articleContext";
 import { Text, Heading } from "@/components/StyledText";
 import { View } from "@/components/Themed";
 import { Image } from "expo-image";
@@ -12,7 +12,7 @@ import { ArticleText } from "@/types";
 import BackButton2 from "@/components/pressable/BackButton2";
 import ArticleCategory from "@/components/Article/ArticleCategory";
 import { dateFormat } from "@/utils/dateFormat";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";

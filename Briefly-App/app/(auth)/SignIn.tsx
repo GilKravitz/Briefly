@@ -11,7 +11,7 @@ import { View } from "@/components/Themed";
 import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React, { useCallback, useRef, useState } from "react";
-import { t } from "@/i18n";
+import { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";

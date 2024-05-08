@@ -11,7 +11,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import Colors from "@/constants/Colors";
+import Colors from "@/core/constants/Colors";
 import i18nLabel from "@/utils/articleCatagoryText";
 
 const springConfig = {
