@@ -66,7 +66,13 @@ const he: I18nKeys = {
     },
     reportArticle: {
       title: "דווח על כתבה",
-      reportReasonLabel: "אנא ספק את הסיבה לדיווח על הכתבה",
+      reportReason: {
+        inappropriate: "מכיל תוכן לא הולם",
+        spam: "ספאם",
+        offensive: "מכיל תוכן פוגעני",
+        incorrect: "מכיל מידע שגוי",
+        other: "אחר",
+      },
       reportDetail: "סיבה לדיווח",
       reportBtn: "שלח",
     },

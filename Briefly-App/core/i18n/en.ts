@@ -66,7 +66,13 @@ const en: I18nKeys = {
     },
     reportArticle: {
       title: "Report Article",
-      reportReasonLabel: "Reason for reporting:",
+      reportReason: {
+        spam: "Spam",
+        inappropriate: "Inappropriate",
+        incorrect: "Incorrect - The article contains incorrect information",
+        offensive: "Offensive - The article contains offensive content",
+        other: "Other",
+      },
       reportDetail: "Please describe the reason for reporting this article",
       reportBtn: "Submit Report",
     },

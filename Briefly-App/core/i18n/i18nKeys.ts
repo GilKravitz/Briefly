@@ -65,7 +65,13 @@ export type I18nKeys = {
     };
     reportArticle: {
       title: string;
-      reportReasonLabel: string;
+      reportReason: {
+        offensive: string;
+        inappropriate: string;
+        spam: string;
+        incorrect: string;
+        other: string;
+      };
       reportDetail: string;
       reportBtn: string;
     };

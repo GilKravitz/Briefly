@@ -1,18 +1,29 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useArticle } from "@/core/store/articleContext";
 import Container from "@/components/Container";
 import { Heading } from "@/components/StyledText";
 import LottieView from "lottie-react-native";
 import BackButton2 from "@/components/pressable/BackButton2";
 import { t } from "@/core/i18n";
-import Input from "@/components/Input";
+import { Picker } from "@react-native-picker/picker";
+
 import Button from "@/components/pressable/Button";
+import Input from "@/components/Input";
+
+const resonsLables = ["offensive", "incorrect", "inappropriate", "other"];
 const ReportArticle = () => {
   const { article } = useArticle();
+  const [value, setValue] = useState(resonsLables[0]);
+  const [description, setDescription] = useState("");
+
   const handleSendReport = () => {
     console.log(`Report sent on article: ${article.id}`);
   };
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
+
   return (
     <Container>
       <View style={styles.backButtonContainer}>
@@ -21,13 +32,33 @@ const ReportArticle = () => {
       <Heading style={styles.heading}>{t.article.reportArticle.title}</Heading>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/report.json")} />
       <View style={styles.form}>
-        <Input placeholder={t.article.reportArticle.reportDetail} />
-        <Input
-          style={styles.textArea}
-          multiline={true}
-          numberOfLines={10}
-          placeholder={t.article.reportArticle.reportReasonLabel}
-        />
+        <View style={{ width: "100%" }}>
+          <Picker
+            selectedValue={value}
+            onValueChange={(v) => setValue(v)}
+            accessibilityLabel="Basic Picker Accessibility Label"
+            style={{ width: "100%" }}
+            // itemStyle={{ height: 150 }}
+          >
+            {resonsLables.map((label) => (
+              <Picker.Item
+                key={label}
+                label={t.article.reportArticle.reportReason[label as keyof typeof t.article.reportArticle.reportReason]}
+                value={label}
+              />
+            ))}
+          </Picker>
+
+          <Input
+            placeholder={t.article.reportArticle.reportDetail}
+            multiline={true}
+            numberOfLines={4}
+            editable={value === "other"}
+            style={{ opacity: value === "other" ? 1 : 0 }}
+            value={description}
+            onChangeText={setDescription}
+          />
+        </View>
         <Button onPress={handleSendReport}>{t.article.reportArticle.reportBtn}</Button>
       </View>
     </Container>
@@ -51,12 +82,12 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "100%",
-    marginTop: 20,
     alignItems: "center",
+
     gap: 20,
+    flex: 1,
   },
   textArea: {
-    height: 200,
     width: "100%",
     textAlignVertical: "top",
   },
