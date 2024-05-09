@@ -13,7 +13,7 @@ namespace BrieflyServer.Services
             var to = new EmailAddress(email);
             var subject = "Reset Your Password";
             var currentDirectory = Directory.GetCurrentDirectory();
-            var filePath = Path.Combine(currentDirectory, "other", "EmailTemplate.html");
+            var filePath = Path.Combine(currentDirectory, "Other", "EmailTemplate.html");
             var htmlContent = File.ReadAllText(filePath).Replace("{otp}", otp);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
             await sendGridClient.SendEmailAsync(msg);
