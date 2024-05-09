@@ -12,7 +12,9 @@ namespace BrieflyServer.Services
             var from = new EmailAddress(Environment.GetEnvironmentVariable("COMPANY_MAIL"), "Briefly");
             var to = new EmailAddress(email);
             var subject = "Reset Your Password";
-            var htmlContent = File.ReadAllText("other/EmailTemplate.html").Replace("{otp}", otp);
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var filePath = Path.Combine(currentDirectory, "other", "EmailTemplate.html");
+            var htmlContent = File.ReadAllText(filePath).Replace("{otp}", otp);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
             await sendGridClient.SendEmailAsync(msg);
         }
