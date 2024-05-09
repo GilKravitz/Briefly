@@ -15,6 +15,7 @@ class DatabaseManager:
         self.__db_connection = self.__connect_to_database()
         self.logger = logging.getLogger(__name__)
         self.logger.info('DatabaseManager initialized')
+        self.aws_image_uploader_manager = AWSImageManager()
 
     def __connect_to_database(self) -> Optional[psycopg2.extensions.connection]:
         '''Establishes a connection to the PostgreSQL database using credentials obtained from environment variables.
@@ -100,7 +101,7 @@ class DatabaseManager:
         self.logger.info(f'Inserting {len(clusters)} summarized articles into the database.')
         for cluster in clusters:
             self.__insert_summarized_article(cluster)
-        articles_id_and_images = AWSImageManager.insert_images_to_aws(self.__get_null_img_articles_id())
+        articles_id_and_images = self.aws_image_uploader_manager.insert_images_to_aws(self.__get_null_img_articles_id())
         self.__update_DB_s3_image_url(articles_id_and_images)
     
     def __update_DB_s3_image_url(self, articles_id_and_images: list[tuple[int, str]]):

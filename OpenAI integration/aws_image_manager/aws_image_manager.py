@@ -9,7 +9,7 @@ class AWSImageManager:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
 
-    def insert_images_to_aws(self, articles_id_and_images):
+    def insert_images_to_aws(self, articles_id_and_images: list[list[int, str]]) -> list[tuple[int, str]]:
         '''Uploads images to AWS S3 for articles that do not already have an S3 image URL, and returns 
         a list of tuples containing article IDs and their newly assigned S3 image URLs.
 
@@ -17,7 +17,7 @@ class AWSImageManager:
         AWS S3 using `ImageUploader`, and then provides a list of tuples containing the updated IDs and URLs.
 
         Args:
-            articles_id_and_images (list[tuple[int, str]]): A list of tuples containing article IDs and original image URLs.
+            articles_id_and_images (list[list[int, str]]): A list of tuples containing article IDs and original image URLs.
 
         Returns:
             list[tuple[int, str]]: A list of tuples containing article IDs and newly assigned S3 image URLs.
