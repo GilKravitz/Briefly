@@ -10,9 +10,10 @@ class ArticleProcessor:
     MAX_TOKENS_PER_CLUSTER = 9000          # Max number of tokens that can be sent to the API
     MAX_NUMBER_OF_WORDS = 3000
     MAX_REQUESTS_PER_MINUTE = 4
+    MAX_SUMMARY_ATTEMPTS = 3
     SUMMERY_AI_MODEL = 'gemini-1.0-pro-001'
     PROMPT = '''summarize the following articles into a single article summary.
-    write the summary in Hebrew as you are the journalist with 380 words maximum, do not refer to the article in the third person.
+    write the summary in Hebrew as you are the journalist with 300 words maximum, do not refer to the article in the third person.
     The summary structure follows standard article formatting with paragraphs. 
     Summarize the article by highlighting its main points, arguments, and conclusions.
     Include significant data, quotes, or statistics, noting their context.
@@ -50,7 +51,6 @@ class ArticleProcessor:
         self.model = genai.GenerativeModel(model_name=self.SUMMERY_AI_MODEL,
                                            generation_config=generation_config,
                                            safety_settings=safety_settings)
-        
         self.convorsation = self.model.start_chat()
     
     @backoff.on_exception(backoff.expo,RateLimitException,max_tries=10,max_time=300)
@@ -66,15 +66,9 @@ class ArticleProcessor:
         if cluster.article_count > 1:
             logging.debug(f'Article ids: {cluster.articles_ids} were merged into one cluster')
         
-        try:
-            cluster_string = self.__prepare_cluster_string(cluster_string)
-            self.__send_and_summarize(cluster, cluster_index, cluster_string)
+        cluster_string = self.__prepare_cluster_string(cluster_string)
+        self.__send_and_summarize(cluster, cluster_index, cluster_string)
 
-        except Exception as e:
-            logging.error(f'Failed to summarize cluster due to: {str(e)}')
-            self.convorsation = self.model.start_chat()
-            return None
-    
     def process_articles(self, articles: List[Dict[str, Any]], similarity_matrix: List[List[float]]) -> List[Cluster]:
         '''Processes a list of articles by clustering and summarizing them.
 
@@ -95,14 +89,14 @@ class ArticleProcessor:
             return None
         
         #TODO:debuging clusters to text file remove
-        self.write_clusters_to_file(clusters, 'clusters.txt')
+        self.__write_clusters_to_file(clusters, 'clusters.txt')
 
         self.logger.info('summerizing clusters.')
         for cluster_index, cluster in enumerate(clusters):
             self.__summarize_cluster_gimini(cluster, cluster_index)
 
         #TODO debug the summary text file remove
-        self.write_summaries_to_file(clusters, 'summeries.txt')
+        self.__write_summaries_to_file(clusters, 'summeries.txt')
 
         return clusters
     
@@ -125,25 +119,39 @@ class ArticleProcessor:
     def __send_and_summarize(self, cluster: Cluster, cluster_index: int, cluster_string: str):
         '''Sends the prepared cluster string to the API for summarization and logs the process.
         It updates the cluster object with the summary obtained.
-        
+
         Args:
             cluster (Cluster): The cluster being summarized.
             cluster_index (int): The index of the cluster.
             cluster_string (str): The prepared string of the cluster.
         '''
-        self.convorsation.send_message(self.PROMPT + cluster_string)
-        logging.debug(f'Summarizing cluster number {cluster_index} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
-        summary_text = self.convorsation.last.text
-        self.convorsation.send_message('write me a title in hebrew to this summary')
-        title = self.convorsation.last.text
-        self.convorsation.send_message('give me a 3 hashtags in hebrew for this summary')
-        hashtags = self.convorsation.last.text
+        for attempt in range(1, self.MAX_SUMMARY_ATTEMPTS + 1):
+            try:
+                self.convorsation = self.model.start_chat()
+                
+                # Send prompt and cluster string for summarization
+                self.convorsation.send_message(self.PROMPT + cluster_string)
+                logging.debug(f'Summarizing cluster number {cluster_index} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
+                summary_text = self.convorsation.last.text
+                
+                self.convorsation.send_message('write me a title in hebrew to this summary')
+                title = self.convorsation.last.text
+                
+                self.convorsation.send_message('give me 3 hashtags in hebrew for this summary')
+                hashtags = self.convorsation.last.text
+                
+                cluster.summary_text = summary_text
+                cluster.summary_title = title
+                cluster.summary_hashtags = hashtags
+                break # Exit the retry loop on successful summarization
+            
+            except Exception as e:
+                logging.error(f'Attempt {attempt} to summeries cluster {cluster_index} failed with error: {e}')
+                if attempt == self.MAX_SUMMARY_ATTEMPTS:
+                    logging.critical(f'All {self.MAX_SUMMARY_ATTEMPTS} attempts to summeries cluster {cluster_index} failed.')
 
-        cluster.summary_text = summary_text
-        cluster.summary_title = title
-        cluster.summary_hashtags = hashtags
 
-    def write_clusters_to_file(self, clusters: List[Cluster], filename: str) -> None:
+    def __write_clusters_to_file(self, clusters: List[Cluster], filename: str) -> None:
         '''Writes the textual representation of each cluster to a file.
 
         Args:
@@ -159,7 +167,7 @@ class ArticleProcessor:
         with open(filename, 'w', encoding='utf-8') as file:
             file.write(text)
 
-    def write_summaries_to_file(self, clusters: List[Cluster], filename: str):
+    def __write_summaries_to_file(self, clusters: List[Cluster], filename: str):
         '''Writes the summaries to a file.
 
         Args:

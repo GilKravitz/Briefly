@@ -3,7 +3,7 @@ import psycopg2
 import psycopg2.extras
 import logging
 from cluster.cluster import Cluster
-from image_uploader.image_uploader import ImageUploader
+from aws_image_manager.aws_image_manager import AWSImageManager
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from typing import List, Optional, Dict, Any
@@ -48,11 +48,8 @@ class DatabaseManager:
             current_time = datetime.now()
             time_x_hours_ago = current_time - timedelta(hours=hours)
             cursor = self.__db_connection.cursor()
-
             self.logger.info(f'Fetching articles from the last {hours} hours.')
-
-            query = 'SELECT * FROM scraped_articles WHERE publish_date >= %s'
-            cursor.execute(query, (time_x_hours_ago,))
+            cursor.execute('SELECT * FROM scraped_articles WHERE publish_date >= %s', (time_x_hours_ago,))
             articles = cursor.fetchall()
 
             return articles
@@ -73,16 +70,19 @@ class DatabaseManager:
         Returns:
             None
         '''
+        # if cluster summary is empty (ai safety_settings constrains) - do not insert to DB 
+        if cluster._summary_text == '':  
+            return None
+
         try:
             cursor = self.__db_connection.cursor()
             insert_query = 'INSERT INTO merged_articles (title, article, category, publish_date, links, image) VALUES (%s, %s, %s, %s, %s, %s)'
-            cursor.execute(insert_query, (cluster.title, cluster.summary_text, cluster.category, cluster.publish_date, cluster.links, cluster.image))
-
+            cursor.execute(insert_query, (cluster.summary_title, cluster.summary_text, cluster.category, cluster.publish_date, cluster.links, cluster.image))
             self.__db_connection.commit()
-            self.logger.info(f'Article titled {cluster.title} inserted successfully into merged_articles table.')
+            self.logger.info(f'Article titled {cluster.summary_title} inserted successfully into merged_articles table.')
 
         except Exception as e:
-            self.logger.error(f'Error inserting article into database: {e}')
+            self.logger.error(f'Error inserting article into database: {e} doing a rollback.')
             self.__db_connection.rollback()
         finally:
             if cursor is not None:
@@ -100,38 +100,45 @@ class DatabaseManager:
         self.logger.info(f'Inserting {len(clusters)} summarized articles into the database.')
         for cluster in clusters:
             self.__insert_summarized_article(cluster)
+        articles_id_and_images = AWSImageManager.insert_images_to_aws(self.__get_null_img_articles_id())
+        self.__update_DB_s3_image_url(articles_id_and_images)
+    
+    def __update_DB_s3_image_url(self, articles_id_and_images: list[tuple[int, str]]):
+        '''Updates the `s3_image` field of an article in the `merged_articles` table with the specified S3 URLs.
 
-    def insert_images_to_aws(self):
-        articles = self.get_null_img_articles_id()
-        for id,img_url in articles:
-            self.logger.info(f'Processing article with id: {id}')
-            s3_url = ImageUploader.upload_image_to_s3(img_url)
-            self.update_s3image_url(id,s3_url)
+        This function updates each article record to include the new S3 URL obtained after uploading the
+        original image to AWS S3.
 
-    def get_null_img_articles_id(self):
+        Args:
+            articles_id_and_images (list[tuple[int, str]]): A list of tuples containing article IDs and S3 image URLs.
+
+        Returns:
+            None
+        '''
+        for article_id ,img_url in articles_id_and_images:
+            cursor = self.__db_connection.cursor()
+            query = f"UPDATE merged_articles SET s3_image = '{img_url}' WHERE id = {article_id}"
+            cursor.execute(query)
+            self.__db_connection.commit()
+            self.logger.info(f'Updated article {article_id} with s3_image url: {img_url}')
+
+
+    def __get_null_img_articles_id(self):
+        '''Retrieves article IDs and image URLs from the `merged_articles` table where the S3 image URL
+        is null but the original image URL is not null.
+
+        This function selects all articles that currently do not have an S3 image URL, indicating
+        that the images have not been uploaded to S3.
+
+        Returns:
+            list[tuple]: A list of tuples, where each tuple contains the article ID and image URL.
+        '''
+        cursor = self.__db_connection.cursor()
         query = "SELECT id,image FROM merged_articles WHERE s3_image IS NULL AND image IS NOT NULL"
-        res =  self.execute(query)
+        cursor.execute(query)
+        res =  cursor.fetchall()
         self.logger.info(f'Getting articles with null s3_image: {len(res)}')
         return res
-    
-    def update_s3image_url(self, article_id, url):
-        query = f"UPDATE merged_articles SET s3_image = '{url}' WHERE id = {article_id}"
-        self.execute(query)
-        self.__db_connection.commit()
-        self.logger.info(f'Updated article {article_id} with s3_image url: {url}')
-
-    def execute(self, query):
-        cursor = self.__db_connection.cursor()
-        try:
-            cursor.execute(query)
-            self.logger.info(f'Executed query: {query}')
-        except Exception as e:
-            self.logger.error(f'Error executing query: {query}', e)
-
-        if cursor.description:
-            return cursor.fetchall()
-        else:
-            return None
         
     def close_connection(self) -> None:
         '''Closes the database connection.

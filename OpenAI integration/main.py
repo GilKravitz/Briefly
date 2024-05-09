@@ -6,7 +6,7 @@ from article_processor.article_processor import ArticleProcessor
 
 class Application:
     SIMILARITY_THRESHOLD = 0.65
-    HOURS_FROM_LAST_FETCH = 12
+    HOURS_FROM_LAST_FETCH = 24
     OPEN_AI_EMMBEDDING_MODEL = 'text-embedding-3-large'
 
     def __init__(self, openai_api_key: str, gimini_api_key: str):
@@ -33,7 +33,6 @@ class Application:
         similarity_matrix = self.ai_text_processor.get_similarity_matrix(articles)
         article_summaries = self.processor.process_articles(articles, similarity_matrix)
         self.db_manager.insert_summarized_articles(article_summaries)
-        self.db_manager.insert_images_to_aws()
         self.db_manager.close_connection()
 
 if __name__ == '__main__':

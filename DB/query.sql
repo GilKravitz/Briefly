@@ -1,2 +1,3 @@
-ALTER TABLE merged_articles
-ADD s3_image text;
+UPDATE merged_articles
+SET article = REPLACE(article, '**היום ה-215 למלחמה:**', '')
+WHERE article LIKE '%**היום ה-215 למלחמה:**%';

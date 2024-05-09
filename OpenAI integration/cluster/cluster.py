@@ -7,7 +7,6 @@ class Cluster:
         '''
         self.articles = articles
         self.category = articles[0]['category'] if articles else None
-        self.title = articles[0]['title'] if articles else None
         self.image = articles[0]['image'] if articles else None
         self.publish_date = articles[0]['publish_date'] if articles else None
         self.links = " ".join(article['link'] for article in articles)
