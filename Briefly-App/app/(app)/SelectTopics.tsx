@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "@/components/Container";
 import { Heading, Heading2 } from "@/components/StyledText";
 import { t } from "@/core/i18n";
@@ -8,9 +8,28 @@ import Button from "@/components/pressable/Button";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import Animated, { FadeInDown, FadeInUp, FadeOut, FadeOutDown, FadeOutUp } from "react-native-reanimated";
-
-const tags = ["Tech", "Economics", "Politics", "Sport", "Food"];
+import { topics } from "@/core/constants/topics";
+import {
+  isFirstTimeUser,
+  setNotFirstTimeUser,
+  selectTopic,
+  removeTopic,
+  removeFirstTimeUser,
+} from "@/core/persistent/selectTopics";
+import { Topic } from "@/types";
 const index = () => {
+  const [selectedTopics, setSelectedTopics] = React.useState<Topic[]>([]);
+
+  const handlePress = (topic: Topic, isSelected: boolean) => {
+    // console.log(tag, isSelected);
+    if (isSelected) {
+      setSelectedTopics([...selectedTopics, topic]);
+      selectTopic(topic);
+    } else {
+      setSelectedTopics(selectedTopics.filter((topic) => topic.name !== topic.name));
+      removeTopic(topic);
+    }
+  };
   return (
     <Container>
       <Animated.View entering={FadeInDown} style={styles.headingContainer}>
@@ -23,12 +42,12 @@ const index = () => {
         <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/settings.json")} />
       </Animated.View>
       <View style={styles.tagsContainer}>
-        {tags.map((tag, i) => (
+        {topics.map((topic, i) => (
           <TagSelect
             entering={FadeInDown.delay(1500 + i * 100)}
-            key={tag}
-            label={tag}
-            onPress={(isSelected) => console.log(tag, isSelected)}
+            key={topic.name}
+            label={topic.name}
+            onPress={(isSelected) => handlePress(topic, isSelected)}
             selected={false}
           />
         ))}

@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { Heading } from "@/components/StyledText";
-import { getAllBookmarked } from "@/core/persistant/bookmarked";
+import { getAllBookmarked } from "@/core/persistent/bookmarked";
 import { Article } from "@/types";
 import Colors from "@/core/constants/Colors";
 import { useArticle } from "@/core/store/articleContext";

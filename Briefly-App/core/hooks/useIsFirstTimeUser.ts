@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { isFirstTimeUser, setNotFirstTimeUser, removeFirstTimeUser } from "../persistant/isFirstTimeUser";
+import { isFirstTimeUser, setNotFirstTimeUser, removeFirstTimeUser } from "../persistent/isFirstTimeUser";
 export const useIsFirstTimeUser = () => {
   const [isFirstTime, setIsFirstTime] = useState(true);
   useEffect(() => {

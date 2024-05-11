@@ -16,7 +16,7 @@ import Colors from "@/core/constants/Colors";
 import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
-import { isArticleBookmarked, toggleBookmark } from "@/core/persistant/bookmarked";
+import { isArticleBookmarked, toggleBookmark } from "@/core/persistent/bookmarked";
 
 type ArticleTextProps = {
   parsedArticle: ArticleText[];
