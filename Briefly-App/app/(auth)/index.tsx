@@ -1,14 +1,12 @@
-import { Dimensions, I18nManager, ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import Container from "@/components/Container";
-import { Heading3, Text } from "@/components/StyledText";
-import { View } from "@/components/Themed";
+import { View, Text } from "@/components/Themed";
 import React, { useEffect } from "react";
 
 import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
-import { Link, Redirect, router } from "expo-router";
+import { Link, router } from "expo-router";
 import i18n, { t } from "@/core/i18n";
-import { useIsFirstTimeUser } from "@/core/hooks/useIsFirstTimeUser";
 
 const Icon = (props: SvgProps) => {
   return (
@@ -20,13 +18,11 @@ const Icon = (props: SvgProps) => {
     </Svg>
   );
 };
+
+const handleSignInPress = () => {
+  router.push("/(auth)/SignIn");
+};
 const index = () => {
-  // const [isFirstTime, setIsFirstTime] = useIsFirstTimeUser();
-  useEffect(() => {
-    // if (!isFirstTime) {
-    //   router.push("/(tabs)/ArticleList");
-    // }
-  }, []);
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground resizeMode="stretch" style={styles.header} source={require("@/assets/images/wave.png")}>
@@ -34,17 +30,17 @@ const index = () => {
       </ImageBackground>
       <Container style={{ minHeight: "auto" }}>
         <View style={styles.main}>
-          <Heading3>{t.index.heading}</Heading3>
+          <Text variant="title">{t.index.heading}</Text>
           <Text style={styles.text} colorName="textMuted">
             {t.index.subheading}
           </Text>
         </View>
         <View style={styles.footer}>
-          <Button onPress={() => router.push("/(auth)/SignUp")}>{t.index.signupBtn}</Button>
+          <Button onPress={handleSignInPress}>{t.index.signupBtn}</Button>
           <View row style={styles.signInWrapper}>
             <Text colorName="textMuted">{t.index.signInMsg}</Text>
             <Link push href="/(auth)/SignIn">
-              <Heading3 size={16}>{t.index.signInLink}</Heading3>
+              <Text variant="text">{t.index.signInLink}</Text>
             </Link>
           </View>
         </View>

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { getArticles } from "@/api/articles";

@@ -1,12 +1,11 @@
 import { Keyboard, StyleSheet, TextInput } from "react-native";
-import { Heading, Text } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React, { useEffect, useRef, useState } from "react";
 import BackButton from "@/components/pressable/BackButton";
 import { router } from "expo-router";
 import { t } from "@/core/i18n";
 import LottieView from "lottie-react-native";
-import { View } from "@/components/Themed";
+import { View, Text } from "@/components/Themed";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
 
@@ -50,7 +49,7 @@ const Otp = () => {
   return (
     <Container>
       <BackButton onPress={() => router.back()} />
-      <Heading>{t.otp.title}</Heading>
+      <Text variant="title">{t.otp.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/otp.json")} />
       <View style={styles.formContainer}>
         {Array.from({ length: 4 }).map((_, index) => (

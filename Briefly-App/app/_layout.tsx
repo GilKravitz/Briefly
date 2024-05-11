@@ -1,4 +1,4 @@
-import { Redirect, SplashScreen, Stack, router } from "expo-router";
+import { Slot, SplashScreen, Stack } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -42,9 +42,7 @@ export default function Layout() {
 
   return (
     <Providers>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" />
-      </Stack>
+      <Slot />
     </Providers>
   );
 }

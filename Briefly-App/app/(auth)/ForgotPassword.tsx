@@ -1,6 +1,5 @@
 import { Keyboard, StyleSheet } from "react-native";
-import { View } from "@/components/Themed";
-import { Heading, Text } from "@/components/StyledText";
+import { Text } from "@/components/Themed";
 import Container from "@/components/Container";
 import React from "react";
 import { t } from "@/core/i18n";
@@ -12,10 +11,13 @@ import Button from "@/components/pressable/Button";
 
 const ForgotPassword = () => {
   const [email, setEmail] = React.useState("");
+  const handlePress = () => {
+    router.push("/(auth)/Otp");
+  };
   return (
     <Container>
       <BackButton onPress={() => router.back()} />
-      <Heading>{t.forgotPassword.title}</Heading>
+      <Text variant="title">{t.forgotPassword.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/forgotPassword.json")} />
 
       <Input
@@ -26,7 +28,7 @@ const ForgotPassword = () => {
         value={email}
         onChangeText={setEmail}
       />
-      <Button style={styles.button} onPress={() => router.push("/(auth)/Otp")}>
+      <Button style={styles.button} onPress={handlePress}>
         {t.forgotPassword.btnText}
       </Button>
     </Container>

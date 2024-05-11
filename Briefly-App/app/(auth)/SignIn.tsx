@@ -1,23 +1,14 @@
-import {
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  Keyboard,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
 import { View } from "@/components/Themed";
-import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
-import Checkbox from "expo-checkbox";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
+import { Text } from "@/components/Themed";
 
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
@@ -43,7 +34,9 @@ export default function SignIn() {
       <ScrollView>
         <Container>
           <BackButton onPress={() => router.back()} />
-          <Heading style={styles.title}>{t.signIn.welcome}</Heading>
+          <Text variant="title" style={styles.title}>
+            {t.signIn.welcome}
+          </Text>
           <SocialButtons style={styles.socialButtons} />
           <FormMessage />
           <View style={styles.form}>
@@ -69,12 +62,16 @@ export default function SignIn() {
           <Button onPress={handleLogin}>{t.signUp.getStarted}</Button>
 
           <Link style={styles.forgotPassLink} push href="/(auth)/ForgotPassword">
-            <Heading3 size={16}>{t.signIn.forgotPassword}</Heading3>
+            <Text variant="subheading" size={16}>
+              {t.signIn.forgotPassword}
+            </Text>
           </Link>
           <View row style={styles.signUpLinkWrapper}>
             <Text colorName="textMuted">{t.signIn.createAccount}</Text>
             <Link push href="/(auth)/SignUp">
-              <Heading3 size={16}>{t.signIn.signupLink}</Heading3>
+              <Text variant="subheading" size={16}>
+                {t.signIn.signupLink}
+              </Text>
             </Link>
           </View>
         </Container>

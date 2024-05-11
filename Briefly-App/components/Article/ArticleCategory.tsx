@@ -1,8 +1,8 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import i18nLabel from "@/utils/articleCatagoryText";
 import { getBgColor, getTextColor } from "@/utils/articleCatagoryColor";
-import { Text } from "../StyledText";
+import { Text, View } from "@/components/Themed";
 
 type ArticleCategoryProps = {
   category: string;
@@ -12,7 +12,7 @@ const ArticleCategory = (props: ArticleCategoryProps) => {
   const bgColor = useMemo(() => getBgColor(props.category), [props.category]);
   return (
     <View style={[styles.container, { backgroundColor: bgColor, borderColor: textColor }]}>
-      <Text size={14} style={{ color: textColor }}>
+      <Text size={12} style={{ color: textColor, fontWeight: "medium" }}>
         {i18nLabel(props.category)}
       </Text>
     </View>

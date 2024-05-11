@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
 
 const TabsLayout = () => {
-  const activeColor = useThemeColor({}, "primary");
+  const activeColor = useThemeColor("primary");
   return (
     <Tabs
       screenOptions={{

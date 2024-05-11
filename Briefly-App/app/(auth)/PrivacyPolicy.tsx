@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import Container from "@/components/Container";
-import { Heading, Text } from "@/components/StyledText";
 import { Link } from "expo-router";
+import { Text } from "@/components/Themed";
 
 const PrivacyPolicy = () => {
   return (
     <Container>
-      <Heading>Privacy Policy</Heading>
+      <Text variant="title">Privacy Policy</Text>
       <Link href="../">
         <Text>Close</Text>
       </Link>

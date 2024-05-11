@@ -13,10 +13,9 @@ interface iProps extends PressableProps, ThemeProps {
 }
 
 export default function BackButton(props: iProps) {
-  const { onPress, style, lightColor, darkColor, ...otherProps } = props;
+  const { onPress, style, ...otherProps } = props;
   const colorName = props.colorName ?? "primary";
-  const theme = { light: lightColor, dark: darkColor };
-  const color = useThemeColor(theme, colorName);
+  const color = useThemeColor(colorName);
   return (
     <View style={styles.container}>
       <AnimatedPressable

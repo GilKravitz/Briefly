@@ -1,50 +1,54 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import Container from "@/components/Container";
-import { Heading, Heading2 } from "@/components/StyledText";
 import { t } from "@/core/i18n";
 import TagSelect from "@/components/SelectTopics/TopicSelect";
 import Button from "@/components/pressable/Button";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
-import Animated, { FadeInDown, FadeInUp, FadeOut, FadeOutDown, FadeOutUp } from "react-native-reanimated";
+import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { topics } from "@/core/constants/topics";
-import {
-  isFirstTimeUser,
-  setNotFirstTimeUser,
-  selectTopic,
-  removeTopic,
-  removeFirstTimeUser,
-} from "@/core/persistent/selectTopics";
-import { Topic } from "@/types";
+import Persistent from "@/core/persistent";
+import { Topic, topicsDict } from "@/types";
+import { View, Text } from "@/components/Themed";
+
 const index = () => {
-  const [selectedTopics, setSelectedTopics] = React.useState<Topic[]>([]);
+  const [selectedTopics, setSelectedTopics] = React.useState<topicsDict>({});
+  useEffect(() => {
+    // const loadSelectedTopicFromStorage = async () => {
+    //   const selectedTopics = await Persistent.SelectedTopic.getSelectedTopics();
+    //   setSelectedTopics(selectedTopics);
+    // };
+    // loadSelectedTopicFromStorage();
+  }, []);
 
   const handlePress = (topic: Topic, isSelected: boolean) => {
     // console.log(tag, isSelected);
     if (isSelected) {
-      setSelectedTopics([...selectedTopics, topic]);
-      selectTopic(topic);
+      setSelectedTopics({ ...selectedTopics, [topic.id]: topic });
+      // Persistent.SelectedTopic.selectTopic(topic);
     } else {
-      setSelectedTopics(selectedTopics.filter((topic) => topic.name !== topic.name));
-      removeTopic(topic);
+      // setSelectedTopics(selectedTopics.filter((topic) => topic.name !== topic.name));
+      delete selectedTopics[topic.id];
+      setSelectedTopics({ ...selectedTopics });
+      // Persistent.SelectedTopic.removeTopic(topic);
     }
   };
+
   return (
     <Container>
       <Animated.View entering={FadeInDown} style={styles.headingContainer}>
-        <Heading style={styles.title}>{t.selectTopics.title}</Heading>
-        <Heading2 style={styles.subheading} size={20}>
+        <Text variant="title" style={styles.title}>
+          {t.selectTopics.title}
+        </Text>
+        <Text variant="heading" style={styles.subheading} size={20}>
           {t.selectTopics.subheading}
-        </Heading2>
-      </Animated.View>
-      <Animated.View entering={FadeOut.delay(1500)}>
-        <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/settings.json")} />
+        </Text>
       </Animated.View>
       <View style={styles.tagsContainer}>
         {topics.map((topic, i) => (
           <TagSelect
-            entering={FadeInDown.delay(1500 + i * 100)}
+            entering={FadeInDown.delay(100 + i * 100)}
             key={topic.name}
             label={topic.name}
             onPress={(isSelected) => handlePress(topic, isSelected)}
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   subheading: {
-    marginTop: 10,
+    marginTop: 5,
   },
   tagsContainer: {
     marginTop: 50,
@@ -81,14 +85,15 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginTop: 20,
-    // width: 175,
     alignSelf: "center",
+  },
+  lottieContainer: {
+    position: "absolute",
+    alignItems: "center",
+    top: "30%",
   },
   lottie: {
     width: 300,
     height: 300,
-    alignSelf: "center",
-    position: "absolute",
-    top: "33%",
   },
 });

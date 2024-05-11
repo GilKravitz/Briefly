@@ -1,16 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useArticle } from "@/core/store/articleContext";
 import Container from "@/components/Container";
-import { Heading } from "@/components/StyledText";
 import LottieView from "lottie-react-native";
 import BackButton2 from "@/components/pressable/BackButton2";
 import { t } from "@/core/i18n";
 import { Picker } from "@react-native-picker/picker";
-
 import Button from "@/components/pressable/Button";
 import Input from "@/components/Input";
-
+import { View, Text } from "@/components/Themed";
 const resonsLables = ["offensive", "incorrect", "inappropriate", "other"];
 const ReportArticle = () => {
   const { article } = useArticle();
@@ -29,7 +27,9 @@ const ReportArticle = () => {
       <View style={styles.backButtonContainer}>
         <BackButton2 variant="dark" />
       </View>
-      <Heading style={styles.heading}>{t.article.reportArticle.title}</Heading>
+      <Text variant="title" style={styles.heading}>
+        {t.article.reportArticle.title}
+      </Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/report.json")} />
       <View style={styles.form}>
         <View style={{ width: "100%" }}>
@@ -38,7 +38,6 @@ const ReportArticle = () => {
             onValueChange={(v) => setValue(v)}
             accessibilityLabel="Basic Picker Accessibility Label"
             style={{ width: "100%" }}
-            // itemStyle={{ height: 150 }}
           >
             {resonsLables.map((label) => (
               <Picker.Item

@@ -1,8 +1,6 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import AnimatedPressable from "../pressable/AnimatedPressable";
-import { ViewProps } from "../Themed";
-import { Heading2 } from "../StyledText";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Animated, {
   Extrapolation,
@@ -13,6 +11,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Colors from "@/core/constants/Colors";
 import i18nLabel from "@/utils/articleCatagoryText";
+import { Text, ViewProps } from "@/components/Themed";
 
 const springConfig = {
   mass: 0.3,
@@ -26,7 +25,7 @@ interface iProps extends ViewProps {
   selected: boolean;
   entering?: any;
 }
-const TagSelect = (props: iProps) => {
+const TopicSelect = (props: iProps) => {
   const [isSelected, setIsSelected] = useState(props.selected);
   const [layoutHeight, setLayoutHeight] = useState(0);
   const height = useSharedValue(0);
@@ -81,7 +80,9 @@ const TagSelect = (props: iProps) => {
       <AnimatedPressable onPress={handlePress}>
         <ImageBackground source={bgImage(props.label)} style={styles.imageBackground}>
           <Animated.View style={[styles.overlay, animatedStyle]}>
-            <Heading2 colorName="background"> {i18nLabel(props.label)}</Heading2>
+            <Text variant="heading" colorName="background">
+              {i18nLabel(props.label)}
+            </Text>
             <Animated.View style={animatedIconStyle}>
               <FontAwesome name="check-circle" size={24} color={Colors.light.background} />
             </Animated.View>
@@ -92,7 +93,7 @@ const TagSelect = (props: iProps) => {
   );
 };
 
-export default TagSelect;
+export default TopicSelect;
 
 const styles = StyleSheet.create({
   container: {

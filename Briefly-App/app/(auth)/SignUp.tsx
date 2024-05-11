@@ -1,14 +1,5 @@
-import {
-  StyleSheet,
-  TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
 import { View } from "@/components/Themed";
-import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React, { useRef, useState } from "react";
 import i18n, { t } from "@/core/i18n";
@@ -18,6 +9,7 @@ import Input from "@/components/Input";
 import Checkbox from "expo-checkbox";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
+import { Text } from "@/components/Themed";
 
 export default function SignUp() {
   const nameRef = useRef<TextInput>(null);
@@ -47,7 +39,9 @@ export default function SignUp() {
       <ScrollView>
         <Container>
           <BackButton onPress={() => router.back()} />
-          <Heading style={styles.title}>{t.signUp.title}</Heading>
+          <Text variant="title" style={styles.title}>
+            {t.signUp.title}
+          </Text>
           <SocialButtons style={styles.socialButtons} />
           {/* <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text> */}
           <FormMessage />
@@ -81,7 +75,9 @@ export default function SignUp() {
               <View row style={styles.privacyPolicyWrapper}>
                 <Text colorName="textMuted">{t.signUp.iHaveRead}</Text>
                 <Link push href="/(auth)/PrivacyPolicy">
-                  <Heading3 size={16}>{t.signUp.privacyPolicy}</Heading3>
+                  <Text variant="subheading" size={16}>
+                    {t.signUp.privacyPolicy}
+                  </Text>
                 </Link>
               </View>
               <Checkbox value={checked} onValueChange={setChecked} />

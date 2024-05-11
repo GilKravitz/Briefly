@@ -1,12 +1,12 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useMemo } from "react";
 import Colors from "@/core/constants/Colors";
 import { getArticleProvider } from "@/utils/articleLinkProvider";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { Image } from "expo-image";
-import { Heading, Heading2, Heading3, Text } from "@/components/StyledText";
 import * as WebBrowser from "expo-web-browser";
 import { t } from "@/core/i18n";
+import { View, Text } from "@/components/Themed";
 
 type LinksModalProps = {
   links: string[];
@@ -43,9 +43,11 @@ const LinksModal = (props: LinksModalProps) => {
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
-      <Heading3 colorName="white">{t.article.linksModal.heading}</Heading3>
+      <Text variant="subheading" colorName="white">
+        {t.article.linksModal.heading}
+      </Text>
       <Text colorName="textMuted">{t.article.linksModal.subheading}</Text>
-      <View style={{ flexDirection: "row", gap: 15 }}>
+      <View colorName="primary" style={{ flexDirection: "row", gap: 15 }}>
         {providers.map((provider, index) => (
           <TouchableOpacity
             onPress={() => handlePressButtonAsync(provider.link)}
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "transparent",
   },
   providerLogo: {
     width: 60,

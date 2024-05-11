@@ -13,8 +13,8 @@ type Ref = TextInput;
 
 const Input = forwardRef<Ref, iProp>((props, ref) => {
   const { style, ...otherProps } = props;
-  const backgroundColor = useThemeColor({}, "inputBackground");
-  const placeholder = useThemeColor({}, "placeholder");
+  const backgroundColor = useThemeColor("inputBackground");
+  const placeholder = useThemeColor("placeholder");
   const dir = useDirection();
   const textAlign = dir === "rtl" ? "right" : "left";
   return (

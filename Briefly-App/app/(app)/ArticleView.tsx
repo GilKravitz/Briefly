@@ -1,10 +1,9 @@
-import { StyleSheet, ScrollView, ImageBackground, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, ScrollView, TouchableWithoutFeedback, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Article } from "@/types";
 import Container from "@/components/Container";
 import { useArticle } from "@/core/store/articleContext";
-import { Text, Heading } from "@/components/StyledText";
-import { View } from "@/components/Themed";
+import { View, Text } from "@/components/Themed";
 import { Image } from "expo-image";
 import { parseArticleText } from "@/utils/articleText";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -16,7 +15,7 @@ import Colors from "@/core/constants/Colors";
 import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
-import { isArticleBookmarked, toggleBookmark } from "@/core/persistent/bookmarked";
+import Persistent from "@/core/persistent";
 
 type ArticleTextProps = {
   parsedArticle: ArticleText[];
@@ -27,15 +26,15 @@ const ArticleTextView = (props: ArticleTextProps) => {
       {props.parsedArticle.map((element, index) => (
         <View style={{ width: "100%" }} key={`articleBullet${index}`}>
           {element.subheading && (
-            <Heading style={styles.articleText} size={20}>
+            <Text variant="subheading" style={[{ fontWeight: "bold" }, styles.articleText]} size={18}>
               {element.subheading}
-            </Heading>
+            </Text>
           )}
-          {element.paragraph && <Text size={20}>{element.paragraph}</Text>}
+          {element.paragraph && <Text size={16}>{element.paragraph}</Text>}
           {element.bullets && (
             <View style={styles.bullets}>
               {element.bullets.map((bullet, i) => (
-                <Text size={20} key={`articleBullet${index}_${i}`}>
+                <Text size={16} key={`articleBullet${index}_${i}`}>
                   • {bullet}
                 </Text>
               ))}
@@ -54,9 +53,9 @@ const ArticleView = () => {
   const parsedArticle = parseArticleText(article.article);
 
   useEffect(() => {
-    isArticleBookmarked(article).then((result) => {
-      setIsBookmarked(result);
-    });
+    // Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
+    // setIsBookmarked(result);
+    // });
   }, []);
 
   const onReportPress = () => {
@@ -77,7 +76,7 @@ const ArticleView = () => {
   };
 
   const onBookmarkPress = () => {
-    toggleBookmark(article);
+    // Persistent.Bookmarked.toggleBookmark(article);
     setIsBookmarked((prev) => !prev);
     console.log("Bookmark");
   };
@@ -98,8 +97,8 @@ const ArticleView = () => {
             setMenuIsOpen={setMenuIsOpen}
           />
         </View>
-        <TouchableWithoutFeedback style={{ borderWidth: 5, borderColor: "red" }} onPress={handleCloseMenus}>
-          <View>
+        <Pressable onPress={() => handleCloseMenus()}>
+          <View style={{ flex: 1 }}>
             <Image source={{ uri: article.s3_image }} style={styles.ImageBackground} />
             <Container style={styles.container}>
               <Animated.View entering={FadeInDown} style={styles.header}>
@@ -109,14 +108,16 @@ const ArticleView = () => {
                 </Text>
               </Animated.View>
               <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
-                <Heading size={24}>{article.title}</Heading>
+                <Text variant="title" size={24}>
+                  {article.title}
+                </Text>
               </Animated.View>
               <Animated.View entering={FadeInDown.delay(500)} style={styles.articleText}>
                 <ArticleTextView parsedArticle={parsedArticle} />
               </Animated.View>
             </Container>
           </View>
-        </TouchableWithoutFeedback>
+        </Pressable>
       </ScrollView>
 
       <LinksModal open={openLinksModal} links={article.links} />
@@ -151,7 +152,6 @@ const styles = StyleSheet.create({
   },
   articleText: {
     width: "100%",
-    alignItems: "flex-start",
   },
   bullets: {
     marginRight: 15,

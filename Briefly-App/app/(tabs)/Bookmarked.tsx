@@ -1,8 +1,7 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
-import { Heading } from "@/components/StyledText";
-import { getAllBookmarked } from "@/core/persistent/bookmarked";
+import Persistent from "@/core/persistent";
 import { Article } from "@/types";
 import Colors from "@/core/constants/Colors";
 import { useArticle } from "@/core/store/articleContext";
@@ -13,24 +12,24 @@ const Bookmarked = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const navigation = useNavigation();
   const { setArticle } = useArticle();
-  const getBookmarkedArticles = async () => {
-    const bookmarkedArticles = await getAllBookmarked();
-    setArticles(bookmarkedArticles);
-  };
+
+  // const getBookmarkedArticles = async () => {
+  //   const bookmarkedArticles = await Persistent.Bookmarked.getAllBookmarked();
+  //   setArticles(bookmarkedArticles);
+  // };
 
   useEffect(() => {
-    getBookmarkedArticles();
+    // getBookmarkedArticles();
   }, []);
 
   const handlePress = (article: Article) => {
     setArticle(article);
     router.push("/(app)/ArticleView");
   };
-
   // on tab focus fetch bookmarked articles
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      getBookmarkedArticles();
+      // getBookmarkedArticles();
     });
     return unsubscribe;
   }, [navigation]);

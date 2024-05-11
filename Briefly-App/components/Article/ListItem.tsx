@@ -1,6 +1,5 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
-import { View } from "../Themed";
-import { Heading2, Text } from "../StyledText";
+import { View, Text } from "../Themed";
 import { Article } from "@/types";
 import { Image } from "expo-image";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -21,10 +20,10 @@ const ListItem = React.memo((props: ListItemProps) => {
         <View style={styles.container}>
           <View style={styles.contentContainer}>
             <ArticleCategory category={props.article.category} />
-            <Heading2 style={{ flex: 0.95, fontSize: 16, fontWeight: "600" }} size={16}>
+            <Text variant="heading" size={15} style={{ flex: 0.95, fontWeight: "bold" }}>
               {props.article.title}
-            </Heading2>
-            <Text style={styles.date} colorName="textMuted">
+            </Text>
+            <Text size={14} style={styles.date} colorName="textMuted">
               {dateFormat(props.article.publish_date)}
             </Text>
           </View>

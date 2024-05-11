@@ -1,6 +1,5 @@
 import { Keyboard, StyleSheet, TextInput } from "react-native";
-import { View } from "@/components/Themed";
-import { Heading, Text } from "@/components/StyledText";
+import { View, Text } from "@/components/Themed";
 import Container from "@/components/Container";
 import React, { useRef, useState } from "react";
 import BackButton from "@/components/pressable/BackButton";
@@ -17,7 +16,7 @@ const SetNewPassword = () => {
   return (
     <Container>
       <BackButton onPress={() => router.back()} />
-      <Heading>{t.setNewPassword.title}</Heading>
+      <Text variant="title">{t.setNewPassword.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/setNewPassword.json")} />
 
       <Input
