@@ -1,4 +1,4 @@
-import { Dimensions, I18nManager, StyleSheet } from "react-native";
+import { Dimensions, I18nManager, ImageBackground, StyleSheet } from "react-native";
 import Container from "@/components/Container";
 import { Heading3, Text } from "@/components/StyledText";
 import { View } from "@/components/Themed";
@@ -7,49 +7,49 @@ import React, { useEffect } from "react";
 import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
 import { Link, Redirect, router } from "expo-router";
-import * as Updates from "expo-updates";
 import i18n, { t } from "@/core/i18n";
+import { useIsFirstTimeUser } from "@/core/hooks/useIsFirstTimeUser";
 
-const Header = (props: SvgProps) => {
-  const width = Dimensions.get("window").width;
-  const height = Dimensions.get("window").height;
+const Icon = (props: SvgProps) => {
   return (
-    <Svg width={width} height={525} fill="none" {...props}>
+    <Svg width={151} height={178} fill="none" {...props}>
       <Path
-        fill="#2D2D2D"
-        d="M0-1v398.763s33.4 71.741 119.273 63.416c85.872-8.325 103.682-53.163 207.364 29.473 0 0 36.576 34.585 103.363 33.314V-1H0Z"
-      />
-      <Path
-        fill="#F8F8F8"
-        d="M154 167v159.894h79.65c55.958 0 80.329-58.704 44.228-85.658C304.051 211.996 279.225 167 236.13 167H154ZM284.05 331.571c0-2.583 2.068-4.677 4.62-4.677h18.479c2.552 0 4.62 2.094 4.62 4.677v18.706c0 2.583-2.068 4.677-4.62 4.677H288.67c-2.552 0-4.62-2.094-4.62-4.677v-18.706Z"
+        fill="white"
+        d="M0 0v151.426h76.359c53.645 0 77.008-55.595 42.399-81.122C143.849 42.614 120.049 0 78.736 0H0ZM124.232 155.855a4.43 4.43 0 0 1 4.429-4.429h17.716a4.43 4.43 0 0 1 4.429 4.429v17.716a4.43 4.43 0 0 1-4.429 4.429h-17.716a4.43 4.43 0 0 1-4.429-4.429v-17.716Z"
       />
     </Svg>
   );
 };
-
 const index = () => {
-  i18n.locale = "he";
-  return <Redirect href={"/(app)/SelectTopics"} />;
-  // return <Redirect href={"/(tabs)/article/ArticleList"} />;
+  // const [isFirstTime, setIsFirstTime] = useIsFirstTimeUser();
+  useEffect(() => {
+    // if (!isFirstTime) {
+    //   router.push("/(tabs)/ArticleList");
+    // }
+  }, []);
   return (
-    <Container paddingTop={0}>
-      <Header style={styles.header} />
-      <View style={styles.main}>
-        <Heading3>{t.index.heading}</Heading3>
-        <Text style={styles.text} colorName="textMuted">
-          {t.index.subheading}
-        </Text>
-      </View>
-      <View style={styles.footer}>
-        <Button onPress={() => router.push("/(auth)/SignUp")}>{t.index.signupBtn}</Button>
-        <View row style={{ gap: 5, alignItems: "baseline" }}>
-          <Text colorName="textMuted">{t.index.signInMsg}</Text>
-          <Link push href="/(auth)/SignIn">
-            <Heading3 size={16}>{t.index.signInLink}</Heading3>
-          </Link>
+    <View style={{ flex: 1 }}>
+      <ImageBackground resizeMode="stretch" style={styles.header} source={require("@/assets/images/wave.png")}>
+        <Icon />
+      </ImageBackground>
+      <Container style={{ minHeight: "auto" }}>
+        <View style={styles.main}>
+          <Heading3>{t.index.heading}</Heading3>
+          <Text style={styles.text} colorName="textMuted">
+            {t.index.subheading}
+          </Text>
         </View>
-      </View>
-    </Container>
+        <View style={styles.footer}>
+          <Button onPress={() => router.push("/(auth)/SignUp")}>{t.index.signupBtn}</Button>
+          <View row style={styles.signInWrapper}>
+            <Text colorName="textMuted">{t.index.signInMsg}</Text>
+            <Link push href="/(auth)/SignIn">
+              <Heading3 size={16}>{t.index.signInLink}</Heading3>
+            </Link>
+          </View>
+        </View>
+      </Container>
+    </View>
   );
 };
 
@@ -57,7 +57,10 @@ export default index;
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
+    flex: 1.5,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
     flex: 1,
@@ -75,5 +78,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-around",
+  },
+  signInWrapper: {
+    gap: 5,
+    alignItems: "baseline",
   },
 });

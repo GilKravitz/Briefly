@@ -16,13 +16,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "ExpoLocalization_supportsRTL": true
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gilkravitz.Briefly"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +34,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "extra": {
-      "supportsRTL": true
+      "supportsRTL": true,
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "959cb243-129b-41e9-9aa0-5a82130dd671"
+      }
     },
     "plugins": [
       "expo-router",

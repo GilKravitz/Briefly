@@ -35,7 +35,7 @@ export default function SignIn() {
   });
 
   const handleLogin = async () => {
-    router.push("/(tabs)/");
+    router.push("/(app)/SelectTopics");
   };
 
   return (
@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   signUpLinkWrapper: {
     marginTop: 30,
     gap: 5,
-    width: "100%",
-    justifyContent: "center",
+    alignItems: "baseline",
   },
 });

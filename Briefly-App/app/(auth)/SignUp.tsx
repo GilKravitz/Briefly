@@ -11,7 +11,7 @@ import { View } from "@/components/Themed";
 import { Text, Heading, Heading3 } from "@/components/StyledText";
 import Container from "@/components/Container";
 import React, { useRef, useState } from "react";
-import { t } from "@/core/i18n";
+import i18n, { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
@@ -78,7 +78,7 @@ export default function SignUp() {
               onChangeText={setPassword}
             />
             <View row style={{ justifyContent: "space-between", paddingVertical: 5, width: "100%" }}>
-              <View row style={{ gap: 5 }}>
+              <View row style={styles.privacyPolicyWrapper}>
                 <Text colorName="textMuted">{t.signUp.iHaveRead}</Text>
                 <Link push href="/(auth)/PrivacyPolicy">
                   <Heading3 size={16}>{t.signUp.privacyPolicy}</Heading3>
@@ -105,5 +105,8 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 20,
     marginVertical: 20,
+  },
+  privacyPolicyWrapper: {
+    gap: 5,
   },
 });

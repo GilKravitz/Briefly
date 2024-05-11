@@ -5,11 +5,13 @@ import { I18nManager } from "react-native";
 import i18n from "@/core/i18n";
 
 export const useDirection = () => {
-  const [dir, setDir] = useState("ltr");
+  const [dir, setDir] = useState<"ltr" | "inherit" | "rtl">("ltr");
+
   useEffect(() => {
     if (i18n.locale === "he") {
       setDir("rtl");
     }
   }, []);
+
   return dir;
 };

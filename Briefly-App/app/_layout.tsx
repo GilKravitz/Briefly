@@ -12,6 +12,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { ArticleProvider } from "@/core/store/articleContext";
+import i18n from "@/core/i18n";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
@@ -22,7 +23,10 @@ export default function Layout() {
     Inter_700Bold,
   });
 
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    i18n.locale = "he";
+    console.log("ok");
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
