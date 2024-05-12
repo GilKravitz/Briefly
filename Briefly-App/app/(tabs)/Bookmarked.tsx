@@ -1,11 +1,11 @@
 import { FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import Persistent from "@/core/persistent";
 import { Article } from "@/types";
 import Colors from "@/core/constants/Colors";
 import { useArticle } from "@/core/store/articleContext";
-import { router, useNavigation } from "expo-router";
+import { router, useNavigation, useFocusEffect } from "expo-router";
 import ListItem from "@/components/Article/ListItem";
 
 const Bookmarked = () => {
@@ -13,26 +13,22 @@ const Bookmarked = () => {
   const navigation = useNavigation();
   const { setArticle } = useArticle();
 
-  // const getBookmarkedArticles = async () => {
-  //   const bookmarkedArticles = await Persistent.Bookmarked.getAllBookmarked();
-  //   setArticles(bookmarkedArticles);
-  // };
+  useFocusEffect(
+    useCallback(() => {
+      console.log("Focused Bookmarked");
+      getBookmarkedArticles();
+    }, [])
+  );
 
-  useEffect(() => {
-    // getBookmarkedArticles();
-  }, []);
+  const getBookmarkedArticles = async () => {
+    const bookmarkedArticles = await Persistent.Bookmarked.getAllBookmarked();
+    setArticles(bookmarkedArticles);
+  };
 
   const handlePress = (article: Article) => {
     setArticle(article);
     router.push("/(app)/ArticleView");
   };
-  // on tab focus fetch bookmarked articles
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      // getBookmarkedArticles();
-    });
-    return unsubscribe;
-  }, [navigation]);
 
   const renderItem = useMemo(
     () =>

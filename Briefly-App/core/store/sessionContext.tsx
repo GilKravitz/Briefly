@@ -1,15 +1,5 @@
-// create a new context for the session - this will be used to store the user's session
-// if the user is logged in, the session will contain the user's token
-// if the user is not logged in, the session will be empty
-// the session will be stored in the context and will be accessible to all components
-// the token is will stored in AsyncStorage and will be used to authenticate the user
-// the context will also provide functions to set and clear the token
-//  the context will provide state of loading and error to indicate the status of the token fetching process
-// the context will also provide a function to refresh the token
-
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Persistent from "@/core/persistent";
-import { useEffect } from "react";
 
 // create a new context for the session
 const SessionContext = createContext({
@@ -38,8 +28,8 @@ export const SessionProvider = ({ children }: { children: React.ReactNode }) => 
       } catch (e) {
         setError("An error occurred while fetching the token");
       } finally {
-        setTimeout(() => setLoading(false), 2000);
-        // setLoading(false);
+        // setTimeout(() => setLoading(false), 5000);
+        setLoading(false);
       }
     };
 

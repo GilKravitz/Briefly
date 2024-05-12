@@ -22,7 +22,7 @@ const Icon = (props: SvgProps) => {
 const handleSignInPress = () => {
   router.push("/(auth)/SignIn");
 };
-const index = () => {
+const AppLaunch = () => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground resizeMode="stretch" style={styles.header} source={require("@/assets/images/wave.png")}>
@@ -49,7 +49,7 @@ const index = () => {
   );
 };
 
-export default index;
+export default AppLaunch;
 
 const styles = StyleSheet.create({
   header: {

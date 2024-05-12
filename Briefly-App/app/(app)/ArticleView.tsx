@@ -7,7 +7,6 @@ import { View, Text } from "@/components/Themed";
 import { Image } from "expo-image";
 import { parseArticleText } from "@/utils/articleText";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { ArticleText } from "@/types";
 import BackButton2 from "@/components/pressable/BackButton2";
 import ArticleCategory from "@/components/Article/ArticleCategory";
 import { dateFormat } from "@/utils/dateFormat";
@@ -16,35 +15,8 @@ import MenuButton from "@/components/SelectTopics/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
 import Persistent from "@/core/persistent";
+import ArticleTextView from "@/components/Article/ArticleTextView";
 
-type ArticleTextProps = {
-  parsedArticle: ArticleText[];
-};
-const ArticleTextView = (props: ArticleTextProps) => {
-  return (
-    <>
-      {props.parsedArticle.map((element, index) => (
-        <View style={{ width: "100%" }} key={`articleBullet${index}`}>
-          {element.subheading && (
-            <Text variant="subheading" style={[{ fontWeight: "bold" }, styles.articleText]} size={18}>
-              {element.subheading}
-            </Text>
-          )}
-          {element.paragraph && <Text size={16}>{element.paragraph}</Text>}
-          {element.bullets && (
-            <View style={styles.bullets}>
-              {element.bullets.map((bullet, i) => (
-                <Text size={16} key={`articleBullet${index}_${i}`}>
-                  • {bullet}
-                </Text>
-              ))}
-            </View>
-          )}
-        </View>
-      ))}
-    </>
-  );
-};
 const ArticleView = () => {
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -53,9 +25,9 @@ const ArticleView = () => {
   const parsedArticle = parseArticleText(article.article);
 
   useEffect(() => {
-    // Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
-    // setIsBookmarked(result);
-    // });
+    Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
+      setIsBookmarked(result);
+    });
   }, []);
 
   const onReportPress = () => {
@@ -76,7 +48,7 @@ const ArticleView = () => {
   };
 
   const onBookmarkPress = () => {
-    // Persistent.Bookmarked.toggleBookmark(article);
+    Persistent.Bookmarked.toggleBookmark(article);
     setIsBookmarked((prev) => !prev);
     console.log("Bookmark");
   };
@@ -112,7 +84,7 @@ const ArticleView = () => {
                   {article.title}
                 </Text>
               </Animated.View>
-              <Animated.View entering={FadeInDown.delay(500)} style={styles.articleText}>
+              <Animated.View entering={FadeInDown.delay(500)} style={styles.articleTextContainer}>
                 <ArticleTextView parsedArticle={parsedArticle} />
               </Animated.View>
             </Container>
@@ -147,14 +119,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  articleTextContainer: {
+    width: "100%",
+  },
   heading: {
     width: "100%",
-  },
-  articleText: {
-    width: "100%",
-  },
-  bullets: {
-    marginRight: 15,
   },
   headerButton: {
     position: "absolute",

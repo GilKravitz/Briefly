@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, Pressable, StyleSheet } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { getArticles } from "@/api/articles";
@@ -8,17 +8,23 @@ import { useArticle } from "@/core/store/articleContext";
 import { router } from "expo-router";
 import Colors from "@/core/constants/Colors";
 import Svg, { Path, SvgProps } from "react-native-svg";
+import { useSession } from "@/core/store/sessionContext";
 
-const Logo = (props: SvgProps) => (
-  <Svg width={92} height={109} fill="none" {...props}>
-    <Path
-      fill="#2D2D2D"
-      d="M0 0v91.974h46.379c32.583 0 46.773-33.768 25.753-49.273C87.372 25.882 72.915 0 47.822 0H0ZM75.725 94.664a2.69 2.69 0 0 1 2.69-2.69h10.76a2.69 2.69 0 0 1 2.69 2.69v10.76a2.69 2.69 0 0 1-2.69 2.69h-10.76a2.69 2.69 0 0 1-2.69-2.69v-10.76Z"
-    />
-  </Svg>
-);
+const Logo = (props: SvgProps) => {
+  const session = useSession();
+  return (
+    <Pressable onPress={session.clearToken}>
+      <Svg width={92} height={109} fill="none" {...props}>
+        <Path
+          fill="#2D2D2D"
+          d="M0 0v91.974h46.379c32.583 0 46.773-33.768 25.753-49.273C87.372 25.882 72.915 0 47.822 0H0ZM75.725 94.664a2.69 2.69 0 0 1 2.69-2.69h10.76a2.69 2.69 0 0 1 2.69 2.69v10.76a2.69 2.69 0 0 1-2.69 2.69h-10.76a2.69 2.69 0 0 1-2.69-2.69v-10.76Z"
+        />
+      </Svg>
+    </Pressable>
+  );
+};
 
-const ArticleList = () => {
+const index = () => {
   const { setArticle } = useArticle();
   const [articles, setArticles] = useState<Article[]>([]);
   const fetchArticles = async () => {
@@ -56,7 +62,7 @@ const ArticleList = () => {
   );
 };
 
-export default ArticleList;
+export default index;
 
 const styles = StyleSheet.create({
   backgroundMuted: {

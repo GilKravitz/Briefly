@@ -16,7 +16,6 @@ const getAllTopicsKeys = async (): Promise<string[]> => {
 
 export const getSelectedTopics = async (): Promise<topicsDict> => {
   try {
-    // return a dictionary of selected topics with topic id as key
     const keys = await getAllTopicsKeys();
     const data = await AsyncStorage.multiGet(keys);
     const topics: topicsDict = {};
@@ -31,26 +30,24 @@ export const getSelectedTopics = async (): Promise<topicsDict> => {
   }
 };
 
-export const selectTopic = async (topic: Topic) => {
+export const setSelectTopics = async (topics: topicsDict) => {
   try {
-    await AsyncStorage.setItem(`${SELECTED_TOPICS_KEY}_${topic.name}`, JSON.stringify(topic));
+    await removeAllSelectedTopics();
+    const keys = Object.keys(topics);
+    if (keys.length === 0) return;
+    const data: [string, string][] = keys.map((key) => [`${SELECTED_TOPICS_KEY}_${key}`, JSON.stringify(topics[key])]);
+    await AsyncStorage.multiSet(data);
+    console.log("selected topics saved", topics);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const removeTopic = async (topic: Topic) => {
-  try {
-    await AsyncStorage.removeItem(`${SELECTED_TOPICS_KEY}_${topic.name}`);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const clearAllSelectedTopics = async () => {
+export const removeAllSelectedTopics = async () => {
   try {
     const keys = await getAllTopicsKeys();
     await AsyncStorage.multiRemove(keys);
+    console.log("removed all selected topics", keys);
   } catch (e) {
     console.log(e);
   }

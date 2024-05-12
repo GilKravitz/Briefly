@@ -1,4 +1,4 @@
-import { Slot, SplashScreen, Stack } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -13,6 +13,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useColorScheme } from "@/components/useColorScheme";
 import { ArticleProvider } from "@/core/store/articleContext";
 import i18n from "@/core/i18n";
+import { SessionProvider } from "@/core/store/sessionContext";
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
@@ -50,10 +51,12 @@ export default function Layout() {
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const colorScheme = useColorScheme();
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaProvider>
-        <ArticleProvider>{children}</ArticleProvider>
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <SafeAreaProvider>
+          <ArticleProvider>{children}</ArticleProvider>
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </SessionProvider>
   );
 };

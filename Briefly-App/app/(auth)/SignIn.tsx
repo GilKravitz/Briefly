@@ -9,10 +9,12 @@ import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import { Text } from "@/components/Themed";
+import { useSession } from "@/core/store/sessionContext";
 
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
+  const session = useSession();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +28,7 @@ export default function SignIn() {
   });
 
   const handleLogin = async () => {
+    session.setToken("token");
     router.push("/(app)/SelectTopics");
   };
 

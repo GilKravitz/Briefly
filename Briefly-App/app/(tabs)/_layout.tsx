@@ -1,10 +1,19 @@
-import React from "react";
-import { Stack, Tabs, router } from "expo-router";
+import React, { useEffect } from "react";
+import { Redirect, Stack, Tabs, router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
-
+import { useSession } from "@/core/store/sessionContext";
+import { Text } from "@/components/Themed";
 const TabsLayout = () => {
+  const session = useSession();
   const activeColor = useThemeColor("primary");
+  if (session.loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (!session.token) {
+    return <Redirect href="/(auth)/AppLaunch" />;
+  }
   return (
     <Tabs
       screenOptions={{
@@ -19,7 +28,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="ArticleList"
+        name="index"
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="newspaper-o" color={color} />,
