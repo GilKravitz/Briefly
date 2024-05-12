@@ -5,12 +5,11 @@ import Persistent from "@/core/persistent";
 import { Article } from "@/types";
 import Colors from "@/core/constants/Colors";
 import { useArticle } from "@/core/store/articleContext";
-import { router, useNavigation, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import ListItem from "@/components/Article/ListItem";
 
 const Bookmarked = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const navigation = useNavigation();
   const { setArticle } = useArticle();
 
   useFocusEffect(
@@ -25,23 +24,28 @@ const Bookmarked = () => {
     setArticles(bookmarkedArticles);
   };
 
-  const handlePress = (article: Article) => {
-    setArticle(article);
-    router.push("/(app)/ArticleView");
-  };
-
-  const renderItem = useMemo(
-    () =>
-      ({ item, index }: { item: Article; index: number }) =>
-        <ListItem index={index} article={item} onPress={() => handlePress(item)} />,
-    [articles]
+  const handlePress = useCallback(
+    (article: Article) => {
+      setArticle(article);
+      router.push("/(app)/ArticleView");
+    },
+    [setArticle, router]
   );
+
+  const renderItem = useCallback(
+    ({ item, index }: { item: Article; index: number }) => (
+      <ListItem index={index} article={item} onPress={() => handlePress(item)} />
+    ),
+    [handlePress]
+  );
+
+  const keyExtractor = useCallback((item: Article) => `BookMarkList${item.id.toString()}`, []);
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
         data={articles}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString() + item.title}
+        keyExtractor={keyExtractor}
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
         ListHeaderComponentStyle={{ alignItems: "center", marginBottom: 30 }}

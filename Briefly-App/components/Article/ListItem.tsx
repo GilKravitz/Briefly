@@ -13,26 +13,29 @@ type ListItemProps = {
   onPress: () => void;
 };
 
-const ListItem = React.memo((props: ListItemProps) => {
-  return (
-    <Animated.View entering={FadeInDown.delay(50 * props.index)}>
-      <TouchableOpacity onPress={props.onPress}>
-        <View style={styles.container}>
-          <View style={styles.contentContainer}>
-            <ArticleCategory category={props.article.category} />
-            <Text variant="heading" size={15} style={{ flex: 0.95, fontWeight: "bold" }}>
-              {props.article.title}
-            </Text>
-            <Text size={14} style={styles.date} colorName="textMuted">
-              {dateFormat(props.article.publish_date)}
-            </Text>
+const ListItem = React.memo(
+  (props: ListItemProps) => {
+    return (
+      <Animated.View entering={FadeInDown.delay(50 * props.index)}>
+        <TouchableOpacity onPress={props.onPress}>
+          <View style={styles.container}>
+            <View style={styles.contentContainer}>
+              <ArticleCategory category={props.article.category} />
+              <Text variant="heading" size={15} style={{ flex: 0.95, fontWeight: "bold" }}>
+                {props.article.title}
+              </Text>
+              <Text size={14} style={styles.date} colorName="textMuted">
+                {dateFormat(props.article.publish_date)}
+              </Text>
+            </View>
+            <Image source={{ uri: props.article.s3_image }} style={styles.img} />
           </View>
-          <Image source={{ uri: props.article.s3_image }} style={styles.img} />
-        </View>
-      </TouchableOpacity>
-    </Animated.View>
-  );
-});
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  },
+  (prev, next) => prev.article.id === next.article.id && prev.index === next.index
+);
 
 export default ListItem;
 

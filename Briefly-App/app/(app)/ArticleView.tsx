@@ -1,6 +1,5 @@
-import { StyleSheet, ScrollView, TouchableWithoutFeedback, Pressable } from "react-native";
+import { StyleSheet, ScrollView, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Article } from "@/types";
 import Container from "@/components/Container";
 import { useArticle } from "@/core/store/articleContext";
 import { View, Text } from "@/components/Themed";
@@ -23,7 +22,6 @@ const ArticleView = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { article } = useArticle();
   const parsedArticle = parseArticleText(article.article);
-
   useEffect(() => {
     Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
       setIsBookmarked(result);

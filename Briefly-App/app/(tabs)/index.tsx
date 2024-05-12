@@ -1,5 +1,5 @@
 import { FlatList, Pressable, StyleSheet } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Container from "@/components/Container";
 import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
@@ -27,36 +27,41 @@ const Logo = (props: SvgProps) => {
 const index = () => {
   const { setArticle } = useArticle();
   const [articles, setArticles] = useState<Article[]>([]);
-  const fetchArticles = async () => {
-    const articles = await getArticles();
-    setArticles(articles as Article[]);
-    // console.log(articles);
-  };
   useEffect(() => {
+    const fetchArticles = async () => {
+      const articles = await getArticles();
+      setArticles(articles as Article[]);
+    };
     fetchArticles();
   }, []);
 
-  const handlePress = (article: Article) => {
-    setArticle(article);
-    router.push("/(app)/ArticleView");
-  };
-
-  const renderItem = useMemo(
-    () =>
-      ({ item, index }: { item: Article; index: number }) =>
-        <ListItem index={index} article={item} onPress={() => handlePress(item)} />,
-    [articles]
+  const handlePress = useCallback(
+    (article: Article) => {
+      setArticle(article);
+      router.push("/(app)/ArticleView");
+    },
+    [setArticle, router]
   );
+
+  const renderItem = useCallback(
+    ({ item, index }: { item: Article; index: number }) => (
+      <ListItem index={index} article={item} onPress={() => handlePress(item)} />
+    ),
+    [handlePress]
+  );
+  const keyExtractor = useCallback((item: Article) => `ArticleList${item.id.toString()}`, []);
+
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
         data={articles}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString() + item.title}
+        keyExtractor={keyExtractor}
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
         ListHeaderComponent={<Logo />}
         ListHeaderComponentStyle={{ alignItems: "center", marginBottom: 30 }}
+        removeClippedSubviews={true} // This might help for long lists
       />
     </Container>
   );

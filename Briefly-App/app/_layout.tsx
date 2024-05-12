@@ -1,4 +1,4 @@
-import { Slot, SplashScreen } from "expo-router";
+import { Slot, SplashScreen, Stack } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -43,7 +43,11 @@ export default function Layout() {
 
   return (
     <Providers>
-      <Slot />
+      {/* <Slot /> */}
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
     </Providers>
   );
 }
