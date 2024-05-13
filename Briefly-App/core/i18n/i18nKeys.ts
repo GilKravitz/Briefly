@@ -76,4 +76,11 @@ export type I18nKeys = {
       reportBtn: string;
     };
   };
+  formErrors: {
+    requiredField: string;
+    invalidEmail: string;
+    invalidPassword: string;
+    minPassLen: string;
+    maxPassLen: string;
+  };
 };

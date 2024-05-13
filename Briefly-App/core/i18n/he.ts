@@ -77,6 +77,13 @@ const he: I18nKeys = {
       reportBtn: "שלח",
     },
   },
+  formErrors: {
+    requiredField: "שדה חובה",
+    invalidEmail: "דואר אלקטרוני לא תקין",
+    invalidPassword: "סיסמה חייבת להכיל [a-z], [A-Z], [0-9], תו מיוחד ולפחות 8 תווים",
+    maxPassLen: "סיסמה חייבת להכיל פחות מ {{max}} תווים",
+    minPassLen: `סיסמה חייבת להכיל לפחות {{min}} תווים`,
+  },
 };
 
 // create type for the i18n keys

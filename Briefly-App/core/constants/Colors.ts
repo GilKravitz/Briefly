@@ -4,6 +4,7 @@ export default {
   darkPrimary: "#2D2D2D",
   lightPrimary: "#F8F8F8",
   white: "#FFF",
+  error: "#BD2025",
   light: {
     primary: "#2D2D2D",
     background: "#F8F8F8",

@@ -77,6 +77,13 @@ const en: I18nKeys = {
       reportBtn: "Submit Report",
     },
   },
+  formErrors: {
+    requiredField: "Required Field",
+    invalidEmail: "Invalid Email",
+    invalidPassword: "Password must contain [A-Z], [a-z], [0-9], symobl and at least 8 characters",
+    maxPassLen: "Password must be less than {{max}} characters",
+    minPassLen: "Password must be at least {{min}} characters",
+  },
 };
 
 export default en;
