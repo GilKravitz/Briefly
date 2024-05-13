@@ -14,7 +14,6 @@ import { useSession } from "@/core/store/sessionContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import schema from "@/core/schemas/signIn";
-import { err } from "react-native-svg";
 
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
@@ -85,7 +84,7 @@ export default function SignIn() {
             />
           </View>
 
-          <Button onPress={handleSubmit(onSubmit)}>{t.signUp.getStarted}</Button>
+          <Button onPress={handleSubmit(onSubmit)}>{t.signIn.signInBtn}</Button>
 
           <Link style={styles.forgotPassLink} push href="/(auth)/ForgotPassword">
             <Text variant="subheading" size={16}>
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "100%",
-    gap: 20,
+    gap: 10,
     marginVertical: 20,
   },
   forgotPassLink: {

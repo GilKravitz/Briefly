@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
 import { View } from "@/components/Themed";
 import Container from "@/components/Container";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import i18n, { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
@@ -11,6 +11,10 @@ import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import { Text } from "@/components/Themed";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
+import schema from "@/core/schemas/signUp";
+
 export default function SignUp() {
   const nameRef = useRef<TextInput>(null);
   const emailRef = useRef<TextInput>(null);
@@ -19,20 +23,24 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [checked, setChecked] = useState(false);
-  const [signUpError, setSignUpError] = useState(false);
 
-  const handleSignUp = () => {
-    router.replace("/(app)/SelectTopics");
-  };
-
-  const FormMessage = React.memo(() => {
-    if (signUpError) {
-      return <Text colorName="error">{t.signUp.signupError}</Text>;
-    }
-    return <Text colorName="textMuted">{t.signIn.signInMutedMsg}</Text>;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { name: "", email: "", password: "", privacyPolicy: false },
+    resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (errors.email) console.log(errors.email);
+  }, [errors]);
+
+  const onSubmit = (data: { email: string; password: string }) => {
+    console.log(data);
+  };
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
@@ -43,47 +51,92 @@ export default function SignUp() {
             {t.signUp.title}
           </Text>
           <SocialButtons style={styles.socialButtons} />
-          {/* <Text colorName="textMuted">{t.signUp.signUpMutedMsg}</Text> */}
-          <FormMessage />
           <View style={styles.form}>
-            <Input
-              ref={nameRef}
-              placeholder="Name"
-              returnKeyType="next"
-              onSubmitEditing={() => emailRef.current?.focus()}
-              value={name}
-              onChangeText={setName}
+            {/* Name */}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  ref={nameRef}
+                  placeholder="Name"
+                  returnKeyType="next"
+                  onSubmitEditing={() => emailRef.current?.focus()}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  error={errors.name?.message}
+                />
+              )}
+              name="name"
             />
-            <Input
-              ref={emailRef}
-              placeholder="Email Address"
-              returnKeyType="next"
-              keyboardType="email-address"
-              onSubmitEditing={() => passwordRef.current?.focus()}
-              value={email}
-              onChangeText={setEmail}
+            {/* Email */}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  ref={emailRef}
+                  placeholder="Email Address"
+                  returnKeyType="next"
+                  keyboardType="email-address"
+                  onSubmitEditing={() => passwordRef.current?.focus()}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  error={errors.email?.message}
+                />
+              )}
+              name="email"
             />
-            <Input
-              ref={passwordRef}
-              placeholder="Password"
-              onSubmitEditing={() => Keyboard.dismiss}
-              secureTextEntry={true}
-              value={password}
-              onChangeText={setPassword}
+            {/* Password */}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  ref={passwordRef}
+                  placeholder="Password"
+                  onSubmitEditing={() => Keyboard.dismiss()}
+                  secureTextEntry={true}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  error={errors.password?.message}
+                />
+              )}
+              name="password"
             />
-            <View row style={{ justifyContent: "space-between", paddingVertical: 5, width: "100%" }}>
-              <View row style={styles.privacyPolicyWrapper}>
-                <Text colorName="textMuted">{t.signUp.iHaveRead}</Text>
-                <Link push href="/(auth)/PrivacyPolicy">
-                  <Text variant="subheading" size={16}>
-                    {t.signUp.privacyPolicy}
-                  </Text>
-                </Link>
+            {/* Privacy Policy */}
+            <View>
+              <View row style={{ justifyContent: "space-between", paddingVertical: 5, width: "100%" }}>
+                <View row style={styles.privacyPolicyWrapper}>
+                  <Text colorName={errors.privacyPolicy ? "error" : "textMuted"}>{t.signUp.iHaveRead}</Text>
+                  <Link push href="/(auth)/PrivacyPolicy">
+                    <Text variant="subheading" size={16}>
+                      {t.signUp.privacyPolicy}
+                    </Text>
+                  </Link>
+                </View>
+                <Controller
+                  name="privacyPolicy"
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, value } }) => <Checkbox onValueChange={onChange} value={value} />}
+                />
               </View>
-              <Checkbox value={checked} onValueChange={setChecked} />
             </View>
           </View>
-          <Button onPress={handleSignUp}>{t.signUp.getStarted}</Button>
+
+          <Button onPress={handleSubmit(onSubmit)}>{t.signUp.getStarted}</Button>
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -99,7 +152,7 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "100%",
-    gap: 20,
+    gap: 10,
     marginVertical: 20,
   },
   privacyPolicyWrapper: {

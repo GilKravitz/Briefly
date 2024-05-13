@@ -17,12 +17,11 @@ const he: I18nKeys = {
     loginError: "דואר אלקטרוני או סיסמה לא נכונים",
   },
   signUp: {
-    title: "הירשם",
-    signUpMutedMsg: "או הרשם עם דואר אלקטרוני",
-    signInBtn: "התחבר",
+    title: "יצירת חשבון",
+    signUpMutedMsg: "או הרשמה עם דואר אלקטרוני",
     iHaveRead: "קראתי ואני מסכים ל",
     privacyPolicy: "מדיניות פרטיות",
-    getStarted: "התחל",
+    getStarted: "הרשמה",
     signupError: "דואר אלקטרוני או שם או סיסמה לא נכונים",
   },
   forgotPassword: {

@@ -19,8 +19,8 @@ const Icon = (props: SvgProps) => {
   );
 };
 
-const handleSignInPress = () => {
-  router.push("/(auth)/SignIn");
+const handleSignUpPress = () => {
+  router.push("/(auth)/SignUp");
 };
 const AppLaunch = () => {
   return (
@@ -36,7 +36,7 @@ const AppLaunch = () => {
           </Text>
         </View>
         <View style={styles.footer}>
-          <Button onPress={handleSignInPress}>{t.index.signupBtn}</Button>
+          <Button onPress={handleSignUpPress}>{t.index.signupBtn}</Button>
           <View row style={styles.signInWrapper}>
             <Text colorName="textMuted">{t.index.signInMsg}</Text>
             <Link push href="/(auth)/SignIn">

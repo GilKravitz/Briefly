@@ -19,7 +19,6 @@ const en: I18nKeys = {
   signUp: {
     title: "Create Your Account",
     signUpMutedMsg: "Or Sign Up With Email",
-    signInBtn: "SIGN IN",
     iHaveRead: "I have read the",
     privacyPolicy: "Privacy Policy",
     getStarted: "GET STARTED",

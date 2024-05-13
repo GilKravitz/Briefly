@@ -18,7 +18,6 @@ export type I18nKeys = {
   signUp: {
     title: string;
     signUpMutedMsg: string;
-    signInBtn: string;
     iHaveRead: string;
     privacyPolicy: string;
     getStarted: string;
