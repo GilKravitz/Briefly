@@ -13,7 +13,8 @@ import { useSession } from "@/core/store/sessionContext";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import schema from "@/core/schemas/signIn";
+// import schema from "@/core/schemas/signIn";
+import { signInSchema } from "@/core/schemas";
 
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
@@ -24,7 +25,7 @@ export default function SignIn() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: { email: "", password: "" }, resolver: yupResolver(schema) });
+  } = useForm({ defaultValues: { email: "", password: "" }, resolver: yupResolver(signInSchema) });
 
   useEffect(() => {
     if (errors.email) console.log(errors.email);
@@ -51,7 +52,7 @@ export default function SignIn() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={emailRef}
-                  placeholder="Email Address"
+                  placeholder={t.formPlaceholders.email}
                   returnKeyType="next"
                   keyboardType="email-address"
                   onSubmitEditing={() => passwordRef.current?.focus()}
@@ -64,6 +65,7 @@ export default function SignIn() {
               name="email"
             />
             <Controller
+              name="password"
               control={control}
               rules={{
                 required: true,
@@ -71,7 +73,7 @@ export default function SignIn() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={passwordRef}
-                  placeholder="Password"
+                  placeholder={t.formPlaceholders.password}
                   onSubmitEditing={() => Keyboard.dismiss()}
                   secureTextEntry={true}
                   onBlur={onBlur}
@@ -80,7 +82,6 @@ export default function SignIn() {
                   error={errors.password?.message}
                 />
               )}
-              name="password"
             />
           </View>
 

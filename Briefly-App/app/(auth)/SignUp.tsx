@@ -13,17 +13,13 @@ import { Text } from "@/components/Themed";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import schema from "@/core/schemas/signUp";
+// import schema from "@/core/schemas/signUp";
+import { signUpSchema } from "@/core/schemas";
 
 export default function SignUp() {
   const nameRef = useRef<TextInput>(null);
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
 
   const {
     control,
@@ -31,7 +27,7 @@ export default function SignUp() {
     formState: { errors },
   } = useForm({
     defaultValues: { name: "", email: "", password: "", privacyPolicy: false },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signUpSchema),
   });
 
   useEffect(() => {
@@ -54,6 +50,7 @@ export default function SignUp() {
           <View style={styles.form}>
             {/* Name */}
             <Controller
+              name="name"
               control={control}
               rules={{
                 required: true,
@@ -61,7 +58,7 @@ export default function SignUp() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={nameRef}
-                  placeholder="Name"
+                  placeholder={t.formPlaceholders.name}
                   returnKeyType="next"
                   onSubmitEditing={() => emailRef.current?.focus()}
                   onBlur={onBlur}
@@ -70,10 +67,10 @@ export default function SignUp() {
                   error={errors.name?.message}
                 />
               )}
-              name="name"
             />
             {/* Email */}
             <Controller
+              name="email"
               control={control}
               rules={{
                 required: true,
@@ -81,7 +78,7 @@ export default function SignUp() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={emailRef}
-                  placeholder="Email Address"
+                  placeholder={t.formPlaceholders.email}
                   returnKeyType="next"
                   keyboardType="email-address"
                   onSubmitEditing={() => passwordRef.current?.focus()}
@@ -91,10 +88,10 @@ export default function SignUp() {
                   error={errors.email?.message}
                 />
               )}
-              name="email"
             />
             {/* Password */}
             <Controller
+              name="password"
               control={control}
               rules={{
                 required: true,
@@ -102,7 +99,7 @@ export default function SignUp() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={passwordRef}
-                  placeholder="Password"
+                  placeholder={t.formPlaceholders.password}
                   onSubmitEditing={() => Keyboard.dismiss()}
                   secureTextEntry={true}
                   onBlur={onBlur}
@@ -111,7 +108,6 @@ export default function SignUp() {
                   error={errors.password?.message}
                 />
               )}
-              name="password"
             />
             {/* Privacy Policy */}
             <View>

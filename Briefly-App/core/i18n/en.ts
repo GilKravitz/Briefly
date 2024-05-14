@@ -82,6 +82,14 @@ const en: I18nKeys = {
     invalidPassword: "Password must contain [A-Z], [a-z], [0-9], symobl and at least 8 characters",
     maxPassLen: "Password must be less than {{max}} characters",
     minPassLen: "Password must be at least {{min}} characters",
+    passwordMatch: "Passwords must match",
+  },
+  formPlaceholders: {
+    name: "Name",
+    email: "Email",
+    password: "Password",
+    passwordConfirmation: "Confirm Password",
+    otp: "0",
   },
 };
 

@@ -81,5 +81,13 @@ export type I18nKeys = {
     invalidPassword: string;
     minPassLen: string;
     maxPassLen: string;
+    passwordMatch: string;
+  };
+  formPlaceholders: {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    name: string;
+    otp: string;
   };
 };

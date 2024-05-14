@@ -53,23 +53,24 @@ const Otp = () => {
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/otp.json")} />
       <View style={styles.formContainer}>
         {Array.from({ length: 4 }).map((_, index) => (
-          <Input
-            style={[styles.input, focusedIndex === index && styles.focused]}
-            key={index}
-            ref={inputRefs[index]}
-            value={otp[index]}
-            // onChangeText={(text) => handleOTPChange(text, index)}
-            maxLength={1}
-            keyboardType="numeric"
-            onKeyPress={({ nativeEvent }) => {
-              if (nativeEvent.key === "Backspace") {
-                handleOTPChange("", index);
-              } else if (nativeEvent.key >= "0" && nativeEvent.key <= "9") {
-                handleOTPChange(nativeEvent.key, index);
-              }
-            }}
-            onFocus={() => setFocusedIndex(index)}
-          />
+          <View key={`OTP_INPUT${index}`}>
+            <Input
+              style={[styles.input, focusedIndex === index && styles.focused]}
+              placeholder="0"
+              ref={inputRefs[index]}
+              value={otp[index]}
+              maxLength={1}
+              keyboardType="numeric"
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === "Backspace") {
+                  handleOTPChange("", index);
+                } else if (nativeEvent.key >= "0" && nativeEvent.key <= "9") {
+                  handleOTPChange(nativeEvent.key, index);
+                }
+              }}
+              onFocus={() => setFocusedIndex(index)}
+            />
+          </View>
         ))}
       </View>
       <Button onPress={() => router.push("/(auth)/SetNewPassword")}>{t.otp.btnText}</Button>

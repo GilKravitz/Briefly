@@ -82,6 +82,14 @@ const he: I18nKeys = {
     invalidPassword: "סיסמה חייבת להכיל [a-z], [A-Z], [0-9], תו מיוחד ולפחות 8 תווים",
     maxPassLen: "סיסמה חייבת להכיל פחות מ {{max}} תווים",
     minPassLen: `סיסמה חייבת להכיל לפחות {{min}} תווים`,
+    passwordMatch: "הסיסמאות חייבות להתאים",
+  },
+  formPlaceholders: {
+    name: "שם מלא",
+    email: "דואר אלקטרוני",
+    password: "סיסמה",
+    passwordConfirmation: "אימות סיסמה",
+    otp: "0",
   },
 };
 
