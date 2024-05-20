@@ -98,6 +98,10 @@ class DatabaseManager:
         Returns:
             None
         '''
+        if clusters is None or len(clusters) == 0:
+            self.logger.info('No summarized articles to insert into the database.')
+            return
+        
         self.logger.info(f'Inserting {len(clusters)} summarized articles into the database.')
         for cluster in clusters:
             self.__insert_summarized_article(cluster)

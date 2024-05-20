@@ -7,9 +7,9 @@ from ai_text_proccesing.ai_text_processor import AiTextProcessor
 from cluster.cluster import Cluster
 
 class ArticleProcessor:
-    MAX_TOKENS_PER_CLUSTER = 9000          # Max number of tokens that can be sent to the API
-    MAX_NUMBER_OF_WORDS = 3000
-    MAX_REQUESTS_PER_MINUTE = 4
+    MAX_TOKENS_PER_CLUSTER = 20000          # Max number of tokens that can be sent to the API
+    MAX_NUMBER_OF_WORDS = 7000
+    MAX_REQUESTS_PER_MINUTE = 10
     MAX_SUMMARY_ATTEMPTS = 3
     SUMMERY_AI_MODEL = 'gemini-1.0-pro-001'
     PROMPT = '''summarize the following articles into a single article summary.
