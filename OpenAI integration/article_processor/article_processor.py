@@ -1,9 +1,8 @@
 import logging
 import backoff
 from ratelimit import limits, RateLimitException
-from typing import List, Dict, Any
+from typing import List
 import google.generativeai as genai
-from ai_text_proccesing.ai_text_processor import AiTextProcessor
 from cluster.cluster import Cluster
 
 class ArticleProcessor:
@@ -55,48 +54,35 @@ class ArticleProcessor:
     
     @backoff.on_exception(backoff.expo,RateLimitException,max_tries=10,max_time=300)
     @limits(calls=MAX_REQUESTS_PER_MINUTE, period=60)
-    def __summarize_cluster_gimini(self, cluster: Cluster, cluster_index: int):
+    def __summarize_cluster_gimini(self, cluster: Cluster):
         '''Summarizes a cluster of articles using the OpenAI API.
 
         Args:
             cluster (Cluster): A cluster of articles to be summarized.
-            cluster_index (int): The index of the cluster being summarized.
         '''
         cluster_string = cluster.combined_data
-        if cluster.article_count > 1:
-            logging.debug(f'Article ids: {cluster.articles_ids} were merged into one cluster')
-        
         cluster_string = self.__prepare_cluster_string(cluster_string)
-        self.__send_and_summarize(cluster, cluster_index, cluster_string)
+        self.__send_and_summarize(cluster, cluster_string)
 
-    def process_articles(self, articles: List[Dict[str, Any]], similarity_matrix: List[List[float]]) -> List[Cluster]:
-        '''Processes a list of articles by clustering and summarizing them.
+    def process_clusters(self, clusters: List[Cluster]) -> List[Cluster]:
+        '''Processes a list of clusters by summarizing them.
 
         Args:
-            articles (List[Dict[str, Any]]): The articles to process.
-            similarity_matrix (List[List[float]]): The similarity matrix for clustering.
+            clusters (List[Cluster]): The clusters to process.
 
         Returns:
             List[Cluster]: A list of clusters with summarized articles.
         '''
-        if len(articles) > 1:  
-            self.logger.info('Clustering articles based on similarity matrix.')
-            clusters = AiTextProcessor.make_clusters(similarity_matrix, articles)
-        elif len(articles) == 1:
-            clusters = [Cluster(articles[0])]
-        else:
-            self.logger.error('no articles')
+        if not clusters:
+            self.logger.error('No clusters to process.')
             return None
-        
-        #TODO:debuging clusters to text file remove
-        self.__write_clusters_to_file(clusters, 'clusters.txt')
 
-        self.logger.info('summerizing clusters.')
-        for cluster_index, cluster in enumerate(clusters):
-            self.__summarize_cluster_gimini(cluster, cluster_index)
+        self.logger.info('Summarizing clusters.')
+        for cluster in clusters:
+            self.__summarize_cluster_gimini(cluster)
 
-        #TODO debug the summary text file remove
-        self.__write_summaries_to_file(clusters, 'summeries.txt')
+        # TODO: Debug the summary text file, remove in production
+        self.__write_summaries_to_file(clusters, 'summaries.txt')
 
         return clusters
     
@@ -116,13 +102,12 @@ class ArticleProcessor:
             cluster_string = ' '.join(words)
         return cluster_string
 
-    def __send_and_summarize(self, cluster: Cluster, cluster_index: int, cluster_string: str):
+    def __send_and_summarize(self, cluster: Cluster, cluster_string: str):
         '''Sends the prepared cluster string to the API for summarization and logs the process.
         It updates the cluster object with the summary obtained.
 
         Args:
             cluster (Cluster): The cluster being summarized.
-            cluster_index (int): The index of the cluster.
             cluster_string (str): The prepared string of the cluster.
         '''
         for attempt in range(1, self.MAX_SUMMARY_ATTEMPTS + 1):
@@ -131,41 +116,20 @@ class ArticleProcessor:
                 
                 # Send prompt and cluster string for summarization
                 self.convorsation.send_message(self.PROMPT + cluster_string)
-                logging.debug(f'Summarizing cluster number {cluster_index} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
-                summary_text = self.convorsation.last.text
+                self.logger.debug(f'Summarizing cluster ID {cluster.id} with article IDs: {", ".join(map(str, cluster.articles_ids))}')
+                cluster.summary_text = self.convorsation.last.text
                 
                 self.convorsation.send_message('write me a title in hebrew to this summary')
-                title = self.convorsation.last.text
+                cluster.summary_title = self.convorsation.last.text
                 
                 self.convorsation.send_message('give me 3 hashtags in hebrew for this summary')
-                hashtags = self.convorsation.last.text
-                
-                cluster.summary_text = summary_text
-                cluster.summary_title = title
-                cluster.summary_hashtags = hashtags
+                cluster.summary_hashtags = self.convorsation.last.text
                 break # Exit the retry loop on successful summarization
             
             except Exception as e:
-                logging.error(f'Attempt {attempt} to summeries cluster {cluster_index} failed with error: {e}')
+                self.logger.error(f'Attempt {attempt} to summeries cluster {cluster.id} failed with error: {e}')
                 if attempt == self.MAX_SUMMARY_ATTEMPTS:
-                    logging.critical(f'All {self.MAX_SUMMARY_ATTEMPTS} attempts to summeries cluster {cluster_index} failed.')
-
-
-    def __write_clusters_to_file(self, clusters: List[Cluster], filename: str) -> None:
-        '''Writes the textual representation of each cluster to a file.
-
-        Args:
-            clusters (List[Cluster]): A list of Cluster objects to be written to the file.
-            filename (str): The name of the file where the cluster data will be stored.
-        '''
-        text = ''
-        for i, cluster in enumerate(clusters):
-            text += f'-----Cluster {i}-----\n'
-            text += cluster.cluster_to_text()
-            text += '\n'
-
-        with open(filename, 'w', encoding='utf-8') as file:
-            file.write(text)
+                    self.logger.critical(f'All {self.MAX_SUMMARY_ATTEMPTS} attempts to summeries cluster {cluster.id} failed.')
 
     def __write_summaries_to_file(self, clusters: List[Cluster], filename: str):
         '''Writes the summaries to a file.

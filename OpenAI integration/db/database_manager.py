@@ -1,69 +1,77 @@
 import os
-import psycopg2
-import psycopg2.extras
 import logging
+import copy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from cluster.cluster import Cluster
 from aws_image_manager.aws_image_manager import AWSImageManager
-from datetime import datetime, timedelta
+from .database_models import TableModels
 from dotenv import load_dotenv
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict
 
 class DatabaseManager:
     def __init__(self):
-        '''Initializes the DatabaseManager instance by loading environment variables and establishing a database connection.'''
+        '''
+        Initializes the DatabaseManager instance by loading environment variables and establishing a database connection.
+        '''
         load_dotenv()
-        self.__db_connection = self.__connect_to_database()
         self.logger = logging.getLogger(__name__)
+        self.__db_connection = self.__connect_to_database()
         self.logger.info('DatabaseManager initialized')
         self.aws_image_uploader_manager = AWSImageManager()
 
-    def __connect_to_database(self) -> Optional[psycopg2.extensions.connection]:
-        '''Establishes a connection to the PostgreSQL database using credentials obtained from environment variables.
+    def __connect_to_database(self):
+        '''
+        Sets up the SQLAlchemy database connection using credentials from environment variables.
 
         Returns:
-            psycopg2.extensions.connection: A connection object if successful, None otherwise.
+            sessionmaker: SQLAlchemy sessionmaker object for database operations.
         '''
-        db_host = os.getenv('DB_HOST')
-        db_port = os.getenv('DB_PORT')
-        db_name = os.getenv('DB_NAME')
-        db_user = os.getenv('DB_USER')
-        db_password = os.getenv('DB_PASSWORD')
+        db_host = os.getenv('AWS_DB_HOST')
+        db_port = os.getenv('AWS_DB_PORT')
+        db_name = os.getenv('AWS_DB_NAME')
+        db_user = os.getenv('AWS_DB_USERNAME')
+        db_password = os.getenv('AWS_DB_PASSWORD')
 
-        db_connection = psycopg2.connect(
-            host=db_host, port=db_port, database=db_name,
-            user=db_user, password=db_password,
-            cursor_factory=psycopg2.extras.DictCursor
-        )
-        return db_connection
+        # SQLAlchemy setup
+        database_url = f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
+        engine = create_engine(database_url)
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+        
+        self.logger.info('Database connection established')
+        return SessionLocal()
 
-    def fetch_articles(self, hours: int = 24) -> Optional[List[Dict]]:
-        '''Fetches articles from the database that were published within the last specified number of hours.
-
-        Args:
-            hours (int): The number of hours from the current time to filter articles by their publish date.
+    def fetch_articles(self) -> Optional[List[Dict]]:
+        '''
+        Fetches unprocessed articles from the database and marks them as processed.
 
         Returns:
             List[Dict]: A list of dictionaries, each representing an article, if successful; None otherwise.
         '''
         try:
-            current_time = datetime.now()
-            time_x_hours_ago = current_time - timedelta(hours=hours)
-            cursor = self.__db_connection.cursor()
-            self.logger.info(f'Fetching articles from the last {hours} hours.')
-            cursor.execute('SELECT * FROM scraped_articles WHERE publish_date >= %s', (time_x_hours_ago,))
-            articles = cursor.fetchall()
+            self.logger.info('Fetching unprocessed articles.')
+            articles = self.__db_connection.query(TableModels.ScrapedArticleTable).filter(
+                TableModels.ScrapedArticleTable.is_processed == False).all()
+            
+            article_ids = [article.id for article in articles]
+            articles_dicts = [copy.deepcopy(article.__dict__)  for article in articles]
+            
+            # Mark articles as processed
+            self.__db_connection.query(TableModels.ScrapedArticleTable).filter(
+                TableModels.ScrapedArticleTable.id.in_(article_ids)).update({TableModels.ScrapedArticleTable.is_processed: True})
+            self.__db_connection.commit()
 
-            return articles
-        
-        except psycopg2.Error as e:
-            self.logger.error(f'Error executing query: {e}')
+            self.logger.info(f'Fetched and Marked articles as processed: {article_ids}')
+            
+            return articles_dicts
+        except Exception as e:
+            self.logger.error(f'Error fetching and updating articles: {e}')
+            self.__db_connection.rollback()
             return None
-        finally:
-            if cursor is not None:
-                cursor.close()
 
     def __insert_summarized_article(self, cluster: Cluster) -> None:
-        '''Inserts a summarized article into the 'merged_articles' table.
+        '''
+        Inserts a summarized article into the 'merged_articles' table.
 
         Args:
             cluster (Cluster): The cluster object containing the summarized article data to be inserted.
@@ -73,83 +81,76 @@ class DatabaseManager:
         '''
         # if cluster summary is empty (ai safety_settings constrains) - do not insert to DB 
         if cluster._summary_text == '':  
-            return None
-
+            return
         try:
-            cursor = self.__db_connection.cursor()
-            insert_query = 'INSERT INTO merged_articles (title, article, category, publish_date, links, image) VALUES (%s, %s, %s, %s, %s, %s)'
-            cursor.execute(insert_query, (cluster.summary_title, cluster.summary_text, cluster.category, cluster.publish_date, cluster.links, cluster.image))
+            #Insert the summarized article into GeneratedArticleTable
+            generated_article = TableModels.GeneratedArticleTable(
+                title=cluster.summary_title,
+                content=cluster.summary_text,
+                image_url=cluster.s3_image_url,
+                cluster_id=cluster.id
+            )
+            self.__db_connection.add(generated_article)
             self.__db_connection.commit()
-            self.logger.info(f'Article titled {cluster.summary_title} inserted successfully into merged_articles table.')
-
+            self.logger.info(f'cluster number {cluster.id} inserted successfully into generated_articles table.')
         except Exception as e:
-            self.logger.error(f'Error inserting article into database: {e} doing a rollback.')
+            # Log the error and rollback the transaction
+            self.logger.error(f'Error inserting article into database: {e}, performing a rollback.')
             self.__db_connection.rollback()
-        finally:
-            if cursor is not None:
-                cursor.close()
+
+    def create_cluster(self) -> int:
+        '''
+        Creates a new cluster in the ClusterTable and returns the ID of the newly created cluster.
+        Returns:
+            int: The ID of the newly created cluster.
+        '''
+        # Step 1: Insert the cluster into the ClusterTable
+        new_cluster = TableModels.ClusterTable()
+        self.__db_connection.add(new_cluster)
+        self.__db_connection.commit()
+        self.logger.info(f'Cluster ID {new_cluster.id} inserted successfully into clusters table.')
+        return new_cluster.id
+
+    def add_articles_to_cluster(self, cluster_id: int, article_ids: List[int]) -> None:
+        '''
+        Adds articles to the ArticlesClusterTable with the given cluster ID.
+
+        Args:
+            cluster_id (int): The ID of the cluster.
+            article_ids (List[int]): A list of article IDs to be added to the cluster.
+        '''
+        try:
+            for article_id in article_ids:
+                article_cluster = TableModels.ArticlesClusterTable(
+                    scraped_article_id=article_id,
+                    cluster_id=cluster_id
+                )
+                self.__db_connection.add(article_cluster)
+            self.__db_connection.commit()
+            self.logger.info(f'Article id/s: {article_ids} inserted into cluster ID {cluster_id} successfully.')
+        except Exception as e:
+            self.logger.error(f'Error adding articles to cluster ID {cluster_id}: {e}, performing a rollback.')
+            self.__db_connection.rollback()
 
     def insert_summarized_articles(self, clusters: List[Cluster]) -> None:
-        '''Inserts multiple summarized articles cluster into the database.
+        '''
+        Inserts multiple summarized articles cluster into the database.
 
         Args:
             clusters (List[Cluster]): A list of Cluster objects, each containing the summarized article data.
-
-        Returns:
-            None
         '''
         if clusters is None or len(clusters) == 0:
             self.logger.info('No summarized articles to insert into the database.')
             return
         
+        self.aws_image_uploader_manager.insert_images_to_aws(clusters)
         self.logger.info(f'Inserting {len(clusters)} summarized articles into the database.')
         for cluster in clusters:
             self.__insert_summarized_article(cluster)
-        articles_id_and_images = self.aws_image_uploader_manager.insert_images_to_aws(self.__get_null_img_articles_id())
-        self.__update_DB_s3_image_url(articles_id_and_images)
-    
-    def __update_DB_s3_image_url(self, articles_id_and_images: list[tuple[int, str]]):
-        '''Updates the `s3_image` field of an article in the `merged_articles` table with the specified S3 URLs.
-
-        This function updates each article record to include the new S3 URL obtained after uploading the
-        original image to AWS S3.
-
-        Args:
-            articles_id_and_images (list[tuple[int, str]]): A list of tuples containing article IDs and S3 image URLs.
-
-        Returns:
-            None
-        '''
-        for article_id ,img_url in articles_id_and_images:
-            cursor = self.__db_connection.cursor()
-            query = f"UPDATE merged_articles SET s3_image = '{img_url}' WHERE id = {article_id}"
-            cursor.execute(query)
-            self.__db_connection.commit()
-            self.logger.info(f'Updated article {article_id} with s3_image url: {img_url}')
-
-
-    def __get_null_img_articles_id(self):
-        '''Retrieves article IDs and image URLs from the `merged_articles` table where the S3 image URL
-        is null but the original image URL is not null.
-
-        This function selects all articles that currently do not have an S3 image URL, indicating
-        that the images have not been uploaded to S3.
-
-        Returns:
-            list[tuple]: A list of tuples, where each tuple contains the article ID and image URL.
-        '''
-        cursor = self.__db_connection.cursor()
-        query = "SELECT id,image FROM merged_articles WHERE s3_image IS NULL AND image IS NOT NULL"
-        cursor.execute(query)
-        res =  cursor.fetchall()
-        self.logger.info(f'Getting articles with null s3_image: {len(res)}')
-        return res
-        
+       
     def close_connection(self) -> None:
-        '''Closes the database connection.
-
-        Returns:
-            None
+        '''
+        Closes the database connection.
         '''
         if self.__db_connection:
             self.__db_connection.close()

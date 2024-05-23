@@ -1,4 +1,6 @@
 from psycopg2.extensions import connection
+from cluster.cluster import Cluster
+from typing import List
 import base64
 import boto3
 import requests
@@ -9,26 +11,19 @@ class AWSImageManager:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
 
-    def insert_images_to_aws(self, articles_id_and_images: list[list[int, str]]) -> list[tuple[int, str]]:
-        '''Uploads images to AWS S3 for articles that do not already have an S3 image URL, and returns 
-        a list of tuples containing article IDs and their newly assigned S3 image URLs.
+    def insert_images_to_aws(self, clusters: List[Cluster]) -> None:
+        '''
+        Uploads images to AWS S3 for clusters that do not already have an S3 image URL.
 
-        This method retrieves articles that have an image URL but lack an S3 image URL, uploads their images to 
-        AWS S3 using `ImageUploader`, and then provides a list of tuples containing the updated IDs and URLs.
+        This method retrieves clusters that have an image URL but lack an S3 image URL, uploads their images to 
+        AWS S3 using `ImageUploader`, and updates the `s3_image_url` field for each cluster.
 
         Args:
-            articles_id_and_images (list[list[int, str]]): A list of tuples containing article IDs and original image URLs.
-
-        Returns:
-            list[tuple[int, str]]: A list of tuples containing article IDs and newly assigned S3 image URLs.
+            clusters (List[Cluster]): A list of Cluster objects containing articles.
         '''
-        articles_images_url = []
-        for article_id ,img_url in articles_id_and_images:
-            self.logger.info(f'Processing article with id: {article_id}')
-            s3_url = ImageUploader.upload_image_to_s3(img_url)
-            articles_images_url.append((article_id, s3_url))
-        
-        return articles_images_url
+        for cluster in clusters:
+            self.logger.info(f'Uploading cluster image url {cluster.image} to AWS S3 Bucket.')
+            cluster.s3_image_url = ImageUploader.upload_image_to_s3(cluster.image)
 
  
 class ImageUploader:
@@ -47,7 +42,8 @@ class ImageUploader:
 
     @classmethod
     def generate_file_name(cls, url: str) -> str:
-        '''Generates a unique filename using base64 encoding based on a given URL.
+        '''
+        Generates a unique filename using base64 encoding based on a given URL.
 
         Args:
             url (str): The original URL of the image.
@@ -61,7 +57,8 @@ class ImageUploader:
 
     @classmethod
     def upload_image_to_s3(cls, url: str) -> str:
-        '''Downloads an image from the specified URL and uploads it to AWS S3.
+        '''
+        Downloads an image from the specified URL and uploads it to AWS S3.
 
         Args:
             url (str): The URL of the image to be downloaded and uploaded.
