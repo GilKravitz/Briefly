@@ -5,7 +5,6 @@ namespace BrieflyServer.Models
     public class UpdatePreferredTopicsRequest
     {
         [Required]
-        [EnumValidation(ErrorMessage = "Invalid category")]
-        public string PreferredTopics { get; set; }
+        public string[] PreferredTopics { get; set; }
     }
 }

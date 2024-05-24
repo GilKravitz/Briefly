@@ -32,7 +32,7 @@ public class AuthenticationController(
                 return Conflict("User with this email already exists");
             }
 
-            var user = new User(model.Email, model.PreferredTopics);
+            var user = new User(model.Email);
             var result = await userManager.CreateAsync(user,model.Password);
             if (result.Succeeded)
             {

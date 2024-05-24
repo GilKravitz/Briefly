@@ -4,6 +4,7 @@ using BrieflyServer.Services;
 using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace BrieflyServer;
 
@@ -32,12 +33,22 @@ public class Program
             .AddEntityFrameworkStores<BrieflyContext>()
             .AddDefaultTokenProviders();
 
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrieflyAPI", Version = "v1" });
+        });
+
         var app = builder.Build();
 
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseHttpsRedirection();
         app.MapControllers();
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "BrieflyAPI V1");
+        });
         app.Run();
     }
 }

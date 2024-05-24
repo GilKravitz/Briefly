@@ -2,7 +2,7 @@
 
 namespace BrieflyServer.Models
 {
-    public class RegistrationModel(string email, string password, string preferredTopics)
+    public class RegistrationModel(string email, string password)
     {
         [Required]
         [EmailAddress]
@@ -11,9 +11,5 @@ namespace BrieflyServer.Models
         [Required]
         [MinLength(8)]
         public string Password { get; set; } = password;
-
-        [Required]
-        [EnumValidation(ErrorMessage = "Invalid category")]
-        public string PreferredTopics { get; set; } = preferredTopics;
     }
 }

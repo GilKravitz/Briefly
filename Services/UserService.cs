@@ -8,30 +8,59 @@ namespace BrieflyServer.Services
     {
         private readonly BrieflyContext _context = context;
 
-        public string GetPreferredCategories(string email)
+        public async Task<string[]> GetPreferredCategories(string email)
         {
-            var user = _context.Users
-                .FirstOrDefault(user => user.Email == email);
+            var user = await _context.Users
+                .Include(u => u.UserCategories)  // Include UserCategories collection
+                .FirstOrDefaultAsync(user => user.Email == email);
 
             if (user == null)
             {
                 throw new Exception("User not found");
             }
 
-            return user.PreferredTopics;
+            // Check if user has any categories
+            if (!user.UserCategories.Any())
+            {
+                return new string[0]; // Return empty array if no categories
+            }
+
+            // Get category names from UserCategories
+            var categoryNames = user.UserCategories
+                .Select(uc => uc.Category.Name)  // Access category name through Category navigation property
+                .ToArray();
+
+            return categoryNames;
         }
 
-        public void UpdatePreferredCategories(string email,string categories)
+        public async Task UpdatePreferredCategories(string email, string[] categories)
         {
-            var user = _context.Users
-                .FirstOrDefault(user => user.Email == email);
+            var user = await _context.Users
+                .Include(u => u.UserCategories) // Include UserCategories collection
+                .FirstOrDefaultAsync(user => user.Email == email);
 
             if (user == null)
             {
                 throw new Exception("User not found");
             }
-            user.PreferredTopics = categories;
-            _context.SaveChanges();
+
+            // Remove existing UserCategories for the user
+            user.UserCategories.Clear();
+
+            // Add new UserCategories based on categories
+            foreach (var categoryName in categories)
+            {
+                var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == categoryName);
+                if (category == null)
+                {
+                    throw new Exception($"Category '{categoryName}' not found");
+                }
+
+                user.UserCategories.Add(new UserCategory { UserId = user.Id, CategoryId = category.Id });
+            }
+
+            await _context.SaveChangesAsync();
         }
+
     }
 }

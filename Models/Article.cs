@@ -8,7 +8,7 @@ public class Article
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("article")] // Specify the column name in the database
+    [Column("content")] // Specify the column name in the database
     public string ArticleText { get; set; }// Rename the property to avoid conflict
 
     [Column("category")] // Specify the column name in the database
@@ -21,23 +21,14 @@ public class Article
     public DateTime PublishDate { get; set; }
 
     [Column("links")]
-    public string SourceLinks { get; set; }
+    public string[] SourceLinks { get; set; }
 
-    [Column("image")]
+    [Column("sources")]
+    public string[] SourceNames { get; set; }
+
+    [Column("image_url")]
     public string? Image { get; set; }
-    [Column("s3_image")]
-    public string? S3_image { get; set; }
-    [NotMapped]
-    public List<string> SourceLinksList
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(SourceLinks))
-            {
-                return [];
-            }
 
-            return new List<string>(SourceLinks.Split(' '));
-        }
-    }
+    [Column("tags")]
+    public string[] Tags { get; set; }
 }

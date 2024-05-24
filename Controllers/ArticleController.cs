@@ -10,8 +10,7 @@ namespace BrieflyServer.Controllers
     [Route("[controller]")]
     public class ArticleController(ArticleService articleService) : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetArticles([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetArticles([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             if (page <= 0 || pageSize <= 0)
             {
@@ -25,7 +24,7 @@ namespace BrieflyServer.Controllers
 
             try
             {
-                var articlesByCategory = articleService.GetArticles(page, pageSize, email);
+                var articlesByCategory = await articleService.GetArticles(page, pageSize, email);
                 return Ok(articlesByCategory);
             }
             catch (ArgumentException invalidCategory)
@@ -38,16 +37,16 @@ namespace BrieflyServer.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public IActionResult SearchArticles([FromQuery] string searchString)
-        {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                return BadRequest("Search string cannot be empty.");
-            }
+        //[HttpGet("search")]
+        //public IActionResult SearchArticles([FromQuery] string searchString)
+        //{
+        //    if (string.IsNullOrEmpty(searchString))
+        //    {
+        //        return BadRequest("Search string cannot be empty.");
+        //    }
 
-            var articles = articleService.SearchArticles(searchString);
-            return Ok(articles);
-        }
+        //    var articles = articleService.SearchArticles(searchString);
+        //    return Ok(articles);
+        //}
     }
 }

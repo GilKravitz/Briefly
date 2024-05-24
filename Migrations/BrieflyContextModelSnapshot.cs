@@ -25,29 +25,41 @@ namespace BrieflyServer.Migrations
             modelBuilder.Entity("BrieflyServer.Models.Article", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     b.Property<string>("ArticleText")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("article");
+                        .HasColumnName("content");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("category");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
+
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("publish_date");
 
-                    b.Property<string>("SourceLinks")
+                    b.Property<string[]>("SourceLinks")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("text[]")
                         .HasColumnName("links");
+
+                    b.Property<string[]>("SourceNames")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("sources");
+
+                    b.Property<string[]>("Tags")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("tags");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -56,7 +68,9 @@ namespace BrieflyServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("merged_articles", (string)null);
+                    b.ToTable((string)null);
+
+                    b.ToView("articles", (string)null);
                 });
 
             modelBuilder.Entity("BrieflyServer.Models.Bookmarked", b =>
@@ -79,6 +93,25 @@ namespace BrieflyServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bookmarks", (string)null);
+                });
+
+            modelBuilder.Entity("BrieflyServer.Models.Categories", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("BrieflyServer.Models.ForgotPasswordToken", b =>
@@ -147,11 +180,6 @@ namespace BrieflyServer.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PreferredTopics")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("preferredTopics");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -172,6 +200,21 @@ namespace BrieflyServer.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BrieflyServer.Models.UserCategory", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("UserCategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -306,6 +349,25 @@ namespace BrieflyServer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BrieflyServer.Models.UserCategory", b =>
+                {
+                    b.HasOne("BrieflyServer.Models.Categories", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BrieflyServer.Models.User", "User")
+                        .WithMany("UserCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -355,6 +417,11 @@ namespace BrieflyServer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BrieflyServer.Models.User", b =>
+                {
+                    b.Navigation("UserCategories");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,12 +27,12 @@ namespace BrieflyServer.Controllers
         }
 
         [HttpPut("PreferredTopics")]
-        public IActionResult UpdatePreferredCategories([FromBody] UpdatePreferredTopicsRequest request)
+        public async Task<IActionResult> UpdatePreferredCategories([FromBody] UpdatePreferredTopicsRequest request)
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                userService.UpdatePreferredCategories(email, request.PreferredTopics);
+                await userService.UpdatePreferredCategories(email, request.PreferredTopics);
                 return Ok("Preferred categories updated successfully");
             }
             catch (Exception ex)
