@@ -11,9 +11,9 @@ namespace BrieflyServer.Models
 
         public virtual ICollection<UserCategory> UserCategories { get; set; }
 
-        public User(string email)
+        public User(string email,string userName)
         {
-            UserName = email; // Set the username to be the same as the email
+            UserName = userName;
             Email = email;
         }
     }
