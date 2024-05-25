@@ -9,15 +9,22 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class UserController(UserService userService) : ControllerBase
+    public class UserController : ControllerBase
     {
+        private readonly UserService _userService;
+
+        public UserController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet("PreferredTopics")]
-        public IActionResult GetPreferredCategories()
+        public async Task<IActionResult> GetPreferredCategories()
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                var categories = userService.GetPreferredCategories(email);
+                var categories =  await _userService.GetPreferredCategories(email);
                 return Ok(categories);
             }
             catch (Exception ex)
@@ -32,7 +39,7 @@ namespace BrieflyServer.Controllers
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                await userService.UpdatePreferredCategories(email, request.PreferredTopics);
+                await _userService.UpdatePreferredCategories(email, request.PreferredTopics);
                 return Ok("Preferred categories updated successfully");
             }
             catch (Exception ex)

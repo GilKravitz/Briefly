@@ -8,8 +8,15 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ArticleController(ArticleService articleService) : ControllerBase
+    public class ArticleController : ControllerBase
     {
+        private readonly ArticleService _articleService;
+
+        public ArticleController(ArticleService articleService)
+        {
+            _articleService = articleService;
+        }
+        [HttpGet]
         public async Task<IActionResult> GetArticles([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             if (page <= 0 || pageSize <= 0)
@@ -24,7 +31,7 @@ namespace BrieflyServer.Controllers
 
             try
             {
-                var articlesByCategory = await articleService.GetArticles(page, pageSize, email);
+                var articlesByCategory = await _articleService.GetArticles(page, pageSize, email);
                 return Ok(articlesByCategory);
             }
             catch (ArgumentException invalidCategory)
