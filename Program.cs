@@ -23,7 +23,7 @@ public class Program
         builder.Services.AddScoped<ArticleService>();
         builder.Services.AddScoped<UserService>();
         builder.Services.AddScoped<EmailService>();
-        builder.Services.AddScoped<BookmarkedService>();
+        builder.Services.AddScoped<BookmarksService>();
         //builder.Services.AddScoped<LoggingService>();
 
         //add controllers

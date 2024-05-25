@@ -8,9 +8,9 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class BookmarkedController(BookmarkedService bookmarkedService) : Controller
+    public class BookmarksController(BookmarksService bookmarksService) : Controller
     {
-        private readonly BookmarkedService _bookmarkedService = bookmarkedService;
+        private readonly BookmarksService _bookmarksService = bookmarksService;
 
         [HttpGet]
         public IActionResult GetBookmarked()
@@ -20,11 +20,11 @@ namespace BrieflyServer.Controllers
             {
                 return BadRequest("Email not found in token.");
             }
-            var articles = _bookmarkedService.GetBookmarkArticles(email);
+            var articles = _bookmarksService.GetBookmarkArticles(email);
             return Ok(articles);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddBookmark([FromQuery] int articleId)
         {
             var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
@@ -32,10 +32,10 @@ namespace BrieflyServer.Controllers
             {
                 return BadRequest("Email not found in token.");
             }
-            _bookmarkedService.AddBookmark(email,articleId);
+            _bookmarksService.AddBookmark(email,articleId);
             return Ok("Article bookmarked successfully.");
         }
-        [HttpPost("remove")]
+        [HttpDelete]
         public IActionResult RemoveBookmark([FromQuery] int articleId)
         {
             var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
@@ -43,7 +43,7 @@ namespace BrieflyServer.Controllers
             {
                 return BadRequest("Email not found in token.");
             }
-            _bookmarkedService.RemoveBookmark(email, articleId);
+            _bookmarksService.RemoveBookmark(email, articleId);
             return Ok("Article removed from bookmarks.");
         }
     }

@@ -9,16 +9,16 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class PreferredTopicsController : ControllerBase
     {
         private readonly UserService _userService;
 
-        public UserController(UserService userService)
+        public PreferredTopicsController(UserService userService)
         {
             _userService = userService;
         }
 
-        [HttpGet("PreferredTopics")]
+        [HttpGet]
         public async Task<IActionResult> GetPreferredCategories()
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
@@ -33,7 +33,7 @@ namespace BrieflyServer.Controllers
             }
         }
 
-        [HttpPut("PreferredTopics")]
+        [HttpPut]
         public async Task<IActionResult> UpdatePreferredCategories([FromBody] UpdatePreferredTopicsRequest request)
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;

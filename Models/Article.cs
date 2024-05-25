@@ -8,13 +8,13 @@ public class Article
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("content")] // Specify the column name in the database
-    public string ArticleText { get; set; }// Rename the property to avoid conflict
+    [Column("content")] 
+    public string ArticleText { get; set; }
 
-    [Column("category")] // Specify the column name in the database
+    [Column("category")] 
     public string Category { get; set; }
 
-    [Column("title")] // Specify the column name in the database
+    [Column("title")]
     public string Title { get; set; }
 
     [Column("publish_date")]

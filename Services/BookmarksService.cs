@@ -3,7 +3,7 @@ using BrieflyServer.Models;
 
 namespace BrieflyServer.Services
 {
-    public class BookmarkedService(BrieflyContext context)
+    public class BookmarksService(BrieflyContext context)
     {
         private readonly BrieflyContext _context = context;
 
