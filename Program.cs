@@ -1,9 +1,12 @@
+using System.Text;
 using BrieflyServer.Data;
 using BrieflyServer.Models;
 using BrieflyServer.Services;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace BrieflyServer;
@@ -29,13 +32,65 @@ public class Program
         //add controllers
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddIdentity<User, IdentityRole<int>>()
             .AddEntityFrameworkStores<BrieflyContext>()
             .AddDefaultTokenProviders();
 
-        builder.Services.AddSwaggerGen(c =>
+        var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+        var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+        var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+
+        if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrieflyAPI", Version = "v1" });
+            throw new ArgumentNullException("JWT configuration is missing in environment variables.");
+        }
+
+        builder.Services.AddAuthentication(options => 
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtIssuer,
+                    ValidAudience = jwtAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                };
+            });
+
+        builder.Services.AddSwaggerGen(configuration =>
+        {
+            configuration.SwaggerDoc("v1", new OpenApiInfo { Title = "BrieflyAPI", Version = "v1" });
+            configuration.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Please enter token",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "bearer"
+            });
+            configuration.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+            });
         });
 
         var app = builder.Build();
@@ -45,9 +100,9 @@ public class Program
         app.UseHttpsRedirection();
         app.MapControllers();
         app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        app.UseSwaggerUI(configuration =>
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "BrieflyAPI V1");
+            configuration.SwaggerEndpoint("/swagger/v1/swagger.json", "BrieflyAPI V1");
         });
         app.Run();
     }

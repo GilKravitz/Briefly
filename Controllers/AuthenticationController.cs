@@ -1,10 +1,14 @@
-﻿using BrieflyServer.Data;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using BrieflyServer.Data;
 using BrieflyServer.Models;
 using BrieflyServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BrieflyServer.Controllers;
 
@@ -14,7 +18,8 @@ public class AuthenticationController(
     UserManager<User> userManager,
     SignInManager<User> signInManager,
     BrieflyContext context,
-    EmailService emailService)
+    EmailService emailService,
+    IConfiguration configuration)
     : ControllerBase
 {
     [HttpPost("register")]
@@ -36,8 +41,9 @@ public class AuthenticationController(
             var result = await userManager.CreateAsync(user,model.Password);
             if (result.Succeeded)
             {
-                await signInManager.SignInAsync(user, isPersistent: false);//log user in
-                return Ok("User registered successfully");
+                await signInManager.SignInAsync(user, isPersistent: false);
+                var token = GenerateJwtToken(user);
+                return Ok(new { Token = token ,Message= "User registered successfully"});
             }
             else
             {
@@ -68,8 +74,8 @@ public class AuthenticationController(
             var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
             if (result.Succeeded)
             {
-                // Generate token or redirect to authenticated page
-                return Ok("User logged in successfully");
+                var token = GenerateJwtToken(user);
+                return Ok(new { Token = token, Message = "User logged in successfully" });
             }
             else
             {
@@ -156,5 +162,32 @@ public class AuthenticationController(
             // Password reset failed, handle the failure (e.g., show an error message)
             return BadRequest("Failed to reset password");
         }
+    }
+
+    private string GenerateJwtToken(User user)
+    {
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email)
+        };
+
+        var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+        var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+        var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+        var jwtTime = Environment.GetEnvironmentVariable("JWT_TIME");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: jwtIssuer,
+            audience: jwtAudience,
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtTime)),
+            signingCredentials: creds);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

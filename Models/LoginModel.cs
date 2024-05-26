@@ -2,14 +2,14 @@
 
 namespace BrieflyServer.Models
 {
-    public class LoginModel(string email, string password)
+    public class LoginModel()
     {
         [Required]
-        [MinLength(8)]
-        public string Password { get; set; } = password;
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; } = email;
+        [MinLength(8)]
+        public string Password { get; set; }
     }
 }
