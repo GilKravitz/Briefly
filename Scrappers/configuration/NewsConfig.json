@@ -18,5 +18,5 @@
         "ONLY_RELEVANT_LINKS":["news" , "sport" , "economy" , "food" , "entertainment" , "digital/technews" , "fashion"],
         "PROBLEMATIC_LINKS":[]
     },
-    "NUMBER_OF_ARTICLES":10
+    "NUMBER_OF_ARTICLES":999
 }

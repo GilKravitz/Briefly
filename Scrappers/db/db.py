@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, DateTime
+from sqlalchemy import create_engine, Column, String, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import json
@@ -8,6 +8,7 @@ from logger import logger
 
 project_dir_path = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(project_dir_path, "DbConfig.json")
+
 with open(config_file_path) as f:
     config = json.load(f)
 
@@ -28,19 +29,19 @@ Base = declarative_base()
 class Article(Base):
     __tablename__ = "scraped_articles"
 
-    link = Column("link", String, primary_key=True)
-    content = Column("content", String, nullable=False)
-    title = Column("title", String, nullable=False)
-    publish_date = Column("publish_date", DateTime)
-    category_id = Column("category_id", int, nullable=False)
-    image_url = Column("image_url", String)
-    source_id = Column("source_id", int, nullable=False)
+    link = Column(String, primary_key=True)
+    content = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+    publish_date = Column(DateTime)
+    category_id = Column(Integer, nullable=False)
+    image_url = Column(String)
+    source_id = Column(Integer, nullable=False)
 
 
 class Sources(Base):
     __tablename__ = "sources"
 
-    id = Column(int, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     url = Column(String, unique=True)
 
@@ -48,7 +49,7 @@ class Sources(Base):
 class Categories(Base):
     __tablename__ = "categories"
 
-    id = Column(int, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
 
 
@@ -69,7 +70,7 @@ def convert_source_to_id(source):
         source_db = session.query(Sources).filter(Sources.name == source).first()
         disconnect(session)
         if source_db:
-            return source_db[0]  # id of the source
+            return source_db.id
         else:
             logger.log_warning(f"Wrong source of article : {source}")
     except Exception as e:
@@ -85,7 +86,7 @@ def convert_category_to_id(category):
         )
         disconnect(session)
         if category_db:
-            return category_db[0]  # id of the source
+            return category_db.id  # id of the source
         else:
             logger.log_warning(f"Wrong source of article : {category}")
     except Exception as e:

@@ -25,7 +25,9 @@ class Ynet_Scrapper(BaseScrapper):
             return formatted_date
 
         except Exception as e:
-            logger.log_warning(f"{e} : No date found in article , display_date was {display_date}")
+            logger.log_warning(
+                f"{e} : No date found in article , display_date was {display_date}"
+            )
             return None
 
     def get_image_link(self):
@@ -53,6 +55,8 @@ class Ynet_Scrapper(BaseScrapper):
                 return -1
 
             imageLink = self.get_image_link()
+            if not imageLink:
+                return -1
             content_article = self.article_soup.find(
                 "div", class_=lambda c: c and c.startswith("dynamicHeightItemsColumn")
             )
@@ -79,5 +83,7 @@ class Ynet_Scrapper(BaseScrapper):
             )
             return article
         except requests.RequestException as e:
-            logger.log_warning(f"{e} : Error fetching article from {link} , all content was {all_content}")
+            logger.log_warning(
+                f"{e} : Error fetching article from {link} , all content was {all_content}"
+            )
             return -1

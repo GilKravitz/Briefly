@@ -50,7 +50,9 @@ class N13_Scrapper(BaseScrapper):
                 publish_date = datetime.strptime(formatted_date, "%d-%m-%y %H:%M")
                 return publish_date
         except Exception as e:
-            logger.log_warning(f"{e} : No date found in article , display date span was {display_date_span}")
+            logger.log_warning(
+                f"{e} : No date found in article , display date span was {display_date_span}"
+            )
             return None
 
     def get_article_content(self, link, article_type):
@@ -67,11 +69,15 @@ class N13_Scrapper(BaseScrapper):
                 return -1
 
             imageLink = self.get_image_link()
+            if not imageLink:
+                return -1
             all_content = []
             content_article = self.article_soup.find(
                 "article", class_=lambda c: c and c.startswith("Articlestyles__Content")
             )
-            if content_article is None: # didnt find article tag in html form , so doing the usual way.
+            if (
+                content_article is None
+            ):  # didnt find article tag in html form , so doing the usual way.
                 content_article = self.article_soup.find_all(
                     "div", class_=lambda c: c and c.startswith("ArticleTimeLinestyles")
                 )
@@ -103,5 +109,7 @@ class N13_Scrapper(BaseScrapper):
             )
             return article
         except requests.RequestException as e:
-            logger.log_warning(f"{e} : Error fetching article from {link} , content was {all_content}")
+            logger.log_warning(
+                f"{e} : Error fetching article from {link} , content was {all_content}"
+            )
             return -1
