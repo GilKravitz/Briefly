@@ -9,7 +9,7 @@ public class Article
     public int Id { get; set; }
 
     [Column("content")] 
-    public string ArticleText { get; set; }
+    public string Content { get; set; }
 
     [Column("category")] 
     public string Category { get; set; }

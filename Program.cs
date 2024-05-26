@@ -23,8 +23,8 @@ public class Program
 
         builder.Services.AddDbContext<BrieflyContext>(options =>
             options.UseNpgsql(connectionString));
-        builder.Services.AddScoped<ArticleService>();
-        builder.Services.AddScoped<UserService>();
+        builder.Services.AddScoped<ArticlesService>();
+        builder.Services.AddScoped<CategoriesService>();
         builder.Services.AddScoped<EmailService>();
         builder.Services.AddScoped<BookmarksService>();
         //builder.Services.AddScoped<LoggingService>();

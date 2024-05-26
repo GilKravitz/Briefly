@@ -8,13 +8,13 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ArticleController : ControllerBase
+    public class ArticlesController : ControllerBase
     {
-        private readonly ArticleService _articleService;
+        private readonly ArticlesService _articlesService;
 
-        public ArticleController(ArticleService articleService)
+        public ArticlesController(ArticlesService articlesService)
         {
-            _articleService = articleService;
+            _articlesService = articlesService;
         }
         [HttpGet]
         public async Task<IActionResult> GetArticles([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -31,7 +31,7 @@ namespace BrieflyServer.Controllers
 
             try
             {
-                var articlesByCategory = await _articleService.GetArticles(page, pageSize, email);
+                var articlesByCategory = await _articlesService.GetArticles(page, pageSize, email);
                 return Ok(articlesByCategory);
             }
             catch (ArgumentException invalidCategory)
@@ -52,7 +52,7 @@ namespace BrieflyServer.Controllers
         //        return BadRequest("Search string cannot be empty.");
         //    }
 
-        //    var articles = articleService.SearchArticles(searchString);
+        //    var articles = articlesService.SearchArticles(searchString);
         //    return Ok(articles);
         //}
     }

@@ -1,11 +1,11 @@
-﻿// ArticleService.cs
+﻿// ArticlesService.cs
 using BrieflyServer.Data;
 using BrieflyServer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Services
 {
-    public class ArticleService(BrieflyContext context)
+    public class ArticlesService(BrieflyContext context)
     {
         public async Task<List<Article>> GetArticles(int page, int pageSize, string email)
         {

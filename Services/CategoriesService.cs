@@ -4,14 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Services
 {
-    public class UserService
+    public class CategoriesService
     {
         private readonly BrieflyContext _context;
-        public UserService(BrieflyContext context)
+        public CategoriesService(BrieflyContext context)
         {
             _context = context;
         }
 
+        public async Task<string[]> GetAllCategories()
+        {
+            string[] categories = await _context.Categories.Select(categories => categories.Name).ToArrayAsync();
+            return categories;
+        }
         public async Task<string[]> GetPreferredCategories(string email)
         {
             var user = await _context.Users

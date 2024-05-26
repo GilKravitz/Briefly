@@ -2,9 +2,9 @@
 
 namespace BrieflyServer.Models
 {
-    public class UpdatePreferredTopicsRequest
+    public class UpdatePreferredCategoriesRequest
     {
         [Required]
-        public string[] PreferredTopics { get; set; }
+        public string[] PreferredCategories { get; set; }
     }
 }

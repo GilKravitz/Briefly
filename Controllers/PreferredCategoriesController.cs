@@ -9,13 +9,20 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class PreferredTopicsController : ControllerBase
+    public class PreferredCategoriesController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly CategoriesService _categoriesService;
 
-        public PreferredTopicsController(UserService userService)
+        public PreferredCategoriesController(CategoriesService categoriesService)
         {
-            _userService = userService;
+            _categoriesService = categoriesService;
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await _categoriesService.GetAllCategories();
+            return Ok(categories);
         }
 
         [HttpGet]
@@ -24,7 +31,7 @@ namespace BrieflyServer.Controllers
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                var categories =  await _userService.GetPreferredCategories(email);
+                var categories =  await _categoriesService.GetPreferredCategories(email);
                 return Ok(categories);
             }
             catch (Exception ex)
@@ -34,12 +41,12 @@ namespace BrieflyServer.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePreferredCategories([FromBody] UpdatePreferredTopicsRequest request)
+        public async Task<IActionResult> UpdatePreferredCategories([FromBody] UpdatePreferredCategoriesRequest request)
         {
             string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             try
             {
-                await _userService.UpdatePreferredCategories(email, request.PreferredTopics);
+                await _categoriesService.UpdatePreferredCategories(email, request.PreferredCategories);
                 return Ok("Preferred categories updated successfully");
             }
             catch (Exception ex)

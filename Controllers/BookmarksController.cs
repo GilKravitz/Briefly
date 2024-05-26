@@ -1,6 +1,7 @@
 ﻿using BrieflyServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BrieflyServer.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BrieflyServer.Controllers
@@ -25,14 +26,14 @@ namespace BrieflyServer.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddBookmark([FromQuery] int articleId)
+        public IActionResult AddBookmark([FromBody] AddBookmarkRequest model)
         {
             var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email not found in token.");
             }
-            _bookmarksService.AddBookmark(email,articleId);
+            _bookmarksService.AddBookmark(email,model.ArticleId);
             return Ok("Article bookmarked successfully.");
         }
         [HttpDelete]
