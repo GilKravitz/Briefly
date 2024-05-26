@@ -21,6 +21,9 @@ class BaseScrapper(ABC):
         self.relevant_links_filter = relevant_links_filter
         self.unrelevant_links_filter = unrelevant_links_filter
         self.counter = 0  # counter of articles
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
 
     def filter_unrelevant_links(self, link):
         if self.unrelevant_links_filter:  # Not every scrapper has unrelevant links.
@@ -62,7 +65,9 @@ class BaseScrapper(ABC):
 
     def get_articles_links(self, article_type):
         try:
-            response = requests.get(self.base_url + "/" + article_type)
+            response = requests.get(
+                self.base_url + "/" + article_type, headers=self.headers
+            )
             if response.status_code == 200:
                 self.article_type_homepage_soup = BeautifulSoup(
                     response.text, "html.parser"

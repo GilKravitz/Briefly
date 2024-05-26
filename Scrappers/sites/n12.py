@@ -41,7 +41,7 @@ class N12_Scrapper(BaseScrapper):
         article_data = ""
         title = ""
         try:
-            response = requests.get(link)
+            response = requests.get(link, headers=self.headers)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
             self.article_soup = BeautifulSoup(
                 response.content, "html.parser", from_encoding="utf-8"

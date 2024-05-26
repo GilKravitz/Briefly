@@ -1,5 +1,5 @@
 {
-    "NEWS_SITES":["n12" , "13tv" , "ynet"],
+    "NEWS_SITES":["n12"],
     "N12":{
         "BASE_URL":"https://www.mako.co.il",
         "NEWS_TYPE":["news-military", "news-sport" , "news-money" , "food" , "news-entertainment" , "news-business/hi_tech"],
