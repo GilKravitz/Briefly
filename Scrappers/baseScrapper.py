@@ -50,10 +50,14 @@ class BaseScrapper(ABC):
                     # Extract src attribute
                     image_link = img_tag.get("src")
                     return image_link
+            else:
+                img_tag = article_tag.find("img")
+                if img_tag:
+                    # Extract src attribute
+                    image_link = img_tag.get("src")
+                    return image_link
                 else:
                     return None
-            else:
-                return None
         except Exception as e:
             logger.log_warning(
                 f"{e} : didnt fetch imageLink from article , img tag : {img_tag}"

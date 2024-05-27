@@ -19,15 +19,20 @@ class N13_Scrapper(BaseScrapper):
                 'span[class^="ArticleCreditsstyles__DateContainer"]'
             )
             date_time_str = display_date_span.text.strip()
-            if "." in date_time_str:
-                # Case: "dd:mm hh:mm"
-                date = date_time_str.split(",")[0]
-                time = date_time_str.split(",")[1]
+            if "." in date_time_str and "," in date_time_str:
+                # Case: "dd.mm HH:MM"
+                date, time = date_time_str.split(", ")
+                day, month = date.split(".")
                 year = datetime.now().strftime("%y")
-                month = date.split(".")[1]
-                day = date.split(".")[0]
                 formatted_date = f"{day}-{month}-{year} {time}"
                 publish_date = datetime.strptime(formatted_date, "%d-%m-%y %H:%M")
+                return publish_date
+            elif "." in date_time_str and len(date_time_str) > 5:
+                # Case: "dd.mm.yyyy"
+                day, month, year = date_time_str.split(".")
+                time = "12:00" #generic time
+                formatted_date = f"{day}-{month}-{year} {time}"
+                publish_date = datetime.strptime(formatted_date, "%d-%m-%Y %H:%M")
                 return publish_date
             elif "," in date_time_str:
                 # Case: "אתמול, HH:MM"
