@@ -5,6 +5,7 @@ from enum import Enum
 # Get the absolute path to the directory containing this script
 project_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(project_dir, "NewsConfig.json")
+
 with open(config_file_path) as f:
     config = json.load(f)
 
@@ -26,6 +27,7 @@ NEWS_SITES = config["NEWS_SITES"]
 
 
 class NewsCategoryConvert(Enum):
+
     politics = [N12_NEWS_TYPE[0], N13_NEWS_TYPE[0], YNET_NEWS_TYPE[0]]
     sports = [N12_NEWS_TYPE[1], N13_NEWS_TYPE[1], YNET_NEWS_TYPE[1]]
     economic = [N12_NEWS_TYPE[2], N13_NEWS_TYPE[2], YNET_NEWS_TYPE[2]]
@@ -36,25 +38,5 @@ class NewsCategoryConvert(Enum):
 
     @classmethod
     def convert_site_category_to_global_category(cls, site_category):
-        for category in cls.politics.value:
-            if category in site_category:
-                return "politics"
-        for category in cls.sports.value:
-            if category in site_category:
-                return "sports"
-        for category in cls.economic.value:
-            if category in site_category:
-                return "economic"
-        for category in cls.food.value:
-            if category in site_category:
-                return "food"
-        for category in cls.entertainment.value:
-            if category in site_category:
-                return "entertainment"
-        for category in cls.technology.value:
-            if category in site_category:
-                return "technology"
-        for category in cls.fashion.value:
-            if category in site_category:
-                return "fashion"
-        return None
+        category_map = {item: category.name for category in cls for item in category.value}
+        return category_map.get(site_category, None)

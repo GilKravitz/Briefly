@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, String, Integer, DateTime
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.orm import sessionmaker
 import json
 import os
@@ -7,7 +7,7 @@ from configuration.NewsConfig import NewsCategoryConvert
 from logger import logger
 
 project_dir_path = os.path.dirname(os.path.abspath(__file__))
-config_file_path = os.path.join(project_dir_path, "DbConfig.json")
+config_file_path = os.path.join(project_dir_path, "DbConfig.json") #credentials for database
 
 with open(config_file_path) as f:
     config = json.load(f)
@@ -25,7 +25,6 @@ engine = create_engine(DB_URL)
 Base = declarative_base()
 
 
-# Define the Article ORM model
 class Article(Base):
     __tablename__ = "scraped_articles"
 
