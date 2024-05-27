@@ -2,15 +2,14 @@
 
 namespace BrieflyServer.Models
 {
-    public class ResetPasswordModel(string email, string otp, string newPassword)
+    public class NewPassRequestModel(string email, string newPassword, string token)
     {
-        [Required]
+        [Required] 
         [EmailAddress]
         public string Email { get; set; } = email;
         [Required]
-        public string Otp { get; set; } = otp;
-        [Required]
         [MinLength(8)]
         public string NewPassword { get; set; } = newPassword;
+        [Required] public string Token { get; set; } = token;
     }
 }

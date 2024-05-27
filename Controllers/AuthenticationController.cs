@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace BrieflyServer.Controllers;
 
@@ -127,30 +129,53 @@ public class AuthenticationController(
         return Ok("Email verification sent");
     }
 
-    [HttpPost("reset-password")]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+    [HttpPost("otp")]
+    public async Task<IActionResult> VerifyOtp([FromBody] OtpModel model)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
+
         var user = await userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
             return BadRequest("User not found");
         }
+
         var forgotPasswordToken = await context.ForgotPassword.FirstOrDefaultAsync(user => user.Email == model.Email);
         if (forgotPasswordToken == null)
         {
             return BadRequest("Invalid OTP");
         }
+
         if (!BCrypt.Net.BCrypt.Verify(model.Otp,forgotPasswordToken.HashedOtp))
         {
             return BadRequest("Invalid OTP");
         }
-        // Reset the user's password
+        // Create reset token
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
-        var result = await userManager.ResetPasswordAsync(user, token, model.NewPassword);
+
+        //invalidate the OTP after it's been used
+        context.ForgotPassword.Remove(forgotPasswordToken);
+        await context.SaveChangesAsync();
+
+        return Ok(new {Token = token, Message = "OTP verified successfully" });
+    }
+    [HttpPost("new-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] NewPassRequestModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var user = await userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return BadRequest("User not found");
+        }
+        var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
 
         if (result.Succeeded)
         {
@@ -163,7 +188,6 @@ public class AuthenticationController(
             return BadRequest("Failed to reset password");
         }
     }
-
     private string GenerateJwtToken(User user)
     {
         var claims = new[]
