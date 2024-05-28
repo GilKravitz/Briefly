@@ -1,15 +1,20 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ArticleText } from "@/types";
 import { View, Text } from "@/components/Themed";
+import { parseArticleText } from "@/utils/articleText";
 
 type ArticleTextProps = {
-  parsedArticle: ArticleText[];
+  content: string;
 };
 const ArticleTextView = (props: ArticleTextProps) => {
+  const [parsedArticle, setParsedArticle] = React.useState<ArticleText[]>([]);
+  useEffect(() => {
+    setParsedArticle(parseArticleText(props.content));
+  }, []);
   return (
     <>
-      {props.parsedArticle.map((element, index) => (
+      {parsedArticle.map((element, index) => (
         <View style={{ width: "100%" }} key={`articleBullet${index}`}>
           {element.subheading && (
             <Text variant="subheading" style={[{ fontWeight: "bold" }, styles.articleText]} size={18}>

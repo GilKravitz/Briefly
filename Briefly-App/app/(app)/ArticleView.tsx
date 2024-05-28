@@ -21,13 +21,14 @@ const ArticleView = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { article } = useArticle();
-  const parsedArticle = parseArticleText(article.article);
+  const parsedArticle = parseArticleText(article.content);
   useEffect(() => {
     Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
       setIsBookmarked(result);
     });
   }, []);
 
+  console.log("ArticleView", article);
   const onReportPress = () => {
     console.log("Report ");
     setMenuIsOpen(false);
@@ -69,7 +70,7 @@ const ArticleView = () => {
         </View>
         <Pressable onPress={() => handleCloseMenus()}>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: article.s3_image }} style={styles.ImageBackground} />
+            <Image source={{ uri: article.img_url }} style={styles.ImageBackground} />
             <Container style={styles.container}>
               <Animated.View entering={FadeInDown} style={styles.header}>
                 <ArticleCategory category={article.category} />
@@ -83,7 +84,7 @@ const ArticleView = () => {
                 </Text>
               </Animated.View>
               <Animated.View entering={FadeInDown.delay(500)} style={styles.articleTextContainer}>
-                <ArticleTextView parsedArticle={parsedArticle} />
+                <ArticleTextView content={article.content} />
               </Animated.View>
             </Container>
           </View>
