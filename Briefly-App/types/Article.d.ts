@@ -1,9 +1,9 @@
 export type Article = {
   id: string;
-  article: string;
+  content: string;
   category: string;
   title: string;
   publish_date: string;
   links: string[];
-  s3_image: string;
+  img_url: string;
 };

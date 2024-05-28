@@ -1,7 +1,6 @@
-import { FlatList, Pressable, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, FlatList, Pressable, RefreshControl, StyleSheet } from "react-native";
+import React, { useCallback, useEffect } from "react";
 import Container from "@/components/Container";
-import { getArticles } from "@/api/articles";
 import { Article } from "@/types";
 import ListItem from "@/components/Article/ListItem";
 import { useArticle } from "@/core/store/articleContext";
@@ -9,6 +8,10 @@ import { router } from "expo-router";
 import Colors from "@/core/constants/Colors";
 import Svg, { Path, SvgProps } from "react-native-svg";
 import { useSession } from "@/core/store/sessionContext";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getArticles } from "@/core/api/articles";
+import { Text, View } from "@/components/Themed";
+import LottieView from "lottie-react-native";
 
 const Logo = (props: SvgProps) => {
   const session = useSession();
@@ -26,14 +29,20 @@ const Logo = (props: SvgProps) => {
 
 const index = () => {
   const { setArticle } = useArticle();
-  const [articles, setArticles] = useState<Article[]>([]);
-  useEffect(() => {
-    const fetchArticles = async () => {
-      const articles = await getArticles();
-      setArticles(articles as Article[]);
-    };
-    fetchArticles();
-  }, []);
+  const { data, error, fetchNextPage, refetch, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<
+    Article[],
+    Error
+  >({
+    queryKey: ["articles"],
+    queryFn: ({ pageParam = 1 }) => getArticles(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length === 0) {
+        return undefined;
+      }
+      return allPages.length + 1; // Assuming you use the page number for pagination
+    },
+  });
 
   const handlePress = useCallback(
     (article: Article) => {
@@ -45,16 +54,38 @@ const index = () => {
 
   const renderItem = useCallback(
     ({ item, index }: { item: Article; index: number }) => (
-      <ListItem index={index} article={item} onPress={() => handlePress(item)} />
+      <ListItem index={index % 10} article={item} onPress={() => handlePress(item)} />
     ),
     [handlePress]
   );
   const keyExtractor = useCallback((item: Article) => `ArticleList${item.id.toString()}`, []);
 
+  if (status === "error") {
+    console.log(error.message);
+    return (
+      <Container>
+        <Text variant="heading">Error</Text>
+      </Container>
+    );
+  }
+
+  if (status === "pending") {
+    return (
+      <Container>
+        <View style={{ paddingTop: 50 }}>
+          <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
+          <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
+          <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
+          <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
+        </View>
+      </Container>
+    );
+  }
+
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
-        data={articles}
+        data={data?.pages.flat() as Article[]}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         style={styles.list}
@@ -62,6 +93,22 @@ const index = () => {
         ListHeaderComponent={<Logo />}
         ListHeaderComponentStyle={{ alignItems: "center", marginBottom: 30 }}
         removeClippedSubviews={true} // This might help for long lists
+        // implement pull to refresh
+        refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
+        onEndReached={() => {
+          if (hasNextPage) {
+            fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={() => {
+          if (isFetchingNextPage) {
+            // return <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/loading.json")} />;
+            return <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />;
+          } else {
+            return null;
+          }
+        }}
       />
     </Container>
   );
@@ -86,5 +133,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     gap: 20,
     width: "100%",
+  },
+  lottie: {
+    width: "100%",
+    height: 150,
   },
 });

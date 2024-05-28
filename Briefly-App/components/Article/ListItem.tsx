@@ -2,19 +2,24 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text } from "../Themed";
 import { Article } from "@/types";
 import { Image } from "expo-image";
-import Animated, { FadeInDown } from "react-native-reanimated";
 import React from "react";
 import { dateFormat } from "@/utils/dateFormat";
 import ArticleCategory from "./ArticleCategory";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import ListItemSkeleton from "./ListItemSkeleton";
 
 type ListItemProps = {
   index: number;
   article: Article;
   onPress: () => void;
+  skeleton?: boolean;
 };
 
 const ListItem = React.memo(
   (props: ListItemProps) => {
+    if (props.skeleton) {
+      return <ListItemSkeleton />;
+    }
     return (
       <Animated.View entering={FadeInDown.delay(50 * props.index)}>
         <TouchableOpacity onPress={props.onPress}>
@@ -28,7 +33,7 @@ const ListItem = React.memo(
                 {dateFormat(props.article.publish_date)}
               </Text>
             </View>
-            <Image source={{ uri: props.article.s3_image }} style={styles.img} />
+            <Image source={{ uri: props.article.img_url }} style={styles.img} />
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -39,7 +44,7 @@ const ListItem = React.memo(
 
 export default ListItem;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     gap: 10,

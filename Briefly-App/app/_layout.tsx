@@ -14,6 +14,20 @@ import { useColorScheme } from "@/components/useColorScheme";
 import { ArticleProvider } from "@/core/store/articleContext";
 import i18n from "@/core/i18n";
 import { SessionProvider } from "@/core/store/sessionContext";
+import { QueryClient, QueryClientProvider, focusManager } from "@tanstack/react-query";
+import { useAppState } from "@/core/hooks/useAppState";
+import { AppStateStatus, Platform } from "react-native";
+
+function onAppStateChange(status: AppStateStatus) {
+  // React Query already supports in web browser refetch on window focus by default
+  if (Platform.OS !== "web") {
+    focusManager.setFocused(status === "active");
+  }
+}
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 2 } },
+});
+
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
@@ -55,12 +69,14 @@ export default function Layout() {
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const colorScheme = useColorScheme();
   return (
-    <SessionProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <SafeAreaProvider>
-          <ArticleProvider>{children}</ArticleProvider>
-        </SafeAreaProvider>
-      </ThemeProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <SafeAreaProvider>
+            <ArticleProvider>{children}</ArticleProvider>
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </SessionProvider>
+    </QueryClientProvider>
   );
 };
