@@ -2,18 +2,41 @@ import { Keyboard, StyleSheet, TextInput } from "react-native";
 import Container from "@/components/Container";
 import React, { useEffect, useRef, useState } from "react";
 import BackButton from "@/components/pressable/BackButton";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { t } from "@/core/i18n";
 import LottieView from "lottie-react-native";
 import { View, Text } from "@/components/Themed";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
+import FormLoadingModal from "@/components/FormLoadingModal";
+import { useMutation } from "@tanstack/react-query";
+import API from "@/core/api";
+import { OtpData, OtpResponse } from "@/types";
 
 const Otp = () => {
   // create ref for 4 text inputs for OTP
+  const { email } = useLocalSearchParams() as { email: string };
   const inputRefs = Array.from({ length: 4 }, () => useRef<TextInput>(null));
   const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
+  const [error, setError] = useState<string>("");
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+
+  const {
+    mutate,
+    status,
+    error: apiError,
+  } = useMutation({
+    mutationFn: (otpData: OtpData) => API.Auth.checkOTP(otpData),
+    onSuccess: (data: OtpResponse) => {
+      setTimeout(() => {
+        router.push({
+          pathname: "/(auth)/SetNewPassword",
+          params: { email: email, token: data.token },
+        });
+      }, 1500);
+    },
+    onError: (error) => console.log("screen", error.message),
+  });
 
   const handleOTPChange = (text: string, index: number) => {
     const newOtp = [...otp];
@@ -46,11 +69,21 @@ const Otp = () => {
     setFocusedIndex(-1);
   };
 
+  const handlePress = () => {
+    const otpString = otp.join("");
+    if (otpString.length === 4) mutate({ email: email, otp: otpString });
+    else setError(t.otp.otpError);
+  };
   return (
     <Container>
       <BackButton onPress={() => router.back()} />
       <Text variant="title">{t.otp.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/otp.json")} />
+      {(apiError || error) && (
+        <Text variant="text" colorName="error">
+          {t.otp.otpError}
+        </Text>
+      )}
       <View style={styles.formContainer}>
         {Array.from({ length: 4 }).map((_, index) => (
           <View key={`OTP_INPUT${index}`}>
@@ -73,7 +106,8 @@ const Otp = () => {
           </View>
         ))}
       </View>
-      <Button onPress={() => router.push("/(auth)/SetNewPassword")}>{t.otp.btnText}</Button>
+      <Button onPress={handlePress}>{t.otp.btnText}</Button>
+      <FormLoadingModal status={status} />
     </Container>
   );
 };

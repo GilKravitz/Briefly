@@ -10,16 +10,34 @@ import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import { Text } from "@/components/Themed";
 import { useSession } from "@/core/store/sessionContext";
+import API from "@/core/api";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-// import schema from "@/core/schemas/signIn";
+import { useMutation } from "@tanstack/react-query";
 import { signInSchema } from "@/core/schemas";
-
+import { LoginResponse } from "@/types/ApiResponse";
+import { LoginData } from "@/types";
+import FormLoadingModal from "@/components/FormLoadingModal";
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
   const session = useSession();
+  const {
+    mutate,
+    status,
+    error: apiError,
+  } = useMutation({
+    mutationFn: (loginData: LoginData) => API.Auth.signIn(loginData),
+    onSuccess: async (data: LoginResponse) => {
+      await session.setToken(data.token);
+      API.Auth.setToken(data.token);
+      setTimeout(() => {
+        router.push("/(tabs)/");
+      }, 1500);
+    },
+    onError: (error) => console.log("screen", error.message),
+  });
 
   const {
     control,
@@ -31,9 +49,10 @@ export default function SignIn() {
     if (errors.email) console.log(errors.email);
   }, [errors]);
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    console.log(data);
+  const onSubmit = (formData: LoginData) => {
+    mutate(formData);
   };
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>
@@ -43,6 +62,9 @@ export default function SignIn() {
             {t.signIn.welcome}
           </Text>
           <SocialButtons style={styles.socialButtons} />
+          <Text variant="text" colorName="error">
+            {apiError && t.signIn.loginError}
+          </Text>
           <View style={styles.form}>
             <Controller
               control={control}
@@ -102,6 +124,7 @@ export default function SignIn() {
           </View>
         </Container>
       </ScrollView>
+      <FormLoadingModal status={status} />
     </KeyboardAvoidingView>
   );
 }

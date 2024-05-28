@@ -7,7 +7,7 @@ let EMAIL_REGX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 let PASSWORD_REGX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/;
 
 const schema = yup.object().shape({
-  name: yup.string().required(() => i18n.t("formErrors.requiredField")),
+  userName: yup.string().required(() => i18n.t("formErrors.requiredField")),
   email: yup
     .string()
     .required(() => i18n.t("formErrors.requiredField"))
@@ -33,7 +33,7 @@ const schema = yup.object().shape({
 });
 
 const signInSchema = schema.pick(["email", "password"]);
-const signUpSchema = schema.pick(["name", "email", "password", "privacyPolicy"]);
+const signUpSchema = schema.pick(["userName", "email", "password", "privacyPolicy"]);
 const forgotPasswordSchema = schema.pick(["email"]);
 const otpSchema = schema.pick(["otp"]);
 const setNewPasswordSchema = schema.pick(["password", "passwordConfirmation"]);

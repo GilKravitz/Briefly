@@ -30,6 +30,7 @@ export type I18nKeys = {
   otp: {
     title: string;
     btnText: string;
+    otpError: string;
   };
   setNewPassword: {
     title: string;

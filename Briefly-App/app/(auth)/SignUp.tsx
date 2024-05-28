@@ -26,7 +26,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { name: "", email: "", password: "", privacyPolicy: false },
+    defaultValues: { userName: "", email: "", password: "", privacyPolicy: false },
     resolver: yupResolver(signUpSchema),
   });
 
@@ -50,7 +50,7 @@ export default function SignUp() {
           <View style={styles.form}>
             {/* Name */}
             <Controller
-              name="name"
+              name="userName"
               control={control}
               rules={{
                 required: true,
@@ -64,7 +64,7 @@ export default function SignUp() {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  error={errors.name?.message}
+                  error={errors.userName?.message}
                 />
               )}
             />

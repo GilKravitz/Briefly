@@ -31,6 +31,7 @@ const he: I18nKeys = {
   otp: {
     title: "הזן קוד",
     btnText: "אישור",
+    otpError: "קוד לא נכון",
   },
   setNewPassword: {
     title: "הגדר סיסמה חדשה",

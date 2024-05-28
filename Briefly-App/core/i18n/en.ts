@@ -31,6 +31,7 @@ const en: I18nKeys = {
   otp: {
     title: "Enter Code",
     btnText: "CONFIRM",
+    otpError: "Invalid OTP",
   },
   setNewPassword: {
     title: "Set New Password",
