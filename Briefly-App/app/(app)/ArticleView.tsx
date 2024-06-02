@@ -21,14 +21,12 @@ const ArticleView = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { article } = useArticle();
-  const parsedArticle = parseArticleText(article.content);
   useEffect(() => {
     Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
       setIsBookmarked(result);
     });
   }, []);
 
-  console.log("ArticleView", article);
   const onReportPress = () => {
     console.log("Report ");
     setMenuIsOpen(false);
@@ -70,17 +68,17 @@ const ArticleView = () => {
         </View>
         <Pressable onPress={() => handleCloseMenus()}>
           <View style={{ flex: 1 }}>
-            <Image source={{ uri: article.img_url }} style={styles.ImageBackground} />
+            <Image source={{ uri: article.image }} style={styles.ImageBackground} />
             <Container style={styles.container}>
               <Animated.View entering={FadeInDown} style={styles.header}>
                 <ArticleCategory category={article.category} />
                 <Text size={14} colorName="textMuted">
-                  {dateFormat(article.publish_date)}
+                  {dateFormat(article.publishDate)}
                 </Text>
               </Animated.View>
               <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
                 <Text variant="title" size={24}>
-                  {article.title}
+                  {article.title.replaceAll("*", "")}
                 </Text>
               </Animated.View>
               <Animated.View entering={FadeInDown.delay(500)} style={styles.articleTextContainer}>
@@ -91,7 +89,7 @@ const ArticleView = () => {
         </Pressable>
       </ScrollView>
 
-      <LinksModal open={openLinksModal} links={article.links} />
+      <LinksModal open={openLinksModal} links={article.sourceLinks} />
     </>
   );
 };

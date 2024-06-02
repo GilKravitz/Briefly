@@ -55,6 +55,8 @@ const en: I18nKeys = {
       politics: "Politics",
       food: "Food",
       tech: "Tech",
+      fashion: "Fashion",
+      entertainment: "Entertainment",
     },
     menu: {
       bookmark: "Bookmark",

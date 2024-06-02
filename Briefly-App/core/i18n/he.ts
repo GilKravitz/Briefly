@@ -55,6 +55,8 @@ const he: I18nKeys = {
       politics: "פוליטיקה",
       food: "אוכל",
       tech: "טכנולוגיה",
+      fashion: "אופנה",
+      entertainment: "בידור",
     },
     menu: {
       bookmark: "שמור",

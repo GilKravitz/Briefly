@@ -19,25 +19,11 @@ import { signInSchema } from "@/core/schemas";
 import { LoginResponse } from "@/types/ApiResponse";
 import { LoginData } from "@/types";
 import FormLoadingModal from "@/components/FormLoadingModal";
+
 export default function SignIn() {
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
   const session = useSession();
-  const {
-    mutate,
-    status,
-    error: apiError,
-  } = useMutation({
-    mutationFn: (loginData: LoginData) => API.Auth.signIn(loginData),
-    onSuccess: async (data: LoginResponse) => {
-      await session.setToken(data.token);
-      API.Auth.setToken(data.token);
-      setTimeout(() => {
-        router.push("/(tabs)/");
-      }, 1500);
-    },
-    onError: (error) => console.log("screen", error.message),
-  });
 
   const {
     control,
@@ -45,14 +31,26 @@ export default function SignIn() {
     formState: { errors },
   } = useForm({ defaultValues: { email: "", password: "" }, resolver: yupResolver(signInSchema) });
 
-  useEffect(() => {
-    if (errors.email) console.log(errors.email);
-  }, [errors]);
-
   const onSubmit = (formData: LoginData) => {
     mutate(formData);
   };
 
+  const onSuccessfulLogin = async (data: LoginResponse) => {
+    await session.setToken(data.token);
+    API.Auth.setToken(data.token);
+    setTimeout(() => {
+      router.push("/(tabs)/");
+    }, 1500);
+  };
+  const {
+    mutate,
+    status,
+    error: apiError,
+  } = useMutation({
+    mutationFn: (loginData: LoginData) => API.Auth.signIn(loginData),
+    onSuccess: onSuccessfulLogin,
+    onError: (error) => console.log("screen", error.message),
+  });
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>

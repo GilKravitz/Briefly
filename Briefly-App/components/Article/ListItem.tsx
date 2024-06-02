@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text } from "../Themed";
 import { Article } from "@/types";
 import { Image } from "expo-image";
-import React from "react";
+import React, { useEffect } from "react";
 import { dateFormat } from "@/utils/dateFormat";
 import ArticleCategory from "./ArticleCategory";
 import Animated, { FadeInDown } from "react-native-reanimated";
@@ -27,13 +27,13 @@ const ListItem = React.memo(
             <View style={styles.contentContainer}>
               <ArticleCategory category={props.article.category} />
               <Text variant="heading" size={15} style={{ flex: 0.95, fontWeight: "bold" }}>
-                {props.article.title}
+                {props.article.title.replaceAll("*", "")}
               </Text>
               <Text size={14} style={styles.date} colorName="textMuted">
-                {dateFormat(props.article.publish_date)}
+                {dateFormat(props.article.publishDate)}
               </Text>
             </View>
-            <Image source={{ uri: props.article.img_url }} style={styles.img} />
+            <Image source={{ uri: props.article.image }} style={styles.img} />
           </View>
         </TouchableOpacity>
       </Animated.View>

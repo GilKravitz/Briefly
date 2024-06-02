@@ -3,7 +3,7 @@ export type Article = {
   content: string;
   category: string;
   title: string;
-  publish_date: string;
-  links: string[];
-  img_url: string;
+  publishDate: string;
+  sourceLinks: string[];
+  image: string;
 };

@@ -54,6 +54,8 @@ export type I18nKeys = {
       politics: string;
       food: string;
       tech: string;
+      fashion: string;
+      entertainment: string;
     };
     menu: {
       bookmark: string;

@@ -2,16 +2,20 @@ import { t } from "@/core/i18n";
 
 const i18nLabel = (label: string) => {
   switch (label) {
-    case "Tech":
+    case "technology":
       return t.article.category.tech;
-    case "Economics":
+    case "economic":
       return t.article.category.economics;
-    case "Politics":
+    case "politics":
       return t.article.category.politics;
-    case "Sport":
+    case "sports":
       return t.article.category.sport;
-    case "Food":
+    case "food":
       return t.article.category.food;
+    case "fashion":
+      return t.article.category.fashion;
+    case "entertainment":
+      return t.article.category.entertainment;
     default:
       return t.article.category.tech;
   }

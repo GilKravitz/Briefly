@@ -11,7 +11,6 @@ import { useSession } from "@/core/store/sessionContext";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArticles } from "@/core/api/articles";
 import { Text, View } from "@/components/Themed";
-import LottieView from "lottie-react-native";
 
 const Logo = (props: SvgProps) => {
   const session = useSession();
@@ -29,6 +28,7 @@ const Logo = (props: SvgProps) => {
 
 const index = () => {
   const { setArticle } = useArticle();
+
   const { data, error, fetchNextPage, refetch, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<
     Article[],
     Error

@@ -1,15 +1,19 @@
 const getTextColor = (catagory: string) => {
   switch (catagory) {
-    case "Tech":
+    case "technology":
       return "#3DAAF6";
-    case "Economics":
+    case "economic":
       return "#43B47B";
-    case "Politics":
+    case "politics":
       return "#B44343";
-    case "Sport":
+    case "sports":
       return "#717BE8";
-    case "Food":
+    case "food":
       return "#FF9800";
+    case "fashion":
+      return "#FF33C4";
+    case "entertainment":
+      return "#9C27B0";
     default:
       return "#FFC107";
   }
@@ -17,16 +21,20 @@ const getTextColor = (catagory: string) => {
 
 const getBgColor = (catagory: string) => {
   switch (catagory) {
-    case "Tech":
+    case "technology":
       return "#EEF8FF";
-    case "Economics":
+    case "economic":
       return "#EBFFE8";
-    case "Politics":
+    case "politics":
       return "#FFE8E8";
-    case "Sport":
+    case "sports":
       return "#E8F4FF";
-    case "Food":
+    case "food":
       return "#FFFAE8";
+    case "fashion":
+      return "#FFE8F5";
+    case "entertainment":
+      return "#F3E5F5";
     default:
       return "#FFFAE8";
   }
