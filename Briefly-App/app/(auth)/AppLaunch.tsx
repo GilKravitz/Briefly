@@ -1,12 +1,12 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import Container from "@/components/Container";
 import { View, Text } from "@/components/Themed";
-import React, { useEffect } from "react";
-
+import React from "react";
 import Svg, { SvgProps, Path } from "react-native-svg";
 import Button from "@/components/pressable/Button";
-import { Link, router } from "expo-router";
-import i18n, { t } from "@/core/i18n";
+import { Link } from "expo-router";
+import { t } from "@/core/i18n";
+import { useAppLaunchActions } from "@/core/hooks/screenHooks/AppLaunch";
 
 const Icon = (props: SvgProps) => {
   return (
@@ -19,10 +19,8 @@ const Icon = (props: SvgProps) => {
   );
 };
 
-const handleSignUpPress = () => {
-  router.push("/(auth)/SignUp");
-};
 const AppLaunch = () => {
+  const { handleSignUpPress } = useAppLaunchActions();
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground resizeMode="stretch" style={styles.header} source={require("@/assets/images/wave.png")}>

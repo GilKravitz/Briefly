@@ -1,56 +1,21 @@
-import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
 import { View } from "@/components/Themed";
 import Container from "@/components/Container";
-import React, { useEffect, useRef, useState } from "react";
-import i18n, { t } from "@/core/i18n";
+import React from "react";
+import { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import { Text } from "@/components/Themed";
-import { useSession } from "@/core/store/sessionContext";
-import API from "@/core/api";
-
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { signInSchema } from "@/core/schemas";
-import { LoginResponse } from "@/types/ApiResponse";
-import { LoginData } from "@/types";
+import { Controller } from "react-hook-form";
 import FormLoadingModal from "@/components/FormLoadingModal";
+import useSignIn from "@/core/hooks/screenHooks/SignIn";
 
 export default function SignIn() {
-  const emailRef = useRef<TextInput>(null);
-  const passwordRef = useRef<TextInput>(null);
-  const session = useSession();
+  const { control, handleSubmit, errors, emailRef, passwordRef, onSubmit, apiError, status } = useSignIn();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ defaultValues: { email: "", password: "" }, resolver: yupResolver(signInSchema) });
-
-  const onSubmit = (formData: LoginData) => {
-    mutate(formData);
-  };
-
-  const onSuccessfulLogin = async (data: LoginResponse) => {
-    await session.setToken(data.token);
-    API.Auth.setToken(data.token);
-    setTimeout(() => {
-      router.push("/(tabs)/");
-    }, 1500);
-  };
-  const {
-    mutate,
-    status,
-    error: apiError,
-  } = useMutation({
-    mutationFn: (loginData: LoginData) => API.Auth.signIn(loginData),
-    onSuccess: onSuccessfulLogin,
-    onError: (error) => console.log("screen", error.message),
-  });
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>
@@ -66,9 +31,7 @@ export default function SignIn() {
           <View style={styles.form}>
             <Controller
               control={control}
-              rules={{
-                required: true,
-              }}
+              rules={{ required: true }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={emailRef}
@@ -87,9 +50,7 @@ export default function SignIn() {
             <Controller
               name="password"
               control={control}
-              rules={{
-                required: true,
-              }}
+              rules={{ required: true }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   ref={passwordRef}

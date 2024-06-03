@@ -1,21 +1,23 @@
-import React, { useEffect } from "react";
-import { Redirect, Stack, Tabs, router } from "expo-router";
+import React from "react";
+import { Redirect, Tabs } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
-import { useSession } from "@/core/store/sessionContext";
 import { Text } from "@/components/Themed";
-import API from "@/core/api";
+import { useAuth } from "@/core/hooks/persistentHooks";
+import Container from "@/components/Container";
 const TabsLayout = () => {
-  const session = useSession();
   const activeColor = useThemeColor("primary");
+  const { loading, token } = useAuth();
 
-  if (session.loading) {
-    API.Auth.setToken(session.token);
-    console.log("token", session.token);
-    return <Text>Loading...</Text>;
+  if (loading) {
+    return (
+      <Container>
+        <Text>Loading...</Text>
+      </Container>
+    );
   }
 
-  if (!session.token) {
+  if (!token) {
     return <Redirect href="/(auth)/AppLaunch" />;
   }
   return (
