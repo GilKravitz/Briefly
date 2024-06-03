@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { useCallback } from "react";
 import { useAuth } from "@/core/hooks/persistentHooks";
 
-const useFormSubmition = () => {
+const useFormSubmission = () => {
   const { saveToken } = useAuth();
   const onSuccessfulLogin = async (data: LoginResponse) => {
     API.Auth.setToken(data.token);
@@ -39,4 +39,4 @@ const useFormSubmition = () => {
   };
 };
 
-export default useFormSubmition;
+export default useFormSubmission;

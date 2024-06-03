@@ -1,9 +1,9 @@
 import useFormValidation from "./useFormValidation";
-import useFormSubmition from "./useFormSubmition";
+import useFormSubmission from "./useFormSubmission";
 
 const useSignIn = () => {
   const { control, handleSubmit, errors, emailRef, passwordRef } = useFormValidation();
-  const { onSubmit, status, apiError } = useFormSubmition();
+  const { onSubmit, status, apiError } = useFormSubmission();
 
   return {
     control,
