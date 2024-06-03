@@ -1,8 +1,8 @@
-import { StyleSheet, TextInput, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, ScrollView, Platform, Keyboard } from "react-native";
 import { View } from "@/components/Themed";
 import Container from "@/components/Container";
-import React, { useEffect, useRef, useState } from "react";
-import i18n, { t } from "@/core/i18n";
+import React from "react";
+import { t } from "@/core/i18n";
 import BackButton from "@/components/pressable/BackButton";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
@@ -10,33 +10,12 @@ import Checkbox from "expo-checkbox";
 import Button from "@/components/pressable/Button";
 import { Link, router } from "expo-router";
 import { Text } from "@/components/Themed";
-
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-// import schema from "@/core/schemas/signUp";
-import { signUpSchema } from "@/core/schemas";
+import useSignUp from "@/core/hooks/screenHooks/SignUp";
+import { Controller } from "react-hook-form";
+import FormLoadingModal from "@/components/FormLoadingModal";
 
 export default function SignUp() {
-  const nameRef = useRef<TextInput>(null);
-  const emailRef = useRef<TextInput>(null);
-  const passwordRef = useRef<TextInput>(null);
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: { userName: "", email: "", password: "", privacyPolicy: false },
-    resolver: yupResolver(signUpSchema),
-  });
-
-  useEffect(() => {
-    if (errors.email) console.log(errors.email);
-  }, [errors]);
-
-  const onSubmit = (data: { email: string; password: string }) => {
-    console.log(data);
-  };
+  const { control, handleSubmit, errors, nameRef, emailRef, passwordRef, onSubmit, status, apiError } = useSignUp();
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
@@ -47,6 +26,9 @@ export default function SignUp() {
             {t.signUp.title}
           </Text>
           <SocialButtons style={styles.socialButtons} />
+          <Text variant="text" colorName="error">
+            {apiError && t.signUp.signupError}
+          </Text>
           <View style={styles.form}>
             {/* Name */}
             <Controller
@@ -135,6 +117,7 @@ export default function SignUp() {
           <Button onPress={handleSubmit(onSubmit)}>{t.signUp.getStarted}</Button>
         </Container>
       </ScrollView>
+      <FormLoadingModal status={status} />
     </KeyboardAvoidingView>
   );
 }

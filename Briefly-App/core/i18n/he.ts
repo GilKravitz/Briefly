@@ -22,7 +22,7 @@ const he: I18nKeys = {
     iHaveRead: "קראתי ואני מסכים ל",
     privacyPolicy: "מדיניות פרטיות",
     getStarted: "הרשמה",
-    signupError: "דואר אלקטרוני או שם או סיסמה לא נכונים",
+    signupError: "דואר אלקטרוני או שם או סיסמה לא חוקיים ",
   },
   forgotPassword: {
     title: "שכחת סיסמה",
