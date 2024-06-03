@@ -1,18 +1,16 @@
 import apiClient from "./apiClient";
 
+export const getAllCategories = async (): Promise<any> => {
+  const response = await apiClient.get("/PreferredCategories/all");
+  return response.data;
+};
+
 export const getCategories = async (): Promise<any> => {
-  const response = await apiClient.get("/categories");
+  const response = await apiClient.get("/PreferredCategories");
   return response.data;
 };
 
-// set bookmark for article
-export const addCategory = async (id: string) => {
-  const response = await apiClient.post(`/categories/${id}`);
-  return response.data;
-};
-
-// remove bookmark for article
-export const removeCategory = async (id: string) => {
-  const response = await apiClient.delete(`/categories/${id}`);
+export const putCategories = async (data: string[]): Promise<any> => {
+  const response = await apiClient.put("/PreferredCategories", { preferredCategories: data });
   return response.data;
 };

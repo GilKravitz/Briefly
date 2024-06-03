@@ -36,7 +36,7 @@ export type I18nKeys = {
     title: string;
     btnText: string;
   };
-  selectTopics: {
+  selectCategories: {
     title: string;
     subheading: string;
     btnText: string;

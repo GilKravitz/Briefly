@@ -37,9 +37,9 @@ const en: I18nKeys = {
     title: "Set New Password",
     btnText: "SET PASSWORD",
   },
-  selectTopics: {
+  selectCategories: {
     title: "Get Your Custom Feed",
-    subheading: "Select Topics You Are Interested In",
+    subheading: "Select Categories You Are Interested In",
     btnText: "NEXT",
   },
   article: {

@@ -37,7 +37,7 @@ const he: I18nKeys = {
     title: "הגדר סיסמה חדשה",
     btnText: "הגדר",
   },
-  selectTopics: {
+  selectCategories: {
     title: "קבל/י את העדכונים שלך",
     subheading: "בחר/י נושאים שמעניינים אותך",
     btnText: "המשך",

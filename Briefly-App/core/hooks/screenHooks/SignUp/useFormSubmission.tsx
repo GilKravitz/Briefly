@@ -11,7 +11,7 @@ const useFormSubmission = () => {
     API.Auth.setToken(data.token);
     saveToken(data.token);
     setTimeout(() => {
-      router.push("/(app)/SelectTopics");
+      router.push("/(app)/SelectCategories");
     }, 1500);
   };
 

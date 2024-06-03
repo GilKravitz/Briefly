@@ -12,6 +12,7 @@ import Animated, {
 import Colors from "@/core/constants/Colors";
 import i18nLabel from "@/utils/articleCatagoryText";
 import { Text, ViewProps } from "@/components/Themed";
+import { Category } from "@/types";
 
 const springConfig = {
   mass: 0.3,
@@ -21,11 +22,11 @@ const springConfig = {
 
 interface iProps extends ViewProps {
   onPress: (isSelected: boolean) => void;
-  label: string;
+  category: Category;
   selected: boolean;
   entering?: any;
 }
-const TopicSelect = (props: iProps) => {
+const CategoryButton = (props: iProps) => {
   const [isSelected, setIsSelected] = useState(props.selected);
   const [layoutHeight, setLayoutHeight] = useState(0);
   const height = useSharedValue(0);
@@ -38,8 +39,9 @@ const TopicSelect = (props: iProps) => {
   };
 
   const handlePress = () => {
-    props.onPress(!isSelected);
-    setIsSelected((prev) => !prev);
+    const newSelected = !isSelected;
+    setIsSelected(newSelected);
+    props.onPress(newSelected);
   };
 
   useEffect(() => {
@@ -47,23 +49,9 @@ const TopicSelect = (props: iProps) => {
     else height.value = withSpring(layoutHeight * 0.33, springConfig);
   }, [isSelected]);
 
-  const bgImage = (label: string) => {
-    switch (label) {
-      case "Tech":
-        return require("@/assets/images/categories/tech.png");
-      case "Economics":
-        return require("@/assets/images/categories/money.png");
-      case "Politics":
-        return require("@/assets/images/categories/politics.png");
-      case "Sport":
-        return require("@/assets/images/categories/sports.png");
-      case "Food":
-        return require("@/assets/images/categories/food.png");
-      default:
-        return require("@/assets/images/categories/tech.png");
-    }
-  };
-
+  useEffect(() => {
+    setIsSelected(props.selected);
+  }, [props.selected]);
   const animatedStyle = useAnimatedStyle(() => {
     return {
       height: height.value,
@@ -78,10 +66,10 @@ const TopicSelect = (props: iProps) => {
   return (
     <Animated.View style={styles.container} onLayout={onLayout} entering={props.entering}>
       <AnimatedPressable onPress={handlePress}>
-        <ImageBackground source={bgImage(props.label)} style={styles.imageBackground}>
+        <ImageBackground source={props.category.image} style={styles.imageBackground}>
           <Animated.View style={[styles.overlay, animatedStyle]}>
             <Text variant="heading" colorName="background">
-              {i18nLabel(props.label)}
+              {i18nLabel(props.category.name)}
             </Text>
             <Animated.View style={animatedIconStyle}>
               <FontAwesome name="check-circle" size={24} color={Colors.light.background} />
@@ -93,7 +81,7 @@ const TopicSelect = (props: iProps) => {
   );
 };
 
-export default TopicSelect;
+export default CategoryButton;
 
 const styles = StyleSheet.create({
   container: {

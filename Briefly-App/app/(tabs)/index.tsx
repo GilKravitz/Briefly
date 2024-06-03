@@ -7,6 +7,7 @@ import Logo from "@/components/Logo";
 import Colors from "@/core/constants/Colors";
 import { Text, View } from "@/components/Themed";
 import useArticleList from "@/core/hooks/screenHooks/ArticleList";
+import { Redirect } from "expo-router";
 
 const index = () => {
   const { handlePress, data, error, fetchNextPage, refetch, hasNextPage, isFetching, isFetchingNextPage, status } =
@@ -22,11 +23,7 @@ const index = () => {
 
   if (status === "error") {
     console.log(error?.message);
-    return (
-      <Container>
-        <Text variant="heading">Error</Text>
-      </Container>
-    );
+    return <Redirect href="(auth)/SignIn" />;
   }
 
   if (status === "pending") {
