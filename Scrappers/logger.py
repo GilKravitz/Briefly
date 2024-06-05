@@ -1,6 +1,7 @@
 import logging
 import os
 import datetime
+import sys
 
 
 class Logger:
@@ -20,7 +21,7 @@ class Logger:
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
-            handlers=[logging.FileHandler(log_filename, encoding="utf-8")],
+            handlers=[logging.FileHandler(log_filename, encoding="utf-8"),logging.StreamHandler(sys.stdout)],
         )
 
         self.logger = logging.getLogger(__name__)
