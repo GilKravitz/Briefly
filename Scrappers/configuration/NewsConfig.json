@@ -1,0 +1,22 @@
+{
+    "NEWS_SITES":["n12" , "13tv" , "ynet"],
+    "N12":{
+        "BASE_URL":"https://www.mako.co.il",
+        "NEWS_TYPE":["news-military", "news-sport" , "news-money" , "food" , "news-entertainment" , "news-business/hi_tech"],
+        "ONLY_RELEVANT_LINKS":["news-military" , "news-sport" , "news-money" , "food" , "news-entertainment" , "news-business/hi_tech"],
+        "PROBLEMATIC_LINKS":["AjaxPage"]
+    },
+    "N13":{
+        "BASE_URL":"https://13tv.co.il",
+        "NEWS_TYPE":["politics/politics/" , "tags/sport/" , "news/consumers/" , "yummies/food-news/" , "entertainment" , "tags/technology/" , "fashion"],
+        "ONLY_RELEVANT_LINKS":["news" , "entertainment" , "fashion"],
+        "PROBLEMATIC_LINKS":["model"]
+    },
+    "YNET":{
+        "BASE_URL":"https://www.ynet.co.il",
+        "NEWS_TYPE":["news/category/185" , "sport" , "economy/category/429" ,"food/foodnews" , "entertainment" , "digital/technews" , "fashion"],
+        "ONLY_RELEVANT_LINKS":["news" , "sport" , "economy" , "food" , "entertainment" , "digital/technews" , "fashion"],
+        "PROBLEMATIC_LINKS":[]
+    },
+    "NUMBER_OF_ARTICLES":999
+}
