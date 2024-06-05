@@ -13,11 +13,6 @@
 *.userosscache
 *.sln.docstates
 
-# ignore .env
-.env
-
-# Icon must end with two \r
-Icon
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -51,13 +46,6 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
-# End of https://www.toptal.com/developers/gitignore/api/macos
-
-# Ignore virtual environment directory
-Scrappers/myvenv/
-
-# Ignore database configuration file
-Scrappers/db/DbConfig.json
 # DNX
 project.lock.json
 project.fragment.lock.json
