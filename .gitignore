@@ -38,3 +38,9 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+# Ignore virtual environment directory
+Scrappers/myvenv/
+
+# Ignore database configuration file
+Scrappers/db/DbConfig.json
