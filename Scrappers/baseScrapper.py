@@ -7,6 +7,8 @@ from logger import logger
 
 
 class BaseScrapper(ABC):
+    NOT_VALID_ARTICLE = -1
+
     def __init__(
         self,
         base_url,
@@ -20,7 +22,7 @@ class BaseScrapper(ABC):
         self.news_type = news_type  # case : Politics , Sport...
         self.relevant_links_filter = relevant_links_filter
         self.unrelevant_links_filter = unrelevant_links_filter
-        self.counter = 0  # counter of articles
+        self.counter = 0  # counter of fetched articles
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
@@ -110,7 +112,7 @@ class BaseScrapper(ABC):
             article_links = self.get_articles_links(article_type)
             for link in article_links:
                 article = self.get_article_content(link, article_type)
-                if article == -1:
+                if article == BaseScrapper.NOT_VALID_ARTICLE:
                     logger.log_warning(f"didnt manage to fetch article from {link}")
                 else:
                     if commit_article(article):
