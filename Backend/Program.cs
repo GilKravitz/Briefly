@@ -16,10 +16,8 @@ public class Program
     public static void Main(string[] args)
     {
         Env.Load();
-
         var builder = WebApplication.CreateBuilder(args);
-
-        var connectionString = $"Host={Environment.GetEnvironmentVariable("PG_HOST")};Port={Environment.GetEnvironmentVariable("PG_PORT")};Database={Environment.GetEnvironmentVariable("PG_DATABASE")};Username={Environment.GetEnvironmentVariable("PG_USER")};Password={Environment.GetEnvironmentVariable("PG_PASS")};";
+        string connectionString = $"Host={Environment.GetEnvironmentVariable("PG_HOST")};Port={Environment.GetEnvironmentVariable("PG_PORT")};Database={Environment.GetEnvironmentVariable("PG_DATABASE")};Username={Environment.GetEnvironmentVariable("PG_USER")};Password={Environment.GetEnvironmentVariable("PG_PASS")};";
 
         builder.Services.AddDbContext<BrieflyContext>(options =>
             options.UseNpgsql(connectionString));
@@ -29,18 +27,14 @@ public class Program
         builder.Services.AddScoped<BookmarksService>();
         //builder.Services.AddScoped<LoggingService>();
 
-        //add controllers
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-
         builder.Services.AddIdentity<User, IdentityRole<int>>()
             .AddEntityFrameworkStores<BrieflyContext>()
             .AddDefaultTokenProviders();
-
-        var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
-        var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
-        var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
-
+        string jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+        string jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+        string jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
         if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
         {
             throw new ArgumentNullException("JWT configuration is missing in environment variables.");
@@ -64,7 +58,7 @@ public class Program
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });
-
+        //Add auth for the swagger for testing
         builder.Services.AddSwaggerGen(configuration =>
         {
             configuration.SwaggerDoc("v1", new OpenApiInfo { Title = "BrieflyAPI", Version = "v1" });
@@ -77,6 +71,7 @@ public class Program
                 BearerFormat = "JWT",
                 Scheme = "bearer"
             });
+
             configuration.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
@@ -94,7 +89,6 @@ public class Program
         });
 
         var app = builder.Build();
-
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseHttpsRedirection();
@@ -104,6 +98,7 @@ public class Program
         {
             configuration.SwaggerEndpoint("/swagger/v1/swagger.json", "BrieflyAPI V1");
         });
+
         app.Run();
     }
 }
