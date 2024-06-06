@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Services
 {
-    internal class CategoriesService
+    public class CategoriesService
     {
         private readonly BrieflyContext _context;
 

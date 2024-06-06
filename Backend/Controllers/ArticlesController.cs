@@ -12,7 +12,7 @@ namespace BrieflyServer.Controllers
     {
         private readonly ArticlesService _articlesService;
 
-        internal ArticlesController(ArticlesService i_ArticlesService)
+        public ArticlesController(ArticlesService i_ArticlesService)
         {
             _articlesService = i_ArticlesService;
         }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BrieflyServer.Services
 {
-    internal class BookmarksService(BrieflyContext i_Context)
+    public class BookmarksService(BrieflyContext i_Context)
     {
         private readonly BrieflyContext _context = i_Context;
 

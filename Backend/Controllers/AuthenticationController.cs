@@ -14,7 +14,7 @@ namespace BrieflyServer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-internal class AuthenticationController(
+public class AuthenticationController(
     UserManager<User> userManager,
     SignInManager<User> signInManager,
     BrieflyContext context,

@@ -3,7 +3,7 @@ using SendGrid;
 
 namespace BrieflyServer.Services
 {
-    internal class EmailService()
+    public class EmailService()
     {
         internal async void SendMail(string i_Email, string i_Otp)
         {

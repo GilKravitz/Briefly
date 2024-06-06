@@ -9,7 +9,7 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    internal class BookmarksController(BookmarksService bookmarksService) : Controller
+    public class BookmarksController(BookmarksService bookmarksService) : Controller
     {
         private readonly BookmarksService _bookmarksService = bookmarksService;
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Services
 {
-    internal class ArticlesService(BrieflyContext i_Context)
+    public class ArticlesService(BrieflyContext i_Context)
     {
         private readonly BrieflyContext _context = i_Context;
 
