@@ -1,5 +1,6 @@
 ﻿using BrieflyServer.Data;
 using BrieflyServer.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BrieflyServer.Services
 {
@@ -7,8 +8,11 @@ namespace BrieflyServer.Services
     {
         private readonly BrieflyContext _context = context;
 
-        public List<Article> GetBookmarkArticles(string email)
+        public List<Article> GetBookmarkArticles(string email, int page, int pageSize)
         {
+            // Calculate the number of items to skip
+            int skip = (page - 1) * pageSize;
+
             var bookmarkedArticlesIds = _context.Bookmarks
                 .Where(b => b.Email == email)
                 .Select(b => b.ArticleId)
@@ -16,7 +20,10 @@ namespace BrieflyServer.Services
 
             var articles = _context.Articles
                 .Where(a => bookmarkedArticlesIds.Contains(a.Id))
+                .Skip(skip)
+                .Take(pageSize)
                 .ToList();
+
             return articles;
         }
         public void AddBookmark(string email, int articleId)
