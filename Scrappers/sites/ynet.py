@@ -16,11 +16,8 @@ class Ynet_Scrapper(BaseScrapper):
     def get_publish_date(self):
         try:
             display_date = self.article_soup.find("time", class_="DateDisplay")
-            # Extract the value of the datetime attribute
             datetime_value = display_date.get("datetime")
-            # Remove the seconds and 'Z' from the datetime string
             datetime_value = datetime_value[:-6]
-            # Convert to datetime object
             formatted_date = datetime.strptime(datetime_value, "%Y-%m-%dT%H:%M:%S")
             return formatted_date
 
@@ -52,11 +49,9 @@ class Ynet_Scrapper(BaseScrapper):
             )
             article_publish_date = self.get_publish_date()
             if article_publish_date is None:
-                return -1
+                return BaseScrapper.NOT_VALID_ARTICLE
 
             imageLink = self.get_image_link()
-            if not imageLink:
-                return -1
             content_article = self.article_soup.find(
                 "div", class_=lambda c: c and c.startswith("dynamicHeightItemsColumn")
             )
@@ -86,4 +81,4 @@ class Ynet_Scrapper(BaseScrapper):
             logger.log_warning(
                 f"{e} : Error fetching article from {link} , all content was {all_content}"
             )
-            return -1
+            return BaseScrapper.NOT_VALID_ARTICLE
