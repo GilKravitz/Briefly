@@ -1,5 +1,6 @@
 bs4
 requests
 sqlalchemy
-dotenv
+python-dotenv
+psycopg2-binary
 boto3

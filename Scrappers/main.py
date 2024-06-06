@@ -78,6 +78,8 @@ def notify_scraper_done():
         Message='Scrappers Service Completed'
     )
 if __name__ == "__main__":
+    logger.log_info("Scrappers Service Started")
     with ThreadPoolExecutor(max_workers=len(NEWS_SITES)) as executor:
         executor.map(main, NEWS_SITES)
+    logger.log_info("Scrappers Service Completed")
     notify_scraper_done()
