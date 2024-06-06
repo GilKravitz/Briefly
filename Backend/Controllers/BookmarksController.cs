@@ -9,7 +9,7 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class BookmarksController(BookmarksService bookmarksService) : Controller
+    internal class BookmarksController(BookmarksService bookmarksService) : Controller
     {
         private readonly BookmarksService _bookmarksService = bookmarksService;
 
@@ -27,7 +27,7 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Email not found in token.");
             }
 
-            var articles = _bookmarksService.GetBookmarkArticles(email, page, pageSize);
+            var articles = _bookmarksService.GetBookmarkArticles(page, pageSize, email);
 
             return Ok(articles);
         }

@@ -1,6 +1,6 @@
 ﻿namespace BrieflyServer.Models;
 
-public class ForgotPasswordRequest(string email)
+public class ForgotPasswordRequest(string i_Email)
 {
-    public string Email { get; set; } = email;
+    public string Email { get; set; } = i_Email;
 }
