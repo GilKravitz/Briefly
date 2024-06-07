@@ -28,8 +28,8 @@ export const forgotPassword = async (credentials: FotgotPasswordData) => {
 };
 
 // Request OTP
-export const checkOTP = async (otp: OtpData) => {
-  const response = await apiClient.post(`/Authentication/otp`, { otp });
+export const checkOTP = async (otpData: OtpData) => {
+  const response = await apiClient.post(`/Authentication/otp`, { otpData });
   return response.data;
 };
 
