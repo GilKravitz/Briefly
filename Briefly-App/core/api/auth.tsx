@@ -29,7 +29,8 @@ export const forgotPassword = async (credentials: FotgotPasswordData) => {
 
 // Request OTP
 export const checkOTP = async (otpData: OtpData) => {
-  const response = await apiClient.post(`/Authentication/otp`, { otpData });
+  console.log("otpData:", otpData);
+  const response = await apiClient.post(`/Authentication/otp`, { otp: otpData.otp, email: otpData.email });
   return response.data;
 };
 
