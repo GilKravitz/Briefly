@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
-using static System.Net.WebRequestMethods;
 
 namespace BrieflyServer.Controllers;
 
@@ -25,7 +23,7 @@ public class AuthenticationController(
     : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody]RegistrationModel model)
+    public async Task<IActionResult> Register([FromBody]RegistrationModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -33,14 +31,14 @@ public class AuthenticationController(
         }
         try
         {
-            var existingUser = await userManager.FindByEmailAsync(model.Email);
+            User? existingUser = await userManager.FindByEmailAsync(i_Model.Email);
             if (existingUser != null)
             {
                 return Conflict("User with this email already exists");
             }
 
-            var user = new User(model.Email,model.UserName);
-            var result = await userManager.CreateAsync(user,model.Password);
+            User user = new User(i_Model.Email,i_Model.UserName);
+            var result = await userManager.CreateAsync(user,i_Model.Password);
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
@@ -60,7 +58,7 @@ public class AuthenticationController(
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody]LoginModel model)
+    public async Task<IActionResult> Login([FromBody]LoginModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -68,12 +66,13 @@ public class AuthenticationController(
         }
         try
         {
-            var user = await userManager.FindByEmailAsync(model.Email);
+            User? user = await userManager.FindByEmailAsync(i_Model.Email);
             if (user == null)
             {
                 return NotFound("User not found");
             }
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+            var result = await signInManager.PasswordSignInAsync(user, i_Model.Password, false, false);
             if (result.Succeeded)
             {
                 var token = GenerateJwtToken(user);
@@ -84,9 +83,9 @@ public class AuthenticationController(
                 return Unauthorized("Invalid login attempt");
             }
         }
-        catch (Exception e)
+        catch (Exception exception)             
         {
-            return BadRequest(e.Message);
+            return BadRequest(exception.Message);
         }
     }
 
@@ -100,19 +99,20 @@ public class AuthenticationController(
     }
 
     [HttpPost("forgot-password")]
-    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest i_Request)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(request.Email);
+        User? user = await userManager.FindByEmailAsync(i_Request.Email);
         if (user == null)
         {
             return Ok("If your email is registered, you will receive an email with instructions on how to reset your password");
         }
-        var existingToken = await context.ForgotPassword.FirstOrDefaultAsync(t => t.Email == request.Email);
+
+        var existingToken = await context.ForgotPassword.FirstOrDefaultAsync(token => token.Email == i_Request.Email);
         var otp = new Random().Next(1000, 9999).ToString();
         var hashedOtp = BCrypt.Net.BCrypt.HashPassword(otp);
         if (existingToken != null)
@@ -121,70 +121,68 @@ public class AuthenticationController(
         }
         else
         {
-            var forgotPasswordToken = new ForgotPasswordToken(request.Email, hashedOtp);
+            var forgotPasswordToken = new ForgotPasswordToken(i_Request.Email, hashedOtp);
             context.ForgotPassword.Add(forgotPasswordToken);
         }
+
         await context.SaveChangesAsync();
-        emailService.SendMail(request.Email, otp);
+        emailService.SendMail(i_Request.Email, otp);
         return Ok("Email verification sent");
     }
 
     [HttpPost("otp")]
-    public async Task<IActionResult> VerifyOtp([FromBody] OtpModel model)
+    public async Task<IActionResult> VerifyOtp([FromBody] OtpModel i_Model)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(model.Email);
+        User? user = await userManager.FindByEmailAsync(i_Model.Email);
         if (user == null)
         {
             return BadRequest("User not found");
         }
 
-        var forgotPasswordToken = await context.ForgotPassword.FirstOrDefaultAsync(user => user.Email == model.Email);
+        var forgotPasswordToken = await context.ForgotPassword.FirstOrDefaultAsync(user => user.Email == i_Model.Email);
         if (forgotPasswordToken == null)
         {
             return BadRequest("Invalid OTP");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(model.Otp,forgotPasswordToken.HashedOtp))
+        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp,forgotPasswordToken.HashedOtp))
         {
             return BadRequest("Invalid OTP");
         }
-        // Create reset token
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-        //invalidate the OTP after it's been used
-        context.ForgotPassword.Remove(forgotPasswordToken);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);// Create reset token
+        context.ForgotPassword.Remove(forgotPasswordToken);//invalidate the OTP after it's been used
         await context.SaveChangesAsync();
 
         return Ok(new {Token = token, Message = "OTP verified successfully" });
     }
+
     [HttpPost("new-password")]
-    public async Task<IActionResult> ResetPassword([FromBody] NewPassRequestModel model)
+    public async Task<IActionResult> ResetPassword([FromBody] NewPassRequestModel i_Model)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(model.Email);
+        User? user = await userManager.FindByEmailAsync(i_Model.Email);
         if (user == null)
         {
             return BadRequest("User not found");
         }
-        var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
 
+        var result = await userManager.ResetPasswordAsync(user, i_Model.Token, i_Model.NewPassword);
         if (result.Succeeded)
         {
-            // Password reset successful, you can redirect the user to a success page
             return Ok("Password reset successfully");
         }
         else
         {
-            // Password reset failed, handle the failure (e.g., show an error message)
             return BadRequest("Failed to reset password");
         }
     }
@@ -204,7 +202,6 @@ public class AuthenticationController(
         var jwtTime = Environment.GetEnvironmentVariable("JWT_TIME");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
         var token = new JwtSecurityToken(
             issuer: jwtIssuer,
             audience: jwtAudience,

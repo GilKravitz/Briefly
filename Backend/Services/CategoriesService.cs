@@ -15,52 +15,47 @@ namespace BrieflyServer.Services
         public async Task<string[]> GetAllCategories()
         {
             string[] categories = await _context.Categories.Select(categories => categories.Name).ToArrayAsync();
+
             return categories;
         }
-        public async Task<string[]> GetPreferredCategories(string email)
-        {
-            var user = await _context.Users
-                .Include(u => u.UserCategories)
-                .ThenInclude(uc => uc.Category) // Include Category navigation property
-                .FirstOrDefaultAsync(user => user.Email == email);
 
+        public async Task<string[]> GetPreferredCategories(string i_Email)
+        {
+            User? user = await _context.Users
+                .Include(u => u.UserCategories)
+                .ThenInclude(userCategory => userCategory.Category) // Include Category navigation property
+                .FirstOrDefaultAsync(user => user.Email == i_Email);
             if (user == null)
             {
                 throw new Exception("User not found");
             }
 
-            // Check if user has any categories
             if (!user.UserCategories.Any())
             {
                 return new string[0]; // Return empty array if no categories
             }
 
-            // Get category names from UserCategories
-            var categoryNames = user.UserCategories
-                .Select(uc => uc.Category.Name)  // Access category name through Category navigation property
+            string[]? categoryNames = user.UserCategories
+                .Select(userCategory => userCategory.Category.Name)  // Access category name through Category navigation property
                 .ToArray();
 
             return categoryNames;
         }
 
-        public async Task UpdatePreferredCategories(string email, string[] categories)
+        public async Task UpdatePreferredCategories(string i_Email, string[] i_Categories)
         {
-            var user = await _context.Users
+            User? user = await _context.Users
                 .Include(u => u.UserCategories) // Include UserCategories collection
-                .FirstOrDefaultAsync(user => user.Email == email);
-
+                .FirstOrDefaultAsync(user => user.Email == i_Email);
             if (user == null)
             {
                 throw new Exception("User not found");
             }
 
-            // Remove existing UserCategories for the user
-            user.UserCategories.Clear();
-
-            // Add new UserCategories based on categories
-            foreach (var categoryName in categories)
+            user.UserCategories.Clear();// Remove existing UserCategories for the user
+            foreach (var categoryName in i_Categories)// Add new UserCategories based on categories
             {
-                var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == categoryName);
+                Categories? category = await _context.Categories.FirstOrDefaultAsync(categories => categories.Name == categoryName);
                 if (category == null)
                 {
                     throw new Exception($"Category '{categoryName}' not found");
@@ -71,6 +66,5 @@ namespace BrieflyServer.Services
 
             await _context.SaveChangesAsync();
         }
-
     }
 }
