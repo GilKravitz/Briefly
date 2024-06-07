@@ -12,68 +12,10 @@ import FormLoadingModal from "@/components/FormLoadingModal";
 import { useMutation } from "@tanstack/react-query";
 import API from "@/core/api";
 import { OtpData, OtpResponse } from "@/types";
-
+import useOtp from "@/core/hooks/screenHooks/Otp";
 const Otp = () => {
-  // create ref for 4 text inputs for OTP
-  const { email } = useLocalSearchParams() as { email: string };
-  const inputRefs = Array.from({ length: 4 }, () => useRef<TextInput>(null));
-  const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
-  const [error, setError] = useState<string>("");
-  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
-
-  const {
-    mutate,
-    status,
-    error: apiError,
-  } = useMutation({
-    mutationFn: (otpData: OtpData) => API.Auth.checkOTP(otpData),
-    onSuccess: (data: OtpResponse) => {
-      setTimeout(() => {
-        router.push({
-          pathname: "/(auth)/SetNewPassword",
-          params: { email: email, token: data.token },
-        });
-      }, 1500);
-    },
-    onError: (error) => console.log("screen", error.message),
-  });
-
-  const handleOTPChange = (text: string, index: number) => {
-    const newOtp = [...otp];
-    newOtp[index] = text;
-    setOtp(newOtp);
-
-    // Auto-focus next input
-    if (text && index < 3) {
-      setFocusedIndex(index + 1);
-    } else if (text && index === 3) {
-      handleKeyboardDismiss();
-    }
-
-    //delete
-    if (text === "" && index > 0) {
-      setFocusedIndex(index - 1);
-    } else if (text === "" && index === 0) {
-      handleKeyboardDismiss();
-    }
-  };
-
-  useEffect(() => {
-    if (focusedIndex > -1 && focusedIndex < 4) {
-      inputRefs[focusedIndex].current?.focus();
-    }
-  }, [focusedIndex]);
-
-  const handleKeyboardDismiss = () => {
-    Keyboard.dismiss();
-    setFocusedIndex(-1);
-  };
-
-  const handlePress = () => {
-    const otpString = otp.join("");
-    if (otpString.length === 4) mutate({ email: email, otp: otpString });
-    else setError(t.otp.otpError);
-  };
+  const { apiError, error, focusedIndex, setFocusedIndex, inputRefs, otp, handleOTPChange, handlePress, status } =
+    useOtp();
   return (
     <Container>
       <BackButton onPress={() => router.back()} />
