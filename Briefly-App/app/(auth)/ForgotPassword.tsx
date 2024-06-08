@@ -3,7 +3,7 @@ import { Text } from "@/components/Themed";
 import Container from "@/components/Container";
 import React from "react";
 import { t } from "@/core/i18n";
-import BackButton from "@/components/pressable/BackButton";
+import BackButton from "@/components/pressable/BackButton2";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import Input from "@/components/Input";
@@ -16,7 +16,7 @@ const ForgotPassword = () => {
 
   return (
     <Container>
-      <BackButton onPress={() => router.back()} />
+      <BackButton variant="dark" />
       <Text variant="title">{t.forgotPassword.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/forgotPassword.json")} />
       <Controller

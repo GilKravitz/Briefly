@@ -1,7 +1,7 @@
 import { Keyboard, StyleSheet, TextInput } from "react-native";
 import Container from "@/components/Container";
 import React, { useEffect, useRef, useState } from "react";
-import BackButton from "@/components/pressable/BackButton";
+import BackButton from "@/components/pressable/BackButton2";
 import { router, useLocalSearchParams } from "expo-router";
 import { t } from "@/core/i18n";
 import LottieView from "lottie-react-native";
@@ -18,7 +18,7 @@ const Otp = () => {
     useOtp();
   return (
     <Container>
-      <BackButton onPress={() => router.back()} />
+      <BackButton variant="dark" />
       <Text variant="title">{t.otp.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/otp.json")} />
       {(apiError || error) && (
