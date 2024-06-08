@@ -2,8 +2,8 @@ import { Keyboard, StyleSheet, TextInput } from "react-native";
 import { View, Text } from "@/components/Themed";
 import Container from "@/components/Container";
 import React, { useEffect, useRef, useState } from "react";
-import BackButton from "@/components/pressable/BackButton";
-import { router } from "expo-router";
+import BackButton from "@/components/pressable/BackButton2";
+import { router, useLocalSearchParams } from "expo-router";
 import { t } from "@/core/i18n";
 import LottieView from "lottie-react-native";
 import Input from "@/components/Input";
@@ -12,31 +12,16 @@ import Button from "@/components/pressable/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { setNewPasswordSchema } from "@/core/schemas";
+import useSetNewPassword from "@/core/hooks/screenHooks/SetNewPassword";
+import FormLoadingModal from "@/components/FormLoadingModal";
 
 const SetNewPassword = () => {
   const confirmPasswordRef = useRef<TextInput>(null);
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: { password: "", passwordConfirmation: "" },
-    resolver: yupResolver(setNewPasswordSchema),
-  });
-
-  useEffect(() => {
-    if (errors.password) console.log(errors.password);
-    if (errors.passwordConfirmation) console.log(errors.passwordConfirmation);
-  }, [errors]);
-
-  const onSubmit = (data: { password: string; passwordConfirmation: string }) => {
-    console.log(data);
-  };
+  const { control, errors, handleSubmit, onSubmit, status } = useSetNewPassword();
 
   return (
     <Container>
-      <BackButton onPress={() => router.back()} />
+      <BackButton variant="dark" />
       <Text variant="title">{t.setNewPassword.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/setNewPassword.json")} />
       <Controller
@@ -83,6 +68,7 @@ const SetNewPassword = () => {
       <Button style={styles.button} onPress={handleSubmit(onSubmit)}>
         {t.setNewPassword.btnText}
       </Button>
+      <FormLoadingModal status={status} />
     </Container>
   );
 };
