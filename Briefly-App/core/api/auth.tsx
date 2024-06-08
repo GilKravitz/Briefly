@@ -23,19 +23,19 @@ export const signIn = async (credentials: LoginData): Promise<LoginResponse> => 
 
 // Reset password
 export const forgotPassword = async (credentials: FotgotPasswordData) => {
-  const response = await apiClient.post(`/Authentication/forgot-password`, { email: credentials.email });
+  const response = await apiClient.post(`/Authentication/forgot-password`, credentials);
   return response.data;
 };
 
 // Request OTP
 export const checkOTP = async (otpData: OtpData) => {
   console.log("otpData:", otpData);
-  const response = await apiClient.post(`/Authentication/otp`, { otp: otpData.otp, email: otpData.email });
+  const response = await apiClient.post(`/Authentication/otp`, otpData);
   return response.data;
 };
 
-export const setNewpassword = async (password: NewPasswordData) => {
-  const response = await apiClient.post(`/Authentication/set-new-password`, { password });
+export const setNewpassword = async (newPasswordData: NewPasswordData) => {
+  const response = await apiClient.post(`/Authentication/new-password`, newPasswordData);
   return response.data;
 };
 
