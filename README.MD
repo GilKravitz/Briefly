@@ -6,6 +6,7 @@ Briefly is an innovative application designed to keep users up-to-date with thei
 
 ## Technologies
 
+
 - _Web Scraping_: Scrapes articles from N12, N13, and YNET using BeautifulSoup module .
 - _Database Integration_: Stores the scraped articles in a PostgreSQL database.
 - _Articles Text-Similarity_: Uses OpenAI embeddings model to perform text-similariry between articles,
@@ -38,6 +39,7 @@ Briefly is an innovative application designed to keep users up-to-date with thei
 - Users can register and set their content preferences.
 - The application will display summarized articles based on the user's interests.
 - Users can click on links to read the full original articles if desired.
+
 
 ## Project Documents
 

@@ -56,8 +56,10 @@ def notify_embedding_text_summarizer_done():
     )
 
 if __name__ == '__main__':
+    logging.info('Starting AI Integration Service...')
     openai_api_key = os.getenv('OPEN_AI_API_KEY')
     gimini_api_key = os.getenv('GIMINI_API_KEY')
     ai_integrator = AI_Integration(openai_api_key, gimini_api_key)
     ai_integrator.run()
+    logging.info('AI Integration Service Completed.')
     notify_embedding_text_summarizer_done()

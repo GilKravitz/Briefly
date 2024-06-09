@@ -20,7 +20,8 @@ from sites.n12 import N12_Scrapper
 from sites.n13 import N13_Scrapper
 from sites.ynet import Ynet_Scrapper
 from logger import logger
-
+import boto3
+import os
 
 def main(news_site):
     try:
@@ -57,6 +58,28 @@ def main(news_site):
         )
 
 
+def notify_scraper_done():
+    '''
+    Publish a notification to AWS SNS to indicate that the Scraper Service has completed its task.
+    
+    This function creates a boto3 client for SNS in the specified region and publishes a message
+    to the 'text_summarize_done_topic' topic to notify the Text Summarizer Service that it has completed.
+    '''
+    region = 'il-central-1'
+
+    # AWS account ID where the SNS topic resides
+    account_id = os.getenv('AWS_ACCOUNT_ID')
+    sns = boto3.client('sns', region_name=region)
+    topic_arn = f'arn:aws:sns:{region}:{account_id}:scraper_done_topic'
+    
+    # Publish a message to the SNS topic
+    sns.publish(
+        TopicArn=topic_arn,
+        Message='Scrappers Service Completed'
+    )
 if __name__ == "__main__":
+    logger.log_info("Scrappers Service Started")
     with ThreadPoolExecutor(max_workers=len(NEWS_SITES)) as executor:
         executor.map(main, NEWS_SITES)
+    logger.log_info("Scrappers Service Completed")
+    notify_scraper_done()

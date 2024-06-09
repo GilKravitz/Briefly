@@ -78,7 +78,8 @@ class ArticleProcessor:
             return None
 
         self.logger.info('Summarizing clusters.')
-        for cluster in clusters:
+        for i,cluster in enumerate(clusters):
+            self.logger.info(f"Summerzing {i+1}/{len(clusters)} clusters.")
             self.__summarize_cluster_gimini(cluster)
 
         # TODO: Debug the summary text file, remove in production
