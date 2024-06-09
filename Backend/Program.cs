@@ -39,7 +39,7 @@ public class Program
             throw new ArgumentNullException("JWT configuration is missing in environment variables.");
         }
 
-        builder.Services.AddAuthentication(options => 
+        builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,6 +70,7 @@ public class Program
                 BearerFormat = "JWT",
                 Scheme = "bearer"
             });
+
             configuration.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
@@ -96,6 +97,7 @@ public class Program
         {
             configuration.SwaggerEndpoint("/swagger/v1/swagger.json", "BrieflyAPI V1");
         });
+
         app.Run();
     }
 }

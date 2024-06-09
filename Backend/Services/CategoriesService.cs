@@ -7,12 +7,13 @@ namespace BrieflyServer.Services
     public class CategoriesService
     {
         private readonly BrieflyContext _context;
-        public CategoriesService(BrieflyContext context)
+
+        internal CategoriesService(BrieflyContext i_Context)
         {
-            _context = context;
+            _context = i_Context;
         }
 
-        public async Task<string[]> GetAllCategories()
+        internal async Task<string[]> GetAllCategories()
         {
             string[] categories = await _context.Categories.Select(categories => categories.Name).ToArrayAsync();
 

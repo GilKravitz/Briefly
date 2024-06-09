@@ -37,9 +37,25 @@ class N12_Scrapper(BaseScrapper):
             )
             return None
 
+    def validate_data_tag(self , tag):
+        if (
+            not tag.find_parent("section", class_="mako_comments")
+            and "content" not in tag.get("class", [])
+            and not (
+                tag.name == "div" and "not_for_print" in tag.get("class", [])
+            )
+            and not tag.find_all("a", recursive=True)
+            and not tag.find_parent("figcaption")
+                ):
+            return True
+        else:
+            return False
+
+
     def get_article_content(self, link, article_type):
         article_data = ""
         title = ""
+
         try:
             response = requests.get(link, headers=self.headers)
             response.raise_for_status()  # Raise an exception for 4XX and 5XX status codes
@@ -48,11 +64,9 @@ class N12_Scrapper(BaseScrapper):
             )
             article_publish_date = self.get_article_publish_date()
             if article_publish_date is None:
-                return -1
+                return BaseScrapper.NOT_VALID_ARTICLE
 
             imageLink = self.get_image_link()
-            if not imageLink:
-                return -1
             content_article = self.article_soup.find("article")
             all_content = (
                 content_article.find_all(["p", "h1", "h2", "strong"])
@@ -61,15 +75,7 @@ class N12_Scrapper(BaseScrapper):
             )
             # Collect all the data of the article
             for tag in all_content:
-                if (
-                    not tag.find_parent("section", class_="mako_comments")
-                    and "content" not in tag.get("class", [])
-                    and not (
-                        tag.name == "div" and "not_for_print" in tag.get("class", [])
-                    )
-                    and not tag.find_all("a", recursive=True)
-                    and not tag.find_parent("figcaption")
-                ):
+                if self.validate_data_tag(tag):
                     if tag.name == "h1":
                         title = tag.get_text(strip=True)
                     article_data += tag.get_text(strip=True) + " "
@@ -87,4 +93,4 @@ class N12_Scrapper(BaseScrapper):
             logger.log_warning(
                 f"{e} : Error fetching article from {link} ,all content was {all_content} "
             )
-            return -1
+            return BaseScrapper.NOT_VALID_ARTICLE

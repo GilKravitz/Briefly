@@ -59,6 +59,12 @@ class N13_Scrapper(BaseScrapper):
                 f"{e} : No date found in article , display date span was {display_date_span}"
             )
             return None
+        
+
+    #Helper function to find and return relevant tags from an element.
+    def extract_content(self , element):
+        return element.find_all(["p", "h1", "h2", "strong"]) if element else []
+
 
     def get_article_content(self, link, article_type):
         article_data = ""
@@ -71,33 +77,25 @@ class N13_Scrapper(BaseScrapper):
             )
             article_publish_date = self.get_article_publish_date()
             if article_publish_date is None:
-                return -1
-
+                return BaseScrapper.NOT_VALID_ARTICLE
+            
             imageLink = self.get_image_link()
-            if not imageLink:
-                return -1
             all_content = []
             content_article = self.article_soup.find(
                 "article", class_=lambda c: c and c.startswith("Articlestyles__Content")
             )
-            if (
-                content_article is None
-            ):  # didnt find article tag in html form , so doing the usual way.
-                content_article = self.article_soup.find_all(
+
+            if content_article is None:
+                # If the article content is not found, find all relevant divs
+                content_articles = self.article_soup.find_all(
                     "div", class_=lambda c: c and c.startswith("ArticleTimeLinestyles")
                 )
-                for contentDiv in content_article:
-                    all_content.extend(
-                        contentDiv.find_all(["p", "h1", "h2", "strong"])
-                        if content_article
-                        else []
-                    )
+                for content_div in content_articles:
+                    all_content.extend(self.extract_content(content_div))
             else:
-                all_content = (
-                    content_article.find_all(["p", "h1", "h2", "strong"])
-                    if content_article
-                    else []
-                )
+                # Collect content directly article tag
+                all_content.extend(self.extract_content(content_article))
+
             for tag in all_content:
                 if tag.name == "h1":
                     title = tag.get_text(strip=True).encode("utf-8").decode("utf-8")
@@ -117,4 +115,4 @@ class N13_Scrapper(BaseScrapper):
             logger.log_warning(
                 f"{e} : Error fetching article from {link} , content was {all_content}"
             )
-            return -1
+            return BaseScrapper.NOT_VALID_ARTICLE

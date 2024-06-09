@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BrieflyServer.Services
 {
-    public class ArticlesService(BrieflyContext context)
+    public class ArticlesService(BrieflyContext i_Context)
     {
         public async Task<List<Article>> GetArticles(int i_PageNumber, int i_PageSize, string i_Email)
         {
@@ -28,7 +28,7 @@ namespace BrieflyServer.Services
             {
                 return new List<Article>();
             }
-            
+
             var articles = await context.Articles// Query the articles based on category names, skipping and taking the desired number
                 .Where(article => preferredCategoryNames.Contains(article.Category))
                 .OrderByDescending(article => article.PublishDate)

@@ -3,9 +3,9 @@ using BrieflyServer.Models;
 
 namespace BrieflyServer.Services
 {
-    public class BookmarksService(BrieflyContext context)
+    public class BookmarksService(BrieflyContext i_Context)
     {
-        private readonly BrieflyContext _context = context;
+        private readonly BrieflyContext _context = i_Context;
 
         public List<Article> GetBookmarkArticles(string i_Email, int i_PageNumber, int i_PageSize)
         {

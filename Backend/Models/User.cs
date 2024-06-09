@@ -11,10 +11,10 @@ namespace BrieflyServer.Models
 
         public virtual ICollection<UserCategory> UserCategories { get; set; }
 
-        public User(string email,string userName)
+        public User(string i_Email,string i_UserName)
         {
-            UserName = userName;
-            Email = email;
+            UserName = i_UserName;
+            Email = i_Email;
         }
     }
 }

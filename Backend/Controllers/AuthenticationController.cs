@@ -23,7 +23,7 @@ public class AuthenticationController(
     : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody]RegistrationModel i_Model)
+    public async Task<IActionResult> Register([FromBody] RegistrationModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -37,17 +37,19 @@ public class AuthenticationController(
                 return Conflict("User with this email already exists");
             }
 
-            User user = new User(i_Model.Email,i_Model.UserName);
-            var result = await userManager.CreateAsync(user,i_Model.Password);
+            User user = new User(i_Model.Email, i_Model.UserName);
+            var result = await userManager.CreateAsync(user, i_Model.Password);
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
                 var token = GenerateJwtToken(user);
-                return Ok(new { Token = token ,Message= "User registered successfully"});
+
+                return Ok(new { Token = token, Message = "User registered successfully" });
             }
             else
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                var errors = string.Join(", ", result.Errors.Select(error => error.Description));
+
                 return Conflict($"Failed to register user: {errors}");
             }
         }
@@ -58,7 +60,7 @@ public class AuthenticationController(
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody]LoginModel i_Model)
+    public async Task<IActionResult> Login([FromBody] LoginModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -76,6 +78,7 @@ public class AuthenticationController(
             if (result.Succeeded)
             {
                 var token = GenerateJwtToken(user);
+
                 return Ok(new { Token = token, Message = "User logged in successfully" });
             }
             else
@@ -83,7 +86,7 @@ public class AuthenticationController(
                 return Unauthorized("Invalid login attempt");
             }
         }
-        catch (Exception exception)             
+        catch (Exception exception)
         {
             return BadRequest(exception.Message);
         }
@@ -150,7 +153,7 @@ public class AuthenticationController(
             return BadRequest("Invalid OTP");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp,forgotPasswordToken.HashedOtp))
+        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp, forgotPasswordToken.HashedOtp))
         {
             return BadRequest("Invalid OTP");
         }
@@ -159,7 +162,7 @@ public class AuthenticationController(
         context.ForgotPassword.Remove(forgotPasswordToken);//invalidate the OTP after it's been used
         await context.SaveChangesAsync();
 
-        return Ok(new {Token = token, Message = "OTP verified successfully" });
+        return Ok(new { Token = token, Message = "OTP verified successfully" });
     }
 
     [HttpPost("new-password")]
@@ -186,14 +189,15 @@ public class AuthenticationController(
             return BadRequest("Failed to reset password");
         }
     }
-    private string GenerateJwtToken(User user)
+
+    private string GenerateJwtToken(User i_User)
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            new Claim(JwtRegisteredClaimNames.Sub, i_User.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.NameIdentifier, i_User.Id.ToString()),
+            new Claim(ClaimTypes.Email, i_User.Email)
         };
 
         var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
