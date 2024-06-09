@@ -5,19 +5,19 @@
 
     public class Bookmarked
     {
-        public Bookmarked(string i_Email, int i_ArticleId)
-        {
-            Email = i_Email;
-            ArticleId = i_ArticleId;
-        }
-
         [Key]
         public int Id { get; set; }
 
-        [Column("email")] 
+        [Column("email")]
         public string Email { get; set; }
 
         [Column("articleId")]
         public int ArticleId { get; set; }
+
+        public Bookmarked(string email, int articleId)
+        {
+            Email = email;
+            ArticleId = articleId;
+        }
     }
 }

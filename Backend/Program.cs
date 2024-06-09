@@ -17,7 +17,7 @@ public class Program
     {
         Env.Load();
         var builder = WebApplication.CreateBuilder(args);
-        string connectionString = $"Host={Environment.GetEnvironmentVariable("PG_HOST")};Port={Environment.GetEnvironmentVariable("PG_PORT")};Database={Environment.GetEnvironmentVariable("PG_DATABASE")};Username={Environment.GetEnvironmentVariable("PG_USER")};Password={Environment.GetEnvironmentVariable("PG_PASS")};";
+        var connectionString = $"Host={Environment.GetEnvironmentVariable("PG_HOST")};Port={Environment.GetEnvironmentVariable("PG_PORT")};Database={Environment.GetEnvironmentVariable("PG_DATABASE")};Username={Environment.GetEnvironmentVariable("PG_USER")};Password={Environment.GetEnvironmentVariable("PG_PASS")};";
 
         builder.Services.AddDbContext<BrieflyContext>(options =>
             options.UseNpgsql(connectionString));
@@ -26,21 +26,20 @@ public class Program
         builder.Services.AddScoped<EmailService>();
         builder.Services.AddScoped<BookmarksService>();
         //builder.Services.AddScoped<LoggingService>();
-
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddIdentity<User, IdentityRole<int>>()
             .AddEntityFrameworkStores<BrieflyContext>()
             .AddDefaultTokenProviders();
-        string jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
-        string jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
-        string jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+        var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+        var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+        var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
         if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
         {
             throw new ArgumentNullException("JWT configuration is missing in environment variables.");
         }
 
-        builder.Services.AddAuthentication(options => 
+        builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -58,7 +57,7 @@ public class Program
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });
-        //Add auth for the swagger for testing
+        //add swagger authoraztion option for api testing
         builder.Services.AddSwaggerGen(configuration =>
         {
             configuration.SwaggerDoc("v1", new OpenApiInfo { Title = "BrieflyAPI", Version = "v1" });

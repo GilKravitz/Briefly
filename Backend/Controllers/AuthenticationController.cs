@@ -23,7 +23,7 @@ public class AuthenticationController(
     : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody]RegistrationModel i_Model)
+    public async Task<IActionResult> Register([FromBody] RegistrationModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -31,20 +31,20 @@ public class AuthenticationController(
         }
         try
         {
-            var existingUser = await userManager.FindByEmailAsync(i_Model.Email);
+            User? existingUser = await userManager.FindByEmailAsync(i_Model.Email);
             if (existingUser != null)
             {
                 return Conflict("User with this email already exists");
             }
 
-            var user = new User(i_Model.Email, i_Model.UserName);
+            User user = new User(i_Model.Email, i_Model.UserName);
             var result = await userManager.CreateAsync(user, i_Model.Password);
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
                 var token = GenerateJwtToken(user);
 
-                return Ok(new { Token = token ,Message= "User registered successfully"});
+                return Ok(new { Token = token, Message = "User registered successfully" });
             }
             else
             {
@@ -60,7 +60,7 @@ public class AuthenticationController(
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody]LoginModel i_Model)
+    public async Task<IActionResult> Login([FromBody] LoginModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -68,11 +68,12 @@ public class AuthenticationController(
         }
         try
         {
-            var user = await userManager.FindByEmailAsync(i_Model.Email);
+            User? user = await userManager.FindByEmailAsync(i_Model.Email);
             if (user == null)
             {
                 return NotFound("User not found");
             }
+
             var result = await signInManager.PasswordSignInAsync(user, i_Model.Password, false, false);
             if (result.Succeeded)
             {
@@ -85,9 +86,9 @@ public class AuthenticationController(
                 return Unauthorized("Invalid login attempt");
             }
         }
-        catch (Exception error)
+        catch (Exception exception)
         {
-            return BadRequest(error.Message);
+            return BadRequest(exception.Message);
         }
     }
 
@@ -108,7 +109,7 @@ public class AuthenticationController(
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(i_Request.Email);
+        User? user = await userManager.FindByEmailAsync(i_Request.Email);
         if (user == null)
         {
             return Ok("If your email is registered, you will receive an email with instructions on how to reset your password");
@@ -129,7 +130,6 @@ public class AuthenticationController(
 
         await context.SaveChangesAsync();
         emailService.SendMail(i_Request.Email, otp);
-
         return Ok("Email verification sent");
     }
 
@@ -141,7 +141,7 @@ public class AuthenticationController(
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(i_Model.Email);
+        User? user = await userManager.FindByEmailAsync(i_Model.Email);
         if (user == null)
         {
             return BadRequest("User not found");
@@ -153,16 +153,16 @@ public class AuthenticationController(
             return BadRequest("Invalid OTP");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp,forgotPasswordToken.HashedOtp))
+        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp, forgotPasswordToken.HashedOtp))
         {
             return BadRequest("Invalid OTP");
         }
-        // Create reset token
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);// Create reset token
         context.ForgotPassword.Remove(forgotPasswordToken);//invalidate the OTP after it's been used
         await context.SaveChangesAsync();
 
-        return Ok(new {Token = token, Message = "OTP verified successfully" });
+        return Ok(new { Token = token, Message = "OTP verified successfully" });
     }
 
     [HttpPost("new-password")]
@@ -173,7 +173,7 @@ public class AuthenticationController(
             return BadRequest(ModelState);
         }
 
-        var user = await userManager.FindByEmailAsync(i_Model.Email);
+        User? user = await userManager.FindByEmailAsync(i_Model.Email);
         if (user == null)
         {
             return BadRequest("User not found");
@@ -182,12 +182,10 @@ public class AuthenticationController(
         var result = await userManager.ResetPasswordAsync(user, i_Model.Token, i_Model.NewPassword);
         if (result.Succeeded)
         {
-            // Password reset successful, you can redirect the user to a success page
             return Ok("Password reset successfully");
         }
         else
         {
-            // Password reset failed, handle the failure (e.g., show an error message)
             return BadRequest("Failed to reset password");
         }
     }

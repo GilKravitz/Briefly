@@ -25,7 +25,7 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Invalid page number or page size.");
             }
 
-            var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email not found in token.");
@@ -34,7 +34,6 @@ namespace BrieflyServer.Controllers
             try
             {
                 var articlesByCategory = await _articlesService.GetArticles(i_PageNumber, i_PageSize, email);
-
                 return Ok(articlesByCategory);
             }
             catch (ArgumentException invalidCategory)

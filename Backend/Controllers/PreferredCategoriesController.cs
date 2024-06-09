@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using BrieflyServer.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BrieflyServer.Controllers
 {
@@ -21,7 +22,7 @@ namespace BrieflyServer.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllCategories()
         {
-            var categories = await _categoriesService.GetAllCategories();
+            string[] categories = await _categoriesService.GetAllCategories();
 
             return Ok(categories);
         }
@@ -29,10 +30,16 @@ namespace BrieflyServer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPreferredCategories()
         {
-            string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            if (email == null)
+            {
+                return Unauthorized();
+            }
+
             try
             {
-                var categories =  await _categoriesService.GetPreferredCategories(email);
+                string[] categories = await _categoriesService.GetPreferredCategories(email);
+
                 return Ok(categories);
             }
             catch (Exception exception)
@@ -44,11 +51,15 @@ namespace BrieflyServer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePreferredCategories([FromBody] UpdatePreferredCategoriesRequest i_Request)
         {
-            string email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            if (email == null)
+            {
+                return Unauthorized();
+            }
+
             try
             {
                 await _categoriesService.UpdatePreferredCategories(email, i_Request.PreferredCategories);
-
                 return Ok("Preferred categories updated successfully");
             }
             catch (Exception exception)

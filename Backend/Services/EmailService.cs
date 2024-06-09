@@ -5,7 +5,7 @@ namespace BrieflyServer.Services
 {
     public class EmailService()
     {
-        internal async void SendMail(string i_Email, string i_Otp)
+        public async void SendMail(string i_Email, string i_Otp)
         {
             var sendGridApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var sendGridClient = new SendGridClient(sendGridApiKey);

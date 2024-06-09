@@ -20,14 +20,14 @@ namespace BrieflyServer.Controllers
             {
                 return BadRequest("Invalid page number or page size.");
             }
-            
+
             var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email not found in token.");
             }
 
-            var articles = _bookmarksService.GetBookmarkArticles(i_PageNumber, i_PageSize, email);
+            var articles = _bookmarksService.GetBookmarkArticles(email, i_PageNumber, i_PageSize);
 
             return Ok(articles);
         }
@@ -35,8 +35,7 @@ namespace BrieflyServer.Controllers
         [HttpPost]
         public IActionResult AddBookmark([FromBody] AddBookmarkRequest i_Model)
         {
-            var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
-
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email not found in token.");
@@ -50,7 +49,7 @@ namespace BrieflyServer.Controllers
         [HttpDelete]
         public IActionResult RemoveBookmark([FromQuery] int i_ArticleId)
         {
-            var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email not found in token.");
