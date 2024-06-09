@@ -2,12 +2,19 @@
 
 namespace BrieflyServer.Models
 {
-    public class OtpModel(string email, string otp)
+    public class OtpModel
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; } = email;
+        public string Email { get; set; }
+
         [Required]
-        public string Otp { get; set; } = otp;
+        public string Otp { get; set; }
+
+        public OtpModel(string email, string otp)
+        {
+            Email = email;
+            Otp = otp;
+        }
     }
 }

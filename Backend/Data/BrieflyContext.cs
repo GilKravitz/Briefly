@@ -20,25 +20,20 @@ namespace BrieflyServer.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Article>().ToView("articles");
             modelBuilder.Entity<ForgotPasswordToken>().ToTable("ForgotPasswordTokens");
             modelBuilder.Entity<Bookmarked>().ToTable("Bookmarks");
             modelBuilder.Entity<Categories>().ToTable("categories");
-
             modelBuilder.Entity<UserCategory>()
-                .HasKey(uc => new { uc.UserId, uc.CategoryId });
-
+                .HasKey(userCategory => new { userCategory.UserId, userCategory.CategoryId });
             modelBuilder.Entity<UserCategory>()
-                .HasOne(uc => uc.User)
-                .WithMany(u => u.UserCategories)
-                .HasForeignKey(uc => uc.UserId);
-
+                .HasOne(userCategory => userCategory.User)
+                .WithMany(user => user.UserCategories)
+                .HasForeignKey(userCategory => userCategory.UserId);
             modelBuilder.Entity<UserCategory>()
-                .HasOne(uc => uc.Category)
+                .HasOne(userCategory => userCategory.Category)
                 .WithMany()
-                .HasForeignKey(uc => uc.CategoryId);
-
+                .HasForeignKey(userCategory => userCategory.CategoryId);
         }
     }
 }

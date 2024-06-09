@@ -3,7 +3,7 @@ import { View } from "@/components/Themed";
 import Container from "@/components/Container";
 import React from "react";
 import { t } from "@/core/i18n";
-import BackButton from "@/components/pressable/BackButton";
+import BackButton from "@/components/pressable/BackButton2";
 import SocialButtons from "@/components/SocialButtons";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
@@ -20,7 +20,7 @@ export default function SignIn() {
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1, width: "100%" }}>
       <ScrollView>
         <Container>
-          <BackButton onPress={() => router.back()} />
+          <BackButton variant="dark" />
           <Text variant="title" style={styles.title}>
             {t.signIn.welcome}
           </Text>
