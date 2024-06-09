@@ -8,7 +8,11 @@ export type User = {
 export type LoginData = Pick<User, "email" | "password">;
 export type RegisterData = Pick<User, "email" | "password" | "userName">;
 export type FotgotPasswordData = Pick<User, "email">;
-export type NewPasswordData = Pick<User, "password">;
+export type NewPasswordData = {
+  email: string;
+  token: string;
+  newPassword: string;
+};
 export type OtpData = {
   email: string;
   otp: string;

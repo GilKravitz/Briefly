@@ -1,51 +1,22 @@
-import { Keyboard, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Text } from "@/components/Themed";
 import Container from "@/components/Container";
-import React, { useEffect } from "react";
+import React from "react";
 import { t } from "@/core/i18n";
-import BackButton from "@/components/pressable/BackButton";
+import BackButton from "@/components/pressable/BackButton2";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import Input from "@/components/Input";
 import Button from "@/components/pressable/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-import { forgotPasswordSchema } from "@/core/schemas";
-import API from "@/core/api";
-import { useMutation } from "@tanstack/react-query";
-import { FotgotPasswordData } from "@/types";
+import { Controller } from "react-hook-form";
 import FormLoadingModal from "@/components/FormLoadingModal";
+import useForgotPassword from "@/core/hooks/screenHooks/ForgotPassword";
 const ForgotPassword = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ defaultValues: { email: "" }, resolver: yupResolver(forgotPasswordSchema) });
-
-  const {
-    mutate,
-    status,
-    error: apiError,
-  } = useMutation({
-    mutationFn: (forgotPasswordData: FotgotPasswordData) => API.Auth.forgotPassword(forgotPasswordData),
-    onSuccess: () => {
-      setTimeout(() => {
-        router.push({
-          pathname: "/(auth)/Otp",
-          params: { email: control._formValues.email },
-        });
-      }, 1500);
-    },
-    onError: (error) => console.log("screen", error.message),
-  });
-
-  const onSubmit = (formData: FotgotPasswordData) => {
-    mutate(formData);
-  };
+  const { control, errors, onSubmit, status, handleSubmit } = useForgotPassword();
 
   return (
     <Container>
-      <BackButton onPress={() => router.back()} />
+      <BackButton variant="dark" />
       <Text variant="title">{t.forgotPassword.title}</Text>
       <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/forgotPassword.json")} />
       <Controller
