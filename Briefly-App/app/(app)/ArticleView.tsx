@@ -10,7 +10,7 @@ import BackButton2 from "@/components/pressable/BackButton2";
 import ArticleCategory from "@/components/Article/ArticleCategory";
 import { dateFormat } from "@/utils/dateFormat";
 import Colors from "@/core/constants/Colors";
-import MenuButton from "@/components/SelectCategories/MenuButton";
+import MenuButton from "@/components/Article/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
 import Persistent from "@/core/persistent";

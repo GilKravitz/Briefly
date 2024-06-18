@@ -60,6 +60,7 @@ export type I18nKeys = {
     menu: {
       bookmark: string;
       report: string;
+      externalLinks: string;
     };
     linksModal: {
       heading: string;

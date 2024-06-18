@@ -61,6 +61,7 @@ const he: I18nKeys = {
     menu: {
       bookmark: "שמור",
       report: "דווח",
+      externalLinks: "קישורים",
     },
     linksModal: {
       heading: "מצאת את הכתבה מעניינת ?",
