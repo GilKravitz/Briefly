@@ -15,13 +15,17 @@ import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
 import Persistent from "@/core/persistent";
 import ArticleTextView from "@/components/Article/ArticleTextView";
+import { useFontSize } from "@/core/store/fontSizeContext";
 
 const ArticleView = () => {
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { article } = useArticle();
+  const { fontSize } = useFontSize();
+
   useEffect(() => {
+    console.log("ArticleID", article.id);
     Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
       setIsBookmarked(result);
     });
@@ -72,12 +76,10 @@ const ArticleView = () => {
             <Container style={styles.container}>
               <Animated.View entering={FadeInDown} style={styles.header}>
                 <ArticleCategory category={article.category} />
-                <Text size={14} colorName="textMuted">
-                  {dateFormat(article.publishDate)}
-                </Text>
+                <Text colorName="textMuted">{dateFormat(article.publishDate)}</Text>
               </Animated.View>
               <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
-                <Text variant="title" size={24}>
+                <Text variant="heading" weight="bold">
                   {article.title.replaceAll("*", "")}
                 </Text>
               </Animated.View>
