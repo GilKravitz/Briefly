@@ -18,6 +18,7 @@ export default function BackButton(props: BackButtonProps) {
     if (router.canGoBack()) router.back();
   };
 
+  if (router.canGoBack() === false) return null;
   const iconColor = props.variant === "dark" ? Colors.lightPrimary : Colors.darkPrimary;
   const bgColor = props.variant === "dark" ? Colors.darkPrimary : Colors.lightPrimary;
   return (
