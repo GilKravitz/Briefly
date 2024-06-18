@@ -95,6 +95,12 @@ const he: I18nKeys = {
     passwordConfirmation: "אימות סיסמה",
     otp: "0",
   },
+  settings: {
+    title: "הגדרות",
+    fontSize: "גודל כתב",
+    updateInterests: "התעדכנ/י בנושאים שמעניינים אותך",
+    selectCategories: "בחר/י נושאים",
+  },
 };
 
 // create type for the i18n keys

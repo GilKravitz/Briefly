@@ -95,6 +95,12 @@ const en: I18nKeys = {
     passwordConfirmation: "Confirm Password",
     otp: "0",
   },
+  settings: {
+    title: "Settings",
+    fontSize: "Font Size",
+    selectCategories: "Select Categories",
+    updateInterests: "Update Your Interests",
+  },
 };
 
 export default en;

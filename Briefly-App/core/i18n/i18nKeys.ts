@@ -94,4 +94,10 @@ export type I18nKeys = {
     name: string;
     otp: string;
   };
+  settings: {
+    title: string;
+    fontSize: string;
+    updateInterests: string;
+    selectCategories: string;
+  };
 };
