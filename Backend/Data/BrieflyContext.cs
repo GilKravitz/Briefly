@@ -12,6 +12,7 @@ namespace BrieflyServer.Data
         public DbSet<Bookmarked> Bookmarks { get; set; }
         public DbSet<UserCategory> UserCategories { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         public BrieflyContext(DbContextOptions<BrieflyContext> options) : base(options)
         {

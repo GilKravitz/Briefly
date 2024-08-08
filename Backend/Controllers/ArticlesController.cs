@@ -1,6 +1,7 @@
 ﻿using BrieflyServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BrieflyServer.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BrieflyServer.Controllers
@@ -43,6 +44,30 @@ namespace BrieflyServer.Controllers
             catch (Exception)
             {
                 return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPost("report")]
+        public async Task<IActionResult> ReportArticle([FromBody] ReportRequest model)
+        {
+            string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest("Email not found in token.");
+            }
+
+            try
+            {
+                await _articlesService.ReportArticleAsync(
+                    email,
+                    model.ArticleId,
+                    model.Reason
+                );
+                return Ok("Article reported successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message); // Return 404 Not Found if article does not exist
             }
         }
     }
