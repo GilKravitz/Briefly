@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using BrieflyServer.Middleware;
+using Newtonsoft.Json.Linq;
 
 namespace BrieflyServer.Controllers;
 
@@ -186,6 +188,35 @@ public class AuthenticationController(
             return BadRequest("Failed to reset password");
         }
     }
+
+    [HttpPost("external-auth")]
+    public async Task<IActionResult> ExternalAuth([FromBody] ExternalAuthDto authDto)
+    {
+        if (authDto.Provider == "Google")
+        {
+            var googlePayload = await GoogleAuth.VerifyGoogleToken(authDto.Token);
+            if (googlePayload != null)
+            {
+                var user = await FindOrCreateUser(googlePayload.Email, googlePayload.Name);
+                var jwt = GenerateJwtToken(user);
+                return Ok(new { Token = jwt, Message = "User logged in successfully" });
+            }
+        }
+        else if (authDto.Provider == "Facebook")
+        {
+            var facebookPayload = await FacebookAuth.VerifyFacebookToken(authDto.Token);
+            if (facebookPayload != null)
+            {
+                var email = facebookPayload["email"].ToString();
+                var user = await FindOrCreateUser(email, null);
+                var jwt = GenerateJwtToken(user);
+                return Ok(new { Token = jwt, Message = "User logged in successfully" });
+            }
+        }
+
+        return Unauthorized("Invalid token");
+    }
+
     private string GenerateJwtToken(User user)
     {
         var claims = new[]
@@ -210,5 +241,16 @@ public class AuthenticationController(
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    private async Task<User> FindOrCreateUser(string email, string? name)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = new User(email, name ?? email);
+            await userManager.CreateAsync(user);
+        }
+        return user;
     }
 }
