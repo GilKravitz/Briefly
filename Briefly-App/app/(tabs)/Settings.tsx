@@ -6,12 +6,17 @@ import { router } from "expo-router";
 import Button from "@/components/pressable/Button";
 import { useFontSize } from "@/core/store/fontSizeContext";
 import { t } from "@/core/i18n";
-
+import Persistent from "@/core/persistent";
 const Settings = () => {
   const { fontSize, setFontSize } = useFontSize();
   const MAX_FONT_SIZE = 20;
   const MIN_FONT_SIZE = 12;
-  const increaseFontSize = () => {
+
+  useEffect(() => {
+    Persistent.FontSize.saveFontSize(fontSize);
+  }, [fontSize]);
+
+  const increaseFontSize = async () => {
     if (fontSize < MAX_FONT_SIZE) {
       setFontSize((prev) => prev + 1);
     }

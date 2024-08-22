@@ -66,17 +66,21 @@ export const Text = React.memo((props: TextProps) => {
       break;
   }
   switch (props.weight) {
-    case "regular":
-      style.fontFamily = "Inter_400Regular";
-      break;
-    case "medium":
-      style.fontFamily = "Inter_500Medium";
+    case "bold":
+      style.fontWeight = "bold";
+      style.fontFamily = "Inter_700Bold";
       break;
     case "semibold":
+      style.fontWeight = "semibold";
       style.fontFamily = "Inter_600SemiBold";
       break;
-    case "bold":
-      style.fontFamily = "Inter_700Bold";
+    case "medium":
+      style.fontWeight = "medium";
+      style.fontFamily = "Inter_500Medium";
+      break;
+    case "regular":
+      style.fontWeight = "regular";
+      style.fontFamily = "Inter_400Regular";
       break;
     default:
       break;

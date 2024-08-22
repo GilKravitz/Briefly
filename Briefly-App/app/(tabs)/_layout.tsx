@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, Tabs } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { useThemeColor } from "@/components/Themed";
 import { Text } from "@/components/Themed";
 import { useAuth } from "@/core/hooks/persistentHooks";
 import Container from "@/components/Container";
+import API from "@/core/api";
+
 const TabsLayout = () => {
   const activeColor = useThemeColor("primary");
   const { loading, token } = useAuth();
+
+  useEffect(() => {
+    if (token) API.Auth.setToken(token);
+  }, [token]);
 
   if (loading) {
     return (

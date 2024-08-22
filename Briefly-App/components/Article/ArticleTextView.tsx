@@ -19,7 +19,7 @@ const ArticleTextView = (props: ArticleTextProps) => {
       {parsedArticle.map((element, index) => (
         <View style={{ width: "100%" }} key={`articleBullet${index}`}>
           {element.subheading && (
-            <Text weight="semibold" variant="subheading" style={[styles.articleText]}>
+            <Text variant="subheading" weight="bold" style={[styles.articleText]}>
               {element.subheading}
             </Text>
           )}

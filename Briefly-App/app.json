@@ -2,29 +2,32 @@
   "expo": {
     "name": "Briefly",
     "slug": "Briefly",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#2D2D2D"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
+      "buildNumber": "4",
       "supportsTablet": true,
       "infoPlist": {
         "ExpoLocalization_supportsRTL": true
-      }
+      },
+      "bundleIdentifier": "com.gilkravitz.Briefly"
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#2D2D2D"
       },
       "package": "com.gilkravitz.Briefly"
     },
