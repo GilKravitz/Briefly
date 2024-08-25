@@ -13,7 +13,7 @@ namespace BrieflyServer.Services
             _context = context;
         }
 
-        public async Task<List<Article>> GetBookmarkArticles(string i_Email, int i_PageNumber, int i_PageSize)
+        public async Task<List<ArticleDto>> GetBookmarkArticles(string i_Email, int i_PageNumber, int i_PageSize)
         {
             // Calculate the number of items to skip
             int numberOfPagesToSkip = (i_PageNumber - 1) * i_PageSize;
@@ -26,7 +26,19 @@ namespace BrieflyServer.Services
                 .Take(i_PageSize)
                 .ToListAsync();
 
-            return articles;
+            return articles.Select(article => new ArticleDto
+            {
+                Id = article.Id,
+                Content = article.Content,
+                Category = article.Category,
+                Title = article.Title,
+                PublishDate = article.PublishDate,
+                SourceLinks = article.SourceLinks,
+                SourceNames = article.SourceNames,
+                Image = article.Image,
+                Tags = article.Tags,
+                IsBookmarked = true
+            }).ToList();
         }
 
         public async Task AddBookmark(string i_Email, int i_ArticleId)
