@@ -23,7 +23,7 @@ const index = () => {
 
   if (status === "error") {
     console.log(error?.message);
-    return <Redirect href="(auth)/SignIn" />;
+    return <Redirect href="/(auth)/SignIn" />;
   }
 
   if (status === "pending") {

@@ -13,22 +13,20 @@ import Colors from "@/core/constants/Colors";
 import MenuButton from "@/components/Article/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
-import Persistent from "@/core/persistent";
 import ArticleTextView from "@/components/Article/ArticleTextView";
 import { useFontSize } from "@/core/store/fontSizeContext";
+import { useBookmarked } from "@/core/hooks/screenHooks/ArticleView";
 
 const ArticleView = () => {
+  const { article } = useArticle();
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const { article } = useArticle();
+  const [isBookmarked, setIsBookmarked] = useState(article.isBookmarked);
   const { fontSize } = useFontSize();
+  const { mutate: toggleBookmark } = useBookmarked();
 
   useEffect(() => {
     console.log("ArticleID", article.id);
-    Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
-      setIsBookmarked(result);
-    });
   }, []);
 
   const onReportPress = () => {
@@ -49,9 +47,10 @@ const ArticleView = () => {
   };
 
   const onBookmarkPress = () => {
-    Persistent.Bookmarked.toggleBookmark(article);
-    setIsBookmarked((prev) => !prev);
-    console.log("Bookmark");
+    toggleBookmark(
+      { id: article.id, isBookmarked: !isBookmarked },
+      { onSuccess: () => setIsBookmarked(!isBookmarked) }
+    );
   };
 
   return (
