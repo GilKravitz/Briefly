@@ -7,8 +7,10 @@ import Button from "@/components/pressable/Button";
 import { useFontSize } from "@/core/store/fontSizeContext";
 import { t } from "@/core/i18n";
 import Persistent from "@/core/persistent";
+import { useAuth } from "@/core/hooks/persistentHooks";
 const Settings = () => {
   const { fontSize, setFontSize } = useFontSize();
+  const { removeToken } = useAuth();
   const MAX_FONT_SIZE = 20;
   const MIN_FONT_SIZE = 12;
 
@@ -24,6 +26,15 @@ const Settings = () => {
   const decreaseFontSize = () => {
     if (fontSize > MIN_FONT_SIZE) {
       setFontSize((prev) => prev - 1);
+    }
+  };
+
+  const logout = async () => {
+    await removeToken();
+    if (router.canDismiss()) {
+      router.dismissAll();
+    } else {
+      router.replace("/(auth)/SignIn");
     }
   };
   return (
@@ -50,6 +61,8 @@ const Settings = () => {
         {t.settings.updateInterests}
       </Text>
       <Button onPress={() => router.push("/(app)/SelectCategories")}>{t.settings.selectCategories}</Button>
+      <View style={styles.spacer} />
+      <Button onPress={logout}>{t.settings.logout}</Button>
     </Container>
   );
 };

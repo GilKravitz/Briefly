@@ -100,6 +100,7 @@ const en: I18nKeys = {
     fontSize: "Font Size",
     selectCategories: "Select Categories",
     updateInterests: "Update Your Interests",
+    logout: "Logout",
   },
   bookmarks: {
     title: "Bookmarks",

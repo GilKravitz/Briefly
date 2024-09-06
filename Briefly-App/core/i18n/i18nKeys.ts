@@ -99,6 +99,7 @@ export type I18nKeys = {
     fontSize: string;
     updateInterests: string;
     selectCategories: string;
+    logout: string;
   };
   bookmarks: {
     title: string;

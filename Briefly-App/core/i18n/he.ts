@@ -100,6 +100,7 @@ const he: I18nKeys = {
     fontSize: "גודל כתב",
     updateInterests: "התעדכנ/י בנושאים שמעניינים אותך",
     selectCategories: "בחר/י נושאים",
+    logout: "התנתקות",
   },
   bookmarks: {
     title: "סימניות",
