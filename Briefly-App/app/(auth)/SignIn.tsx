@@ -12,6 +12,7 @@ import { Text } from "@/components/Themed";
 import { Controller } from "react-hook-form";
 import FormLoadingModal from "@/components/FormLoadingModal";
 import useSignIn from "@/core/hooks/screenHooks/SignIn";
+import LottieView from "lottie-react-native";
 
 export default function SignIn() {
   const { control, handleSubmit, errors, emailRef, passwordRef, onSubmit, apiError, status } = useSignIn();
@@ -24,7 +25,14 @@ export default function SignIn() {
           <Text variant="title" style={styles.title}>
             {t.signIn.welcome}
           </Text>
-          <SocialButtons style={styles.socialButtons} />
+          {/* <SocialButtons style={styles.socialButtons} /> */}
+          <LottieView
+            speed={0.8}
+            enableMergePathsAndroidForKitKatAndAbove
+            autoPlay
+            style={styles.lottie}
+            source={require("../../assets/lottie/login.json")}
+          />
           <Text variant="text" colorName="error">
             {apiError && t.signIn.loginError}
           </Text>
@@ -107,5 +115,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     gap: 5,
     alignItems: "baseline",
+  },
+  lottie: {
+    width: "100%",
+    height: 200,
+    marginTop: 40,
   },
 });

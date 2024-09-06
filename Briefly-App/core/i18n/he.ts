@@ -1,7 +1,7 @@
 import { I18nKeys } from "./i18nKeys";
 const he: I18nKeys = {
   index: {
-    heading: "תמציתי.",
+    heading: "בקיצור.",
     subheading: "קבל/י את עדכוני החדשות שלך\n בהתאמה אישית",
     signupBtn: "הרשמה",
     signInMsg: "כבר יש לך חשבון?",
