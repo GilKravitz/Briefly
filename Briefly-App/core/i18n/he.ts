@@ -101,6 +101,10 @@ const he: I18nKeys = {
     updateInterests: "התעדכנ/י בנושאים שמעניינים אותך",
     selectCategories: "בחר/י נושאים",
   },
+  bookmarks: {
+    title: "סימניות",
+    noBookmarks: "אין כתבות מועדפות עדיין",
+  },
 };
 
 // create type for the i18n keys

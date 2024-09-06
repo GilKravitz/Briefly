@@ -100,4 +100,8 @@ export type I18nKeys = {
     updateInterests: string;
     selectCategories: string;
   };
+  bookmarks: {
+    title: string;
+    noBookmarks: string;
+  };
 };

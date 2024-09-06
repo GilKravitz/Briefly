@@ -101,6 +101,10 @@ const en: I18nKeys = {
     selectCategories: "Select Categories",
     updateInterests: "Update Your Interests",
   },
+  bookmarks: {
+    title: "Bookmarks",
+    noBookmarks: "No Bookmarks Yet",
+  },
 };
 
 export default en;

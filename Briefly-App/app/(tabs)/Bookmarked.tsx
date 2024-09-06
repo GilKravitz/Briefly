@@ -6,9 +6,10 @@ import ListItem from "@/components/Article/ListItem";
 import Logo from "@/components/Logo";
 import Colors from "@/core/constants/Colors";
 import { Text, View } from "@/components/Themed";
-
+import { t } from "@/core/i18n";
 import { Redirect, useFocusEffect } from "expo-router";
 import useBookmarksList from "@/core/hooks/screenHooks/Bookmarks";
+import LottieView from "lottie-react-native";
 
 const Bookmarked = () => {
   const { handlePress, data, error, fetchNextPage, refetch, hasNextPage, isFetching, isFetchingNextPage, status } =
@@ -42,6 +43,16 @@ const Bookmarked = () => {
           <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
           <ListItem skeleton index={0} article={{} as Article} onPress={() => {}} />
         </View>
+      </Container>
+    );
+  }
+
+  if (data?.pages.flat().length === 0) {
+    return (
+      <Container style={{ gap: 40 }}>
+        <Text variant="title">{t.bookmarks.title}</Text>
+        <Text variant="subheading">{t.bookmarks.noBookmarks}</Text>
+        <LottieView autoPlay style={styles.lottie} source={require("../../assets/lottie/loading.json")} />
       </Container>
     );
   }
@@ -95,5 +106,12 @@ const styles = StyleSheet.create({
     gap: 20,
     width: "100%",
     paddingBottom: 50,
+  },
+  lottie: {
+    // width: "100%",
+    // height: 200,
+    width: "100%",
+    height: 400,
+    marginTop: 40,
   },
 });
