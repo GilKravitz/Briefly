@@ -4,7 +4,7 @@ namespace BrieflyServer.Models
 {
     public class NewPassRequestModel
     {
-        [Required] 
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -12,7 +12,7 @@ namespace BrieflyServer.Models
         [MinLength(8)]
         public string NewPassword { get; set; }
 
-        [Required] 
+        [Required]
         public string Token { get; set; }
 
         public NewPassRequestModel(string email, string newPassword, string token)

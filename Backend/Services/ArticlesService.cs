@@ -29,7 +29,7 @@ namespace BrieflyServer.Services
             {
                 return new List<ArticleDto>();
             }
-            
+
             var articles = await context.Articles// Query the articles based on category names, skipping and taking the desired number
                 .Where(article => preferredCategoryNames.Contains(article.Category))
                 .OrderByDescending(article => article.PublishDate)

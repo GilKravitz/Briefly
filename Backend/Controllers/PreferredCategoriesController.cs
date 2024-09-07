@@ -14,9 +14,9 @@ namespace BrieflyServer.Controllers
     {
         private readonly CategoriesService _categoriesService;
 
-        public PreferredCategoriesController(CategoriesService categoriesService)
+        internal PreferredCategoriesController(CategoriesService i_CategoriesService)
         {
-            _categoriesService = categoriesService;
+            _categoriesService = i_CategoriesService;
         }
 
         [HttpGet("all")]
@@ -38,7 +38,7 @@ namespace BrieflyServer.Controllers
 
             try
             {
-                string[] categories =  await _categoriesService.GetPreferredCategories(email);
+                string[] categories = await _categoriesService.GetPreferredCategories(email);
 
                 return Ok(categories);
             }

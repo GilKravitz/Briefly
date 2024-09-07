@@ -10,27 +10,31 @@ type BackButtonProps = {
   variant?: "default" | "dark";
 };
 
+const buttonSize = 50;
+
 export default function BackButton(props: BackButtonProps) {
   const { style } = props;
   const handlePress = () => {
-    router.back();
+    if (router.canGoBack()) router.back();
   };
 
   const iconColor = props.variant === "dark" ? Colors.lightPrimary : Colors.darkPrimary;
   const bgColor = props.variant === "dark" ? Colors.darkPrimary : Colors.lightPrimary;
   return (
-    <AnimatedPressable onPress={handlePress}>
-      <View style={[styles.container, { backgroundColor: bgColor }]}>
-        <FontAwesome name="chevron-left" size={25} color={iconColor} />
-      </View>
-    </AnimatedPressable>
+    <View style={{ width: "100%" }}>
+      <AnimatedPressable containerStyle={{ width: buttonSize, height: buttonSize }} onPress={handlePress}>
+        <View style={[styles.container, { backgroundColor: bgColor }]}>
+          <FontAwesome name="chevron-left" size={25} color={iconColor} />
+        </View>
+      </AnimatedPressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: 50,
-    height: 50,
+    width: buttonSize,
+    height: buttonSize,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,

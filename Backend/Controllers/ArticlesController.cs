@@ -13,9 +13,9 @@ namespace BrieflyServer.Controllers
     {
         private readonly ArticlesService _articlesService;
 
-        public ArticlesController(ArticlesService articlesService)
+        public ArticlesController(ArticlesService i_ArticlesService)
         {
-            _articlesService = articlesService;
+            _articlesService = i_ArticlesService;
         }
 
         [HttpGet]

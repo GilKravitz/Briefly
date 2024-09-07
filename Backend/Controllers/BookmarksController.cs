@@ -9,9 +9,9 @@ namespace BrieflyServer.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class BookmarksController(BookmarksService bookmarksService) : Controller
+    public class BookmarksController(BookmarksService i_BookmarksService) : Controller
     {
-        private readonly BookmarksService _bookmarksService = bookmarksService;
+        private readonly BookmarksService _bookmarksService = i_BookmarksService;
 
         [HttpGet]
         public async Task<IActionResult> GetBookmarked([FromQuery] int i_PageNumber = 1, [FromQuery] int i_PageSize = 10)
@@ -20,7 +20,7 @@ namespace BrieflyServer.Controllers
             {
                 return BadRequest("Invalid page number or page size.");
             }
-            
+
             var email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
             {
@@ -41,8 +41,8 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Email not found in token.");
             }
 
-            await _bookmarksService.AddBookmark(email,i_Model.ArticleId);
-
+            await _bookmarksService.AddBookmark(email,i_Model.ArticleId); 
+            
             return Ok("Article bookmarked successfully.");
         }
 

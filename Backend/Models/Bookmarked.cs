@@ -8,7 +8,7 @@
         [Key]
         public int Id { get; set; }
 
-        [Column("email")] 
+        [Column("email")]
         public string Email { get; set; }
 
         [Column("articleId")]
