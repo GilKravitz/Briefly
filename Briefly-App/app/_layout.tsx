@@ -14,6 +14,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import { ArticleProvider } from "@/core/store/articleContext";
 import i18n from "@/core/i18n";
 import { SessionProvider } from "@/core/store/sessionContext";
+import { FontSizeProvider } from "@/core/store/fontSizeContext";
 import { QueryClient, QueryClientProvider, focusManager } from "@tanstack/react-query";
 import { useAppState } from "@/core/hooks/useAppState";
 import { AppStateStatus, Platform } from "react-native";
@@ -44,10 +45,17 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (fontsLoaded || fontError) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync();
+      // SplashScreen.hideAsync();
+      timeout = setTimeout(() => {
+        SplashScreen.hideAsync();
+      }, 750);
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [fontsLoaded, fontError]);
 
   // Prevent rendering until the font has loaded or an error was returned
@@ -71,11 +79,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <SafeAreaProvider>
-            <ArticleProvider>{children}</ArticleProvider>
-          </SafeAreaProvider>
-        </ThemeProvider>
+        <FontSizeProvider>
+          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+            <SafeAreaProvider>
+              <ArticleProvider>{children}</ArticleProvider>
+            </SafeAreaProvider>
+          </ThemeProvider>
+        </FontSizeProvider>
       </SessionProvider>
     </QueryClientProvider>
   );

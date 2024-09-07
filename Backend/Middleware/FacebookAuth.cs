@@ -1,23 +1,18 @@
-﻿//using Microsoft.AspNetCore.Authentication;
+﻿using Newtonsoft.Json.Linq;
 
-//namespace BrieflyServer.Middleware
-//{
-//    public class FacebookAuth : IAuthService
-//    {
-//        public AuthenticationBuilder AddAuthentication(AuthenticationBuilder builder)
-//        {
-//            var clientId = Environment.GetEnvironmentVariable("FB_APP_ID");
-//            var clientSecret = Environment.GetEnvironmentVariable("FB_SECRET");
-            
-//            if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
-//            {
-//                throw new InvalidOperationException("Facebook App ID or Secret not configured.");
-//            }
-//            return builder.AddFacebook(options =>
-//            {
-//                options.AppId = clientId;
-//                options.AppSecret = clientSecret;
-//            });
-//        }
-//    }
-//}
+namespace BrieflyServer.Middleware;
+public static class FacebookAuth
+{
+    public static async Task<JObject?> VerifyFacebookToken(string token)
+    {
+        using var httpClient = new HttpClient();
+        var response = await httpClient.GetStringAsync($"https://graph.facebook.com/me?access_token={token}&fields=id,email");
+        if (string.IsNullOrEmpty(response))
+        {
+            return null;
+        }
+
+        var userInfo = JObject.Parse(response);
+        return userInfo;
+    }
+}

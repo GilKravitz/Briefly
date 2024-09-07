@@ -61,6 +61,7 @@ const en: I18nKeys = {
     menu: {
       bookmark: "Bookmark",
       report: "Report",
+      externalLinks: "External Links",
     },
     linksModal: {
       heading: "Found It Interesting?",
@@ -93,6 +94,17 @@ const en: I18nKeys = {
     password: "Password",
     passwordConfirmation: "Confirm Password",
     otp: "0",
+  },
+  settings: {
+    title: "Settings",
+    fontSize: "Font Size",
+    selectCategories: "Select Categories",
+    updateInterests: "Update Your Interests",
+    logout: "Logout",
+  },
+  bookmarks: {
+    title: "Bookmarks",
+    noBookmarks: "No Bookmarks Yet",
   },
 };
 

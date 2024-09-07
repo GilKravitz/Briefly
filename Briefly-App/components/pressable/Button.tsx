@@ -11,7 +11,7 @@ const Button = (props: ButtonProps) => {
   return (
     <AnimatedPressable onPress={props.onPress}>
       <View colorName="buttonBackground" style={[styles.button, props.style]}>
-        <Text colorName="buttonForeground" variant="subheading" style={{ fontWeight: "bold" }}>
+        <Text colorName="buttonForeground" variant="heading" style={{ fontWeight: "bold" }}>
           {props.children}
         </Text>
       </View>

@@ -135,6 +135,33 @@ namespace BrieflyServer.Migrations
                     b.ToTable("ForgotPasswordTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BrieflyServer.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ReportDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("BrieflyServer.Models.User", b =>
                 {
                     b.Property<int>("Id")

@@ -1,10 +1,22 @@
 {
     "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal"
+        },
+        "development-simulator": {
+            "extends": "development",
+            "ios": {
+                "simulator": true
+            }
+        },
         "preview": {
+            "distribution": "internal",
             "android": {
                 "buildType": "apk"
             }
         },
+        "production": {},
         "preview2": {
             "android": {
                 "gradleCommand": ":app:assembleRelease"
@@ -15,7 +27,6 @@
         },
         "preview4": {
             "distribution": "internal"
-        },
-        "production": {}
+        }
     }
 }

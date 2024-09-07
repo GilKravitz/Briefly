@@ -6,3 +6,4 @@ export * from "./Category";
 export * from "./ArticleText";
 export * from "./User";
 export * from "./ApiResponse";
+export * from "./Bookmarked";

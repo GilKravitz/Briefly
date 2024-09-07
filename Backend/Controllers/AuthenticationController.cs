@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BrieflyServer.Data;
@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using BrieflyServer.Middleware;
+using Newtonsoft.Json.Linq;
 
 namespace BrieflyServer.Controllers;
 
@@ -23,7 +25,7 @@ public class AuthenticationController(
     : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegistrationModel i_Model)
+    public async Task<IActionResult> Register([FromBody]RegistrationModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -37,19 +39,17 @@ public class AuthenticationController(
                 return Conflict("User with this email already exists");
             }
 
-            User user = new User(i_Model.Email, i_Model.UserName);
-            var result = await userManager.CreateAsync(user, i_Model.Password);
+            User user = new User(i_Model.Email,i_Model.UserName);
+            var result = await userManager.CreateAsync(user,i_Model.Password);
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
                 var token = GenerateJwtToken(user);
-
-                return Ok(new { Token = token, Message = "User registered successfully" });
+                return Ok(new { Token = token ,Message= "User registered successfully"});
             }
             else
             {
-                var errors = string.Join(", ", result.Errors.Select(error => error.Description));
-
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 return Conflict($"Failed to register user: {errors}");
             }
         }
@@ -60,7 +60,7 @@ public class AuthenticationController(
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel i_Model)
+    public async Task<IActionResult> Login([FromBody]LoginModel i_Model)
     {
         if (!ModelState.IsValid)
         {
@@ -78,7 +78,6 @@ public class AuthenticationController(
             if (result.Succeeded)
             {
                 var token = GenerateJwtToken(user);
-
                 return Ok(new { Token = token, Message = "User logged in successfully" });
             }
             else
@@ -86,7 +85,7 @@ public class AuthenticationController(
                 return Unauthorized("Invalid login attempt");
             }
         }
-        catch (Exception exception)
+        catch (Exception exception)             
         {
             return BadRequest(exception.Message);
         }
@@ -153,7 +152,7 @@ public class AuthenticationController(
             return BadRequest("Invalid OTP");
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp, forgotPasswordToken.HashedOtp))
+        if (!BCrypt.Net.BCrypt.Verify(i_Model.Otp,forgotPasswordToken.HashedOtp))
         {
             return BadRequest("Invalid OTP");
         }
@@ -162,7 +161,7 @@ public class AuthenticationController(
         context.ForgotPassword.Remove(forgotPasswordToken);//invalidate the OTP after it's been used
         await context.SaveChangesAsync();
 
-        return Ok(new { Token = token, Message = "OTP verified successfully" });
+        return Ok(new {Token = token, Message = "OTP verified successfully" });
     }
 
     [HttpPost("new-password")]
@@ -190,14 +189,42 @@ public class AuthenticationController(
         }
     }
 
-    private string GenerateJwtToken(User i_User)
+    [HttpPost("external-auth")]
+    public async Task<IActionResult> ExternalAuth([FromBody] ExternalAuthDto authDto)
+    {
+        if (authDto.Provider == "Google")
+        {
+            var googlePayload = await GoogleAuth.VerifyGoogleToken(authDto.Token);
+            if (googlePayload != null)
+            {
+                var user = await FindOrCreateUser(googlePayload.Email, googlePayload.Name);
+                var jwt = GenerateJwtToken(user);
+                return Ok(new { Token = jwt, Message = "User logged in successfully" });
+            }
+        }
+        else if (authDto.Provider == "Facebook")
+        {
+            var facebookPayload = await FacebookAuth.VerifyFacebookToken(authDto.Token);
+            if (facebookPayload != null)
+            {
+                var email = facebookPayload["email"].ToString();
+                var user = await FindOrCreateUser(email, null);
+                var jwt = GenerateJwtToken(user);
+                return Ok(new { Token = jwt, Message = "User logged in successfully" });
+            }
+        }
+
+        return Unauthorized("Invalid token");
+    }
+
+    private string GenerateJwtToken(User user)
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, i_User.Email),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, i_User.Id.ToString()),
-            new Claim(ClaimTypes.Email, i_User.Email)
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email)
         };
 
         var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
@@ -214,5 +241,16 @@ public class AuthenticationController(
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    private async Task<User> FindOrCreateUser(string email, string? name)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = new User(email, name ?? email);
+            await userManager.CreateAsync(user);
+        }
+        return user;
     }
 }

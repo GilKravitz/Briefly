@@ -10,21 +10,23 @@ import BackButton2 from "@/components/pressable/BackButton2";
 import ArticleCategory from "@/components/Article/ArticleCategory";
 import { dateFormat } from "@/utils/dateFormat";
 import Colors from "@/core/constants/Colors";
-import MenuButton from "@/components/SelectCategories/MenuButton";
+import MenuButton from "@/components/Article/MenuButton";
 import LinksModal from "@/components/Article/LinksModal";
 import { router } from "expo-router";
-import Persistent from "@/core/persistent";
 import ArticleTextView from "@/components/Article/ArticleTextView";
+import { useFontSize } from "@/core/store/fontSizeContext";
+import { useBookmarked } from "@/core/hooks/screenHooks/ArticleView";
 
 const ArticleView = () => {
+  const { article, setArticle } = useArticle();
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const { article } = useArticle();
+  const [isBookmarked, setIsBookmarked] = useState(article.isBookmarked);
+  const { fontSize } = useFontSize();
+  const { mutate: toggleBookmark } = useBookmarked();
+
   useEffect(() => {
-    Persistent.Bookmarked.isArticleBookmarked(article).then((result) => {
-      setIsBookmarked(result);
-    });
+    console.log("ArticleID", article.id);
   }, []);
 
   const onReportPress = () => {
@@ -45,9 +47,16 @@ const ArticleView = () => {
   };
 
   const onBookmarkPress = () => {
-    Persistent.Bookmarked.toggleBookmark(article);
-    setIsBookmarked((prev) => !prev);
-    console.log("Bookmark");
+    toggleBookmark(
+      { id: article.id, isBookmarked: !isBookmarked },
+      {
+        onSuccess: () => {
+          // Fix the issue with the bookmark icon not updating
+          setArticle({ ...article, isBookmarked: !isBookmarked });
+          setIsBookmarked(!isBookmarked);
+        },
+      }
+    );
   };
 
   return (
@@ -72,12 +81,10 @@ const ArticleView = () => {
             <Container style={styles.container}>
               <Animated.View entering={FadeInDown} style={styles.header}>
                 <ArticleCategory category={article.category} />
-                <Text size={14} colorName="textMuted">
-                  {dateFormat(article.publishDate)}
-                </Text>
+                <Text colorName="textMuted">{dateFormat(article.publishDate)}</Text>
               </Animated.View>
               <Animated.View style={styles.heading} entering={FadeInDown.delay(200)}>
-                <Text variant="title" size={24}>
+                <Text variant="heading" weight="bold">
                   {article.title.replaceAll("*", "")}
                 </Text>
               </Animated.View>
