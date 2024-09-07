@@ -18,7 +18,7 @@ import { useFontSize } from "@/core/store/fontSizeContext";
 import { useBookmarked } from "@/core/hooks/screenHooks/ArticleView";
 
 const ArticleView = () => {
-  const { article } = useArticle();
+  const { article, setArticle } = useArticle();
   const [openLinksModal, setOpenLinksModal] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(article.isBookmarked);
@@ -49,7 +49,13 @@ const ArticleView = () => {
   const onBookmarkPress = () => {
     toggleBookmark(
       { id: article.id, isBookmarked: !isBookmarked },
-      { onSuccess: () => setIsBookmarked(!isBookmarked) }
+      {
+        onSuccess: () => {
+          // Fix the issue with the bookmark icon not updating
+          setArticle({ ...article, isBookmarked: !isBookmarked });
+          setIsBookmarked(!isBookmarked);
+        },
+      }
     );
   };
 
