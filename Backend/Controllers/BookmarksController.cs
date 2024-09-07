@@ -14,7 +14,7 @@ namespace BrieflyServer.Controllers
         private readonly BookmarksService _bookmarksService = i_BookmarksService;
 
         [HttpGet]
-        public IActionResult GetBookmarked([FromQuery] int i_PageNumber = 1, [FromQuery] int i_PageSize = 10)
+        public async Task<IActionResult> GetBookmarked([FromQuery] int i_PageNumber = 1, [FromQuery] int i_PageSize = 10)
         {
             if (i_PageNumber <= 0 || i_PageSize <= 0)
             {
@@ -27,13 +27,13 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Email not found in token.");
             }
 
-            var articles = _bookmarksService.GetBookmarkArticles(email, i_PageNumber, i_PageSize);
+            var articles = await _bookmarksService.GetBookmarkArticles(email, i_PageNumber, i_PageSize);
 
             return Ok(articles);
         }
 
         [HttpPost]
-        public IActionResult AddBookmark([FromBody] AddBookmarkRequest i_Model)
+        public async Task<IActionResult> AddBookmark([FromBody] AddBookmarkRequest i_Model)
         {
             string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
@@ -41,13 +41,13 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Email not found in token.");
             }
 
-            _bookmarksService.AddBookmark(email, i_Model.ArticleId);
-
+            await _bookmarksService.AddBookmark(email,i_Model.ArticleId); 
+            
             return Ok("Article bookmarked successfully.");
         }
 
         [HttpDelete]
-        public IActionResult RemoveBookmark([FromQuery] int i_ArticleId)
+        public async Task<IActionResult> RemoveBookmark([FromQuery] int i_ArticleId)
         {
             string? email = HttpContext.User?.FindFirst(ClaimTypes.Email)?.Value;
             if (string.IsNullOrEmpty(email))
@@ -55,7 +55,7 @@ namespace BrieflyServer.Controllers
                 return BadRequest("Email not found in token.");
             }
 
-            _bookmarksService.RemoveBookmark(email, i_ArticleId);
+            await _bookmarksService.RemoveBookmark(email, i_ArticleId);
 
             return Ok("Article removed from bookmarks.");
         }
