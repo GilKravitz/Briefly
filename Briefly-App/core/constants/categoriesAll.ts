@@ -7,9 +7,8 @@ const categoriesAll: Category[] = [
   { name: "politics", image: require("@/assets/images/categories/politics.png") },
   // TODO: change the image name to economic
   { name: "economic", image: require("@/assets/images/categories/money.png") },
-  // TODO: change the images to the correct ones
-  { name: "fashion", image: require("@/assets/images/categories/politics.png") },
-  { name: "entertainment", image: require("@/assets/images/categories/politics.png") },
+  { name: "fashion", image: require("@/assets/images/categories/fashion.png") },
+  { name: "entertainment", image: require("@/assets/images/categories/entertainment.png") },
 ];
 
 export default categoriesAll;

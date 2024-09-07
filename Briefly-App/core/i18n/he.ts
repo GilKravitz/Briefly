@@ -1,7 +1,7 @@
 import { I18nKeys } from "./i18nKeys";
 const he: I18nKeys = {
   index: {
-    heading: "תמציתי.",
+    heading: "בקיצור.",
     subheading: "קבל/י את עדכוני החדשות שלך\n בהתאמה אישית",
     signupBtn: "הרשמה",
     signInMsg: "כבר יש לך חשבון?",
@@ -61,6 +61,7 @@ const he: I18nKeys = {
     menu: {
       bookmark: "שמור",
       report: "דווח",
+      externalLinks: "קישורים",
     },
     linksModal: {
       heading: "מצאת את הכתבה מעניינת ?",
@@ -93,6 +94,17 @@ const he: I18nKeys = {
     password: "סיסמה",
     passwordConfirmation: "אימות סיסמה",
     otp: "0",
+  },
+  settings: {
+    title: "הגדרות",
+    fontSize: "גודל כתב",
+    updateInterests: "התעדכנ/י בנושאים שמעניינים אותך",
+    selectCategories: "בחר/י נושאים",
+    logout: "התנתקות",
+  },
+  bookmarks: {
+    title: "סימניות",
+    noBookmarks: "אין כתבות מועדפות עדיין",
   },
 };
 

@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import { ArticleText } from "@/types";
 import { View, Text } from "@/components/Themed";
 import { parseArticleText } from "@/utils/articleText";
+import { useFontSize } from "@/core/store/fontSizeContext";
 
 type ArticleTextProps = {
   content: string;
 };
 const ArticleTextView = (props: ArticleTextProps) => {
   const [parsedArticle, setParsedArticle] = React.useState<ArticleText[]>([]);
+  const { fontSize } = useFontSize();
   useEffect(() => {
     setParsedArticle(parseArticleText(props.content));
   }, []);
@@ -17,17 +19,15 @@ const ArticleTextView = (props: ArticleTextProps) => {
       {parsedArticle.map((element, index) => (
         <View style={{ width: "100%" }} key={`articleBullet${index}`}>
           {element.subheading && (
-            <Text variant="subheading" style={[{ fontWeight: "bold" }, styles.articleText]} size={18}>
+            <Text variant="subheading" weight="bold" style={[styles.articleText]}>
               {element.subheading}
             </Text>
           )}
-          {element.paragraph && <Text size={16}>{element.paragraph}</Text>}
+          {element.paragraph && <Text>{element.paragraph}</Text>}
           {element.bullets && (
             <View style={styles.bullets}>
               {element.bullets.map((bullet, i) => (
-                <Text size={16} key={`articleBullet${index}_${i}`}>
-                  • {bullet}
-                </Text>
+                <Text key={`articleBullet${index}_${i}`}>• {bullet}</Text>
               ))}
             </View>
           )}

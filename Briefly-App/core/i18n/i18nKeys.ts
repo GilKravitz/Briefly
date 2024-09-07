@@ -60,6 +60,7 @@ export type I18nKeys = {
     menu: {
       bookmark: string;
       report: string;
+      externalLinks: string;
     };
     linksModal: {
       heading: string;
@@ -92,5 +93,16 @@ export type I18nKeys = {
     passwordConfirmation: string;
     name: string;
     otp: string;
+  };
+  settings: {
+    title: string;
+    fontSize: string;
+    updateInterests: string;
+    selectCategories: string;
+    logout: string;
+  };
+  bookmarks: {
+    title: string;
+    noBookmarks: string;
   };
 };

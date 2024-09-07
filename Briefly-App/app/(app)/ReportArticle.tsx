@@ -9,18 +9,19 @@ import { Picker } from "@react-native-picker/picker";
 import Button from "@/components/pressable/Button";
 import Input from "@/components/Input";
 import { View, Text } from "@/components/Themed";
-const resonsLables = ["offensive", "incorrect", "inappropriate", "other"];
+import { useReportArticle } from "@/core/hooks/screenHooks/ArticleView";
+import FormLoadingModal from "@/components/FormLoadingModal";
+const resonsLables = ["offensive", "incorrect", "inappropriate"];
 const ReportArticle = () => {
   const { article } = useArticle();
   const [value, setValue] = useState(resonsLables[0]);
   const [description, setDescription] = useState("");
+  const { mutate, status } = useReportArticle();
 
   const handleSendReport = () => {
-    console.log(`Report sent on article: ${article.id}`);
+    mutate({ articleId: article.id, reason: value });
+    console.log(`Report sent on article: ${article.id} - reason: ${value}`);
   };
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   return (
     <Container>
@@ -47,19 +48,10 @@ const ReportArticle = () => {
               />
             ))}
           </Picker>
-
-          <Input
-            placeholder={t.article.reportArticle.reportDetail}
-            multiline={true}
-            numberOfLines={4}
-            editable={value === "other"}
-            style={{ opacity: value === "other" ? 1 : 0 }}
-            value={description}
-            onChangeText={setDescription}
-          />
         </View>
         <Button onPress={handleSendReport}>{t.article.reportArticle.reportBtn}</Button>
       </View>
+      <FormLoadingModal status={status} />
     </Container>
   );
 };

@@ -66,7 +66,7 @@ const MenuButton = (props: MenuButtonProps) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={props.onExternalLinksPress}>
           <View style={[styles.menuItem, styles.seperator]}>
-            <Text>קישורים</Text>
+            <Text>{t.article.menu.externalLinks}</Text>
             <FontAwesome name="external-link" size={20} color={Colors.light.primary} />
           </View>
         </TouchableOpacity>

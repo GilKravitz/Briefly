@@ -1,5 +1,5 @@
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Container from "@/components/Container";
 import { Article } from "@/types";
 import ListItem from "@/components/Article/ListItem";
@@ -7,11 +7,23 @@ import Logo from "@/components/Logo";
 import Colors from "@/core/constants/Colors";
 import { Text, View } from "@/components/Themed";
 import useArticleList from "@/core/hooks/screenHooks/ArticleList";
-import { Redirect } from "expo-router";
+import { Redirect, useFocusEffect } from "expo-router";
+import { useArticle } from "@/core/store/articleContext";
 
 const index = () => {
   const { handlePress, data, error, fetchNextPage, refetch, hasNextPage, isFetching, isFetchingNextPage, status } =
     useArticleList();
+
+  // Fix the issue with the bookmark icon not updating
+  const { article } = useArticle();
+  useEffect(() => {
+    console.log("ArticleID", article.id, article.isBookmarked);
+    data?.pages.flat().forEach((item) => {
+      if (item.id === article.id) {
+        item.isBookmarked = article.isBookmarked;
+      }
+    });
+  }, [article]);
 
   const renderItem = useCallback(
     ({ item, index }: { item: Article; index: number }) => (
@@ -23,7 +35,7 @@ const index = () => {
 
   if (status === "error") {
     console.log(error?.message);
-    return <Redirect href="(auth)/SignIn" />;
+    return <Redirect href="/(auth)/SignIn" />;
   }
 
   if (status === "pending") {
@@ -42,6 +54,7 @@ const index = () => {
   return (
     <Container style={styles.backgroundMuted}>
       <FlatList
+        extraData={article}
         data={data?.pages.flat() as Article[]}
         renderItem={renderItem}
         keyExtractor={keyExtractor}

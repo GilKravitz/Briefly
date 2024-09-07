@@ -26,10 +26,10 @@ const ListItem = React.memo(
           <View style={styles.container}>
             <View style={styles.contentContainer}>
               <ArticleCategory category={props.article.category} />
-              <Text variant="heading" size={15} style={{ flex: 0.95, fontWeight: "bold" }}>
+              <Text weight="bold" style={{ flex: 0.95 }}>
                 {props.article.title.replaceAll("*", "")}
               </Text>
-              <Text size={14} style={styles.date} colorName="textMuted">
+              <Text style={styles.date} colorName="textMuted">
                 {dateFormat(props.article.publishDate)}
               </Text>
             </View>
